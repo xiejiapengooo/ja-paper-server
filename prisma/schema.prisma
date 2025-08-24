@@ -27,6 +27,33 @@ enum QuestionType {
   MULTI_CHOICE // 多选题
 }
 
+model User {
+  id           String         @id @default(cuid())
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+  email        String         @unique
+  name         String?
+  password     String
+  UserQuestion UserQuestion[]
+}
+
+model UserQuestion {
+  id           String        @id @default(cuid())
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  userId       String
+  user         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  questionId   String
+  question     PaperQuestion @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  isFavorite   Boolean
+  wrongCount   Int           @default(0)
+  lastAnswerAt DateTime?
+  chosenIds    String[]
+  note         String?       @db.Text
+
+  @@unique([userId, questionId])
+}
+
 model Paper {
   id          String    @id @default(cuid())
   createdAt   DateTime  @default(now())
@@ -88,7 +115,8 @@ model PaperQuestion {
   mediaId   String?
   media     PaperMedia?   @relation(fields: [mediaId], references: [id])
 
-  choices QuestionChoice[]
+  choices       QuestionChoice[]
+  userQuestions UserQuestion[]
 
   @@index([sectionId, order])
   @@index([type])
