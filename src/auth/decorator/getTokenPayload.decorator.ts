@@ -6,7 +6,6 @@ export type UserTokenPayload = {
   id: number;
   name: string;
   role: ROLES;
-  certificateType: CERTIFICATE_TYPE;
   exp: number;
   iat: number;
 };
@@ -18,14 +17,7 @@ export const GetUserTokenPayload = createParamDecorator(
     if (key) {
       return user[key];
     } else {
-      return {
-        userId: user.userId,
-        username: user.username,
-        role: user.role,
-        certificateType: user.certificateType,
-        exp: user.exp,
-        iat: user.iat,
-      };
+      return user;
     }
   },
 );
