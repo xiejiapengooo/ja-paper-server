@@ -107,7 +107,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "/Users/jiapeng/Code/ja-paper-server/prisma.generated",
+      "value": "/Users/jiapeng/Code/ja-paper-server/.prisma.generated",
       "fromEnvVar": null
     },
     "config": {
@@ -143,8 +143,8 @@ const config = {
       }
     }
   },
-  "inlineSchema": "generator client {\n  provider = \"prisma-client-js\"\n  output   = \"../prisma.generated\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n",
-  "inlineSchemaHash": "4187bf749578ec30ac917fa9581bedcc55b80f5cd75c9ac416c9ada424c20e2b",
+  "inlineSchema": "generator client {\n  provider = \"prisma-client-js\"\n  output   = \"../.prisma.generated\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n",
+  "inlineSchemaHash": "bb4a90884a8897e5c7044655dcedb4f40b20adea3552b9d9e93dc8c189e8efe5",
   "copyEngine": false
 }
 config.dirname = '/'
