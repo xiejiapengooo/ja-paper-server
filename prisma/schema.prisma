@@ -7,3 +7,113 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+enum JLPTLevel {
+  N1
+  N2
+  N3
+  N4
+  N5
+}
+
+enum SectionType {
+  VOCAB_GRAMMAR // 言語知識（文字・語彙・文法）
+  READING // 読解
+  LISTENING // 聴解
+}
+
+enum QuestionType {
+  SINGLE_CHOICE // 单选题
+  MULTI_CHOICE // 多选题
+}
+
+model Paper {
+  id          String    @id @default(cuid())
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  level       JLPTLevel
+  year        Int
+  month       Int
+  title       String    @db.VarChar(255)
+  description String?   @db.Text
+
+  sections PaperSection[]
+
+  @@index([level, year, month])
+}
+
+model PaperSection {
+  id        String      @id @default(cuid())
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+  paperId   String
+  paper     Paper       @relation(fields: [paperId], references: [id], onDelete: Cascade)
+  mediaId   String?
+  media     PaperMedia? @relation(fields: [mediaId], references: [id])
+  type      SectionType
+  title     String      @db.VarChar(255)
+  order     Int
+  duration  Int
+
+  passages  PaperPassage[]
+  questions PaperQuestion[]
+
+  @@index([paperId, order])
+  @@index([type])
+}
+
+model PaperPassage {
+  id        String       @id @default(cuid())
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
+  sectionId String
+  section   PaperSection @relation(fields: [sectionId], references: [id], onDelete: Cascade)
+  content   String       @db.Text
+
+  questions PaperQuestion[]
+}
+
+model PaperQuestion {
+  id        String        @id @default(cuid())
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+  sectionId String
+  section   PaperSection  @relation(fields: [sectionId], references: [id], onDelete: Cascade)
+  passageId String?
+  passage   PaperPassage? @relation(fields: [passageId], references: [id])
+  type      QuestionType
+  order     Int
+  point     Int
+  prompt    String        @db.Text
+  mediaId   String?
+  media     PaperMedia?   @relation(fields: [mediaId], references: [id])
+
+  choices QuestionChoice[]
+
+  @@index([sectionId, order])
+  @@index([type])
+}
+
+model QuestionChoice {
+  id         String        @id @default(cuid())
+  createdAt  DateTime      @default(now())
+  updatedAt  DateTime      @updatedAt
+  label      String        @db.VarChar(8)
+  text       String        @db.Text
+  isCorrect  Boolean
+  questionId String
+  question   PaperQuestion @relation(fields: [questionId], references: [id], onDelete: Cascade)
+
+  @@index([questionId])
+}
+
+model PaperMedia {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  key       String   @db.Text
+  duration  Int?
+
+  questions PaperQuestion[]
+  sections  PaperSection[]
+}
