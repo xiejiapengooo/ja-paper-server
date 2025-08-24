@@ -7,13 +7,14 @@
   "license": "UNLICENSED",
   "scripts": {
     "build": "nest build",
-    "start": "nest start",
+    "start": "ENV=production nest start",
     "dev": "ENV=development nest start --watch",
     "prisma:generate": "npx prisma generate --no-engine",
     "prisma:migrate": "dotenv -e .env.development npx prisma migrate dev"
   },
   "dependencies": {
     "@nestjs/common": "^11.0.1",
+    "@nestjs/config": "^4.0.2",
     "@nestjs/core": "^11.0.1",
     "@nestjs/platform-express": "^11.0.1",
     "@prisma/client": "6.14.0",
