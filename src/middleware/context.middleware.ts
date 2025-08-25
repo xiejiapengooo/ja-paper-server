@@ -5,7 +5,7 @@ import { AlsService } from "../als/als.service";
 
 @Injectable()
 export class ContextMiddleware implements NestMiddleware {
-  constructor(private readonly als: AlsService) {}
+  constructor(private als: AlsService) {}
 
   use(req: Request, res: Response, next: NextFunction) {
     const requestId = uuidv7();
@@ -13,6 +13,7 @@ export class ContextMiddleware implements NestMiddleware {
     this.als.run(
       {
         requestId,
+        headers: req.headers,
       },
       () => next(),
     );

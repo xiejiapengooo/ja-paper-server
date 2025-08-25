@@ -11,8 +11,6 @@ export class AuthService {
   ) {}
 
   login(dto: LoginDto) {
-    this.logger.log("login");
-    this.logger.error(new Error("test error"));
     return dto;
   }
 }

@@ -2,8 +2,8 @@ import { Injectable } from "@nestjs/common";
 import { AsyncLocalStorage } from "async_hooks";
 
 interface RequestContext {
+  headers: Record<string, any>;
   requestId: string;
-  // headers: Record<string, any>;
 }
 
 @Injectable()

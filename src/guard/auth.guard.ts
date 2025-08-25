@@ -4,6 +4,7 @@ import { Request } from "express";
 import { ConfigService } from "@nestjs/config";
 import { Reflector } from "@nestjs/core";
 import { IS_PUBLIC_KEY } from "../decorator";
+import { extractTokenFromHeader } from "../libs/utils";
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -12,11 +13,6 @@ export class AuthGuard implements CanActivate {
     private jwtService: JwtService,
     private config: ConfigService,
   ) {}
-
-  private extractTokenFromHeader(request: Request): string | undefined {
-    const [type, token] = request.headers.authorization?.split(" ") ?? [];
-    return type === "Bearer" ? token : undefined;
-  }
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const isPublic = this.reflector.getAllAndOverride<boolean>(IS_PUBLIC_KEY, [
@@ -29,7 +25,7 @@ export class AuthGuard implements CanActivate {
     }
 
     const request: Request = context.switchToHttp().getRequest();
-    const token = this.extractTokenFromHeader(request);
+    const token = extractTokenFromHeader(request);
 
     if (!token) {
       throw new UnauthorizedException();
