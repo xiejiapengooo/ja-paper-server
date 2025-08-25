@@ -10,14 +10,14 @@ export type UserTokenPayload = {
   iat: number;
 };
 
-export const GetUserTokenPayload = createParamDecorator(
-  (key: string | undefined, ctx: ExecutionContext): UserTokenPayload[keyof UserTokenPayload] | UserTokenPayload => {
+export const GetTokenPayload = createParamDecorator(
+  <T extends Record<string, any>>(key: keyof T | undefined, ctx: ExecutionContext): T[keyof T] | T => {
     const request: Request = ctx.switchToHttp().getRequest();
-    const user: Record<string, any> = request.user || {};
+    const payload = (request["tokenPayload"] || {}) as T;
+
     if (key) {
-      return user[key];
-    } else {
-      return user;
+      return payload[key];
     }
+    return payload;
   },
 );
