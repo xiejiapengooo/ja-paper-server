@@ -3,13 +3,13 @@ import { AppModule } from "./app.module";
 import process from "process";
 import { NestExpressApplication } from "@nestjs/platform-express";
 import { ValidationPipe } from "@nestjs/common";
-import { requestIdMiddleware } from "./middleware";
+import { LoggerService } from "./logger/logger.service";
 
 (async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule, {
-    logger: ["error", "warn"],
+    bufferLogs: true,
   });
-  app.use(requestIdMiddleware);
+  app.useLogger(app.get(LoggerService));
   app.setGlobalPrefix("api");
   app.useGlobalPipes(
     new ValidationPipe({
