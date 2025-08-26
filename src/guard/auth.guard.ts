@@ -5,6 +5,7 @@ import { ConfigService } from "@nestjs/config";
 import { Reflector } from "@nestjs/core";
 import { IS_PUBLIC_KEY } from "../decorator";
 import { extractTokenFromHeader } from "../libs/utils";
+import { IS_PUBLIC } from "../types";
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -15,7 +16,7 @@ export class AuthGuard implements CanActivate {
   ) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
-    const isPublic = this.reflector.getAllAndOverride<boolean>(IS_PUBLIC_KEY, [
+    const isPublic = this.reflector.getAllAndOverride<IS_PUBLIC>(IS_PUBLIC_KEY, [
       context.getHandler(),
       context.getClass(),
     ]);
