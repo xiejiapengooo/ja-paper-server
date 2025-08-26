@@ -1,7 +1,4 @@
-export enum ROLES {
-  ADMIN = "ADMIN",
-  USER = "USER",
-}
+import { UserRole } from "@prisma/client";
 
 export enum StatusCode {
   OK = "ok",
@@ -15,14 +12,12 @@ export type CommonResponse<T = any> = {
 };
 
 export type UserTokenPayload = {
-  id: number;
+  id: string;
   name: string;
-  role: ROLES;
-  exp: number;
-  iat: number;
+  role: UserRole;
 };
 
-export type ROLE_LIST = ROLES[];
+export type ROLE_LIST = UserRole[];
 
 export type IS_PUBLIC = boolean;
 
