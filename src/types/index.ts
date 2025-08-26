@@ -1,4 +1,4 @@
-import { UserRole } from "@prisma/client";
+import { User, UserRole } from "@prisma/client";
 
 export enum StatusCode {
   OK = "ok",
@@ -12,8 +12,8 @@ export type CommonResponse<T = any> = {
 };
 
 export type UserTokenPayload = {
-  id: string;
-  name: string;
+  id: User["id"];
+  name: User["name"];
   role: UserRole;
 };
 

@@ -10,7 +10,7 @@ export class LoggerService extends ConsoleLogger {
   }
 
   messageFormat(data: any) {
-    const requestId = this.als.getStore()?.requestId;
+    const requestId = this.als.getRequestId();
     let message = "";
     if (typeof data === "string") {
       message = data;

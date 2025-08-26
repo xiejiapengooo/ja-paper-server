@@ -53,7 +53,7 @@ model Certificate {
   expiredAt DateTime
   usedAt    DateTime
   userAgent String          @db.Text
-  content   String          @db.Text
+  content   String          @unique @db.Text
   type      CertificateType
   relatedId String?
 
