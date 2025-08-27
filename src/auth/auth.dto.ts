@@ -45,3 +45,9 @@ export class PasswordResetDto {
   @IsNotEmpty()
   password: string;
 }
+
+export class RegisterDto extends LoginDto {
+  @IsString()
+  @IsNotEmpty()
+  name: string;
+}

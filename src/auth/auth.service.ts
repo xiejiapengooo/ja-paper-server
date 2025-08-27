@@ -224,4 +224,39 @@ export class AuthService {
 
     await this.logoutAll({ userId: certificate.relatedId });
   }
+
+  async register(dto) {
+    const existingUser = await this.prisma.user.findUnique({
+      where: { email: dto.email },
+    });
+    if (existingUser) {
+      throw new BusinessException("This email is already registered.");
+    }
+
+    const hashedPassword = await argon.hash(dto.password);
+
+    // 3. 创建用户
+    const user = await this.prisma.user.create({
+      data: {
+        email: dto.email,
+        password: hashedPassword,
+        name: dto.name || "",
+        role: "USER", // 默认角色，可根据需要修改
+      },
+    });
+
+    // 4. 可选：发送欢迎邮件
+    await this.mailService.sendMail({
+      to: user.email,
+      subject: "Welcome to Our Service",
+      text: `Hello ${user.name || "User"},\n\nWelcome! Your account has been successfully created.`,
+    });
+
+    // 5. 返回用户信息（不返回密码）
+    return {
+      id: user.id,
+      email: user.email,
+      name: user.name,
+    };
+  }
 }

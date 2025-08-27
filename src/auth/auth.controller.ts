@@ -46,4 +46,12 @@ export class AuthController {
   passwordReset(@Body() dto: PasswordResetDto) {
     return this.authService.passwordReset(dto);
   }
+
+  @Post("register")
+  @Public()
+  // TODO
+  @ResponseMessage("")
+  register(@Body() dto: LoginDto) {
+    return this.authService.register(dto);
+  }
 }
