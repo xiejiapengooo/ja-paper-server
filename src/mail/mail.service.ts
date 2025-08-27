@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { MailerService } from "@nestjs-modules/mailer";
 import { ConfigService } from "@nestjs/config";
-import { SendPasswordResetEmailDto } from "./dto/mail.dto";
+import { SendPasswordResetEmailDto, SendRegisterEmailDto } from "./dto/mail.dto";
 
 @Injectable()
 export class MailService {
@@ -16,6 +16,18 @@ export class MailService {
       to: dto.email,
       subject: "Reset your password",
       template: "./password-reset",
+      context: {
+        link,
+      },
+    });
+  }
+
+  async sendRegisterEmail(dto: SendRegisterEmailDto) {
+    const link = `${this.config.get("WEB_HOST")}/register?verify_token=${dto.token}`;
+    await this.mailerService.sendMail({
+      to: dto.email,
+      subject: "Complete your registration",
+      template: "./register",
       context: {
         link,
       },

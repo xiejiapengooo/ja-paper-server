@@ -1,7 +1,16 @@
 import { Body, Controller, Get, Post, Query } from "@nestjs/common";
 import { AuthService } from "./auth.service";
 import { Public, ResponseMessage } from "../decorator";
-import { ForgetDto, LoginDto, LogoutAllDto, LogoutDto, PasswordResetDto, RefreshDto } from "./auth.dto";
+import {
+  RegisterDto,
+  ForgetDto,
+  LoginDto,
+  LogoutAllDto,
+  LogoutDto,
+  PasswordResetDto,
+  RefreshDto,
+  RegisterCompletionDto,
+} from "./auth.dto";
 
 @Controller("auth")
 export class AuthController {
@@ -49,9 +58,15 @@ export class AuthController {
 
   @Post("register")
   @Public()
-  // TODO
-  @ResponseMessage("")
-  register(@Body() dto: LoginDto) {
+  @ResponseMessage("Email has been sent.")
+  register(@Body() dto: RegisterDto) {
     return this.authService.register(dto);
+  }
+
+  @Post("register/completion")
+  @Public()
+  @ResponseMessage("Congratulations, registration successful.")
+  registerCompletion(@Body() dto: RegisterCompletionDto) {
+    return this.authService.registerCompletion(dto);
   }
 }

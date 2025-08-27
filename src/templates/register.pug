@@ -1,0 +1,26 @@
+doctype html
+html
+  head
+    meta(charset="UTF-8")
+    title Complete Your Registration
+    style.
+      body { background: #faf7f5; padding: 20px; color: #733e0a; }
+      a { color: #733e0a; text-decoration: none; }
+      .container { background-color: #fff; padding: 20px; border-radius: 12px; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1); }
+      .button { display: inline-flex; padding: 10px 20px; background: #df6f00; color: #feecd3; font-weight: bold; text-decoration: none; border-radius: 14px; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1); }
+      .divider { width: 100%; height: 1px; background: #e5e7eb; margin: 20px 0; }
+      .info { font-size: 14px; }
+  body
+    .container
+      h2 Welcome! Complete Your Registration
+      p Thank you for signing up. To complete your registration, please set your username and password.
+      p
+        | Click the button below to finish setting up your account (valid for 24 hours):
+      p
+        a.button(href=link target="_blank") Set Up Account
+      p Or copy and paste the following link into your browser:
+      p
+        a(href=link target="_blank")= link
+      div.divider
+      p.info If the button above does not work, please copy and paste the link into your browser address bar.
+      p.info We’re excited to have you with us. Welcome aboard!

@@ -34,6 +34,13 @@ enum QuestionType {
 enum CertificateType {
   REFRESH_TOKEN
   PASSWORD_RESET
+  REGISTER
+}
+
+enum UserStatus {
+  ACTIVED
+  PENDING
+  DISABLED
 }
 
 model User {
@@ -43,6 +50,7 @@ model User {
   email        String         @unique
   name         String?
   role         UserRole
+  status       UserStatus
   password     String
   UserQuestion UserQuestion[]
 }

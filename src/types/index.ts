@@ -17,6 +17,16 @@ export type UserTokenPayload = {
   role: UserRole;
 };
 
+export type PasswordResetTokenPayload = {
+  userId: User["id"];
+  email: User["email"];
+};
+
+export type RegisterTokenPayload = {
+  userId: User["id"];
+  email: User["email"];
+};
+
 export type ROLE_LIST = UserRole[];
 
 export type IS_PUBLIC = boolean;

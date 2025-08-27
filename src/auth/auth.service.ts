@@ -1,11 +1,19 @@
 import { Injectable, NotFoundException, UnauthorizedException } from "@nestjs/common";
-import { ForgetDto, LoginDto, LogoutAllDto, LogoutDto, PasswordResetDto, RefreshDto } from "./auth.dto";
-import { LoggerService } from "../logger/logger.service";
+import {
+  RegisterDto,
+  ForgetDto,
+  LoginDto,
+  LogoutAllDto,
+  LogoutDto,
+  PasswordResetDto,
+  RefreshDto,
+  RegisterCompletionDto,
+} from "./auth.dto";
 import { PrismaService } from "../prisma/prisma.service";
 import { BusinessException } from "../exception";
-import { UserTokenPayload } from "../types";
+import { PasswordResetTokenPayload, RegisterTokenPayload, UserTokenPayload } from "../types";
 import argon from "argon2";
-import { CertificateType, User } from "@prisma/client";
+import { CertificateType, User, UserRole, UserStatus } from "@prisma/client";
 import { JwtService } from "@nestjs/jwt";
 import { ConfigService } from "@nestjs/config";
 import dayjs from "dayjs";
@@ -111,7 +119,14 @@ export class AuthService {
       },
     });
 
-    return { accessToken, refreshToken };
+    return {
+      accessToken,
+      refreshToken,
+      user: {
+        id: user.id,
+        name: user.name,
+      },
+    };
   }
 
   async refresh(dto: RefreshDto) {
@@ -173,10 +188,11 @@ export class AuthService {
     });
     if (!user) throw new BusinessException("User does not exist.");
 
-    const token = this.jwtService.sign(
-      { email: dto.email, userId: user.id },
-      { expiresIn: this.config.get("MAIL_TOKEN_EXPIRES") },
-    );
+    const payload: PasswordResetTokenPayload = {
+      email: user.email,
+      userId: user.id,
+    };
+    const token = this.jwtService.sign(payload, { expiresIn: this.config.get("PASSWORD_RESET_MAIL_TOKEN_EXPIRES") });
     const tokenDecoded = this.jwtService.decode(token);
     const tokenExpiredAt = dayjs(tokenDecoded.exp * 1000).toISOString();
 
@@ -197,6 +213,13 @@ export class AuthService {
   }
 
   async passwordReset(dto: PasswordResetDto) {
+    let payload: PasswordResetTokenPayload;
+    try {
+      payload = this.jwtService.verify<PasswordResetTokenPayload>(dto.token);
+    } catch (error) {
+      throw new BusinessException("Invalid credential.");
+    }
+
     const certificate = await this.prisma.certificate.findUnique({
       where: { content: dto.token },
     });
@@ -205,7 +228,8 @@ export class AuthService {
       !certificate ||
       !certificate.usedAt ||
       !certificate.relatedId ||
-      dayjs(certificate.expiredAt).isBefore(dayjs())
+      dayjs(certificate.expiredAt).isBefore(dayjs()) ||
+      payload.userId !== certificate.relatedId
     ) {
       throw new BusinessException("Invalid credential.");
     }
@@ -225,38 +249,89 @@ export class AuthService {
     await this.logoutAll({ userId: certificate.relatedId });
   }
 
-  async register(dto) {
+  async register(dto: RegisterDto) {
     const existingUser = await this.prisma.user.findUnique({
       where: { email: dto.email },
     });
+
     if (existingUser) {
       throw new BusinessException("This email is already registered.");
     }
 
-    const hashedPassword = await argon.hash(dto.password);
-
-    // 3. 创建用户
     const user = await this.prisma.user.create({
       data: {
         email: dto.email,
-        password: hashedPassword,
-        name: dto.name || "",
-        role: "USER", // 默认角色，可根据需要修改
+        role: UserRole.USER,
+        status: UserStatus.PENDING,
+        password: "",
+        name: "",
       },
     });
 
-    // 4. 可选：发送欢迎邮件
-    await this.mailService.sendMail({
-      to: user.email,
-      subject: "Welcome to Our Service",
-      text: `Hello ${user.name || "User"},\n\nWelcome! Your account has been successfully created.`,
+    const token = this.jwtService.sign(
+      { email: user.email, userId: user.id },
+      { expiresIn: this.config.get("REGISTER_MAIL_TOKEN_EXPIRES") },
+    );
+    const tokenDecoded = this.jwtService.decode(token);
+    const tokenExpiredAt = dayjs(tokenDecoded.exp * 1000).toISOString();
+
+    await this.prisma.certificate.create({
+      data: {
+        type: CertificateType.REGISTER,
+        relatedId: user.id,
+        content: token,
+        expiredAt: tokenExpiredAt,
+        userAgent: this.als.getUserAgent(),
+      },
     });
 
-    // 5. 返回用户信息（不返回密码）
-    return {
-      id: user.id,
+    await this.mailService.sendRegisterEmail({
       email: user.email,
-      name: user.name,
-    };
+      token,
+    });
+  }
+
+  async registerCompletion(dto: RegisterCompletionDto) {
+    let payload: RegisterTokenPayload;
+    try {
+      payload = this.jwtService.verify<RegisterTokenPayload>(dto.token);
+    } catch (error) {
+      throw new BusinessException("Invalid credential.");
+    }
+
+    const certificate = await this.prisma.certificate.findUnique({
+      where: { content: dto.token },
+    });
+
+    if (
+      !certificate ||
+      !certificate.usedAt ||
+      !certificate.relatedId ||
+      dayjs(certificate.expiredAt).isBefore(dayjs()) ||
+      payload.userId !== certificate.relatedId
+    ) {
+      throw new BusinessException("Invalid credential.");
+    }
+
+    const hashedPassword = await argon.hash(dto.password);
+
+    const user = await this.prisma.user.update({
+      where: { id: certificate.relatedId },
+      data: {
+        password: hashedPassword,
+        name: dto.name,
+        status: UserStatus.ACTIVED,
+      },
+    });
+
+    await this.prisma.certificate.update({
+      where: { id: certificate.id },
+      data: { usedAt: dayjs().toISOString() },
+    });
+
+    return await this.login({
+      email: user.email,
+      password: dto.password,
+    });
   }
 }

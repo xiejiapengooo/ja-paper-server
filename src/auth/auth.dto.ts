@@ -1,5 +1,4 @@
 import { IsEmail, IsNotEmpty, IsString } from "class-validator";
-import { UserTokenPayload } from "../types";
 import { User } from "@prisma/client";
 
 export class LoginDto {
@@ -46,8 +45,22 @@ export class PasswordResetDto {
   password: string;
 }
 
-export class RegisterDto extends LoginDto {
+export class RegisterDto {
+  @IsEmail()
+  @IsNotEmpty()
+  email: string;
+}
+
+export class RegisterCompletionDto {
   @IsString()
   @IsNotEmpty()
   name: string;
+
+  @IsString()
+  @IsNotEmpty()
+  password: string;
+
+  @IsString()
+  @IsNotEmpty()
+  token: string;
 }
