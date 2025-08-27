@@ -4,6 +4,7 @@ import { ConfigModule } from "@nestjs/config";
 import { AuthModule } from "./auth/auth.module";
 import { PrismaModule } from "./prisma/prisma.module";
 import { LoggerModule } from "./logger/logger.module";
+import { MailModule } from "./mail/mail.module";
 import { AuthGuard, RolesGuard } from "./guard";
 import { APP_FILTER, APP_GUARD, APP_INTERCEPTOR, APP_PIPE } from "@nestjs/core";
 import { AlsModule } from "./als/als.module";
@@ -22,6 +23,7 @@ import { AllExceptionFilter } from "./filter";
     PrismaModule,
     AuthModule,
     AlsModule,
+    MailModule,
   ],
   providers: [
     {

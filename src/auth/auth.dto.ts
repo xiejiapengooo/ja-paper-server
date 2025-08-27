@@ -29,3 +29,19 @@ export class LogoutAllDto {
   @IsNotEmpty()
   userId: User["id"];
 }
+
+export class ForgetDto {
+  @IsEmail()
+  @IsNotEmpty()
+  email: string;
+}
+
+export class PasswordResetDto {
+  @IsString()
+  @IsNotEmpty()
+  token: string;
+
+  @IsString()
+  @IsNotEmpty()
+  password: string;
+}

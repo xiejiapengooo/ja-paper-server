@@ -1,5 +1,5 @@
-import { Injectable, UnauthorizedException } from "@nestjs/common";
-import { LoginDto, LogoutAllDto, LogoutDto, RefreshDto } from "./auth.dto";
+import { Injectable, NotFoundException, UnauthorizedException } from "@nestjs/common";
+import { ForgetDto, LoginDto, LogoutAllDto, LogoutDto, PasswordResetDto, RefreshDto } from "./auth.dto";
 import { LoggerService } from "../logger/logger.service";
 import { PrismaService } from "../prisma/prisma.service";
 import { BusinessException } from "../exception";
@@ -10,15 +10,16 @@ import { JwtService } from "@nestjs/jwt";
 import { ConfigService } from "@nestjs/config";
 import dayjs from "dayjs";
 import { AlsService } from "../als/als.service";
+import { MailService } from "../mail/mail.service";
 
 @Injectable()
 export class AuthService {
   constructor(
-    private logger: LoggerService,
     private prisma: PrismaService,
     private jwtService: JwtService,
     private config: ConfigService,
     private als: AlsService,
+    private mailService: MailService,
   ) {}
 
   private getUserTokenPayload(user: User): UserTokenPayload {
@@ -64,11 +65,11 @@ export class AuthService {
     });
 
     if (!user) {
-      throw new BusinessException("用户不存在");
+      throw new BusinessException("User does not exist.");
     }
 
     if (!(await argon.verify(user.password, dto.password))) {
-      throw new BusinessException("账号或密码不正确");
+      throw new BusinessException("Incorrect username or password.");
     }
 
     const payload = this.getUserTokenPayload(user);
@@ -95,7 +96,7 @@ export class AuthService {
         },
       });
       if (count !== oldSessions.length) {
-        throw new BusinessException("登录设备数量已达上限");
+        throw new BusinessException("The number of logged-in devices has reached the limit.");
       }
     }
 
@@ -118,7 +119,7 @@ export class AuthService {
     try {
       payload = this.jwtService.verify<UserTokenPayload>(dto.refreshToken);
     } catch (error) {
-      throw new UnauthorizedException("凭证已过期");
+      throw new UnauthorizedException("The credentials have expired.");
     }
 
     const session = await this.prisma.certificate.findFirst({
@@ -137,7 +138,7 @@ export class AuthService {
           relatedId: payload.id,
         },
       });
-      throw new UnauthorizedException("无效凭证");
+      throw new UnauthorizedException("Invalid credentials.");
     }
 
     const { accessToken, refreshToken, refreshTokenExpiredAt } = this.signNewToken(payload);
@@ -164,5 +165,63 @@ export class AuthService {
     await this.prisma.certificate.deleteMany({
       where: { relatedId: dto.userId, type: CertificateType.REFRESH_TOKEN },
     });
+  }
+
+  async passwordForget(dto: ForgetDto) {
+    const user = await this.prisma.user.findUnique({
+      where: { email: dto.email },
+    });
+    if (!user) throw new BusinessException("User does not exist.");
+
+    const token = this.jwtService.sign(
+      { email: dto.email, userId: user.id },
+      { expiresIn: this.config.get("MAIL_TOKEN_EXPIRES") },
+    );
+    const tokenDecoded = this.jwtService.decode(token);
+    const tokenExpiredAt = dayjs(tokenDecoded.exp * 1000).toISOString();
+
+    await this.prisma.certificate.create({
+      data: {
+        type: CertificateType.PASSWORD_RESET,
+        relatedId: user.id,
+        content: token,
+        expiredAt: tokenExpiredAt,
+        userAgent: this.als.getUserAgent(),
+      },
+    });
+
+    await this.mailService.sendPasswordResetEmail({
+      email: user.email,
+      token,
+    });
+  }
+
+  async passwordReset(dto: PasswordResetDto) {
+    const certificate = await this.prisma.certificate.findUnique({
+      where: { content: dto.token },
+    });
+
+    if (
+      !certificate ||
+      !certificate.usedAt ||
+      !certificate.relatedId ||
+      dayjs(certificate.expiredAt).isBefore(dayjs())
+    ) {
+      throw new BusinessException("Invalid credential.");
+    }
+
+    const hashedPassword = await argon.hash(dto.password);
+
+    await this.prisma.user.update({
+      where: { id: certificate.relatedId },
+      data: { password: hashedPassword },
+    });
+
+    await this.prisma.certificate.update({
+      where: { id: certificate.id },
+      data: { usedAt: dayjs().toISOString() },
+    });
+
+    await this.logoutAll({ userId: certificate.relatedId });
   }
 }

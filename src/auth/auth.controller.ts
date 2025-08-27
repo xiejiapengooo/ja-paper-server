@@ -1,7 +1,7 @@
-import { Controller, Get, Post, Query } from "@nestjs/common";
+import { Body, Controller, Get, Post, Query } from "@nestjs/common";
 import { AuthService } from "./auth.service";
 import { Public, ResponseMessage } from "../decorator";
-import { LoginDto, LogoutAllDto, LogoutDto, RefreshDto } from "./auth.dto";
+import { ForgetDto, LoginDto, LogoutAllDto, LogoutDto, PasswordResetDto, RefreshDto } from "./auth.dto";
 
 @Controller("auth")
 export class AuthController {
@@ -9,27 +9,41 @@ export class AuthController {
 
   @Post("login")
   @Public()
-  @ResponseMessage("登录成功")
-  login(@Query() dto: LoginDto) {
+  @ResponseMessage("Login successful.")
+  login(@Body() dto: LoginDto) {
     return this.authService.login(dto);
   }
 
   @Post("refresh")
   @Public()
-  @ResponseMessage("刷新成功")
-  refresh(@Query() dto: RefreshDto) {
+  @ResponseMessage("Refresh successful.")
+  refresh(@Body() dto: RefreshDto) {
     return this.authService.refresh(dto);
   }
 
   @Post("logout")
-  @ResponseMessage("已退出")
-  logout(@Query() dto: LogoutDto) {
+  @ResponseMessage("Logged out.")
+  logout(@Body() dto: LogoutDto) {
     return this.authService.logout(dto);
   }
 
   @Post("logout/all")
-  @ResponseMessage("已退出所有设备")
-  logoutAll(@Query() dto: LogoutAllDto) {
+  @ResponseMessage("Logged out of all devices.")
+  logoutAll(@Body() dto: LogoutAllDto) {
     return this.authService.logoutAll(dto);
+  }
+
+  @Post("password/forget")
+  @Public()
+  @ResponseMessage("Email has been sent.")
+  passwordForget(@Body() dto: ForgetDto) {
+    return this.authService.passwordForget(dto);
+  }
+
+  @Post("password/reset")
+  @Public()
+  @ResponseMessage("Password has been reset, please log in again.")
+  passwordReset(@Body() dto: PasswordResetDto) {
+    return this.authService.passwordReset(dto);
   }
 }

@@ -1,7 +1,4 @@
-import { EMAIL_VERIFY_TYPE } from "../../constant";
-
-export class SendVerificationEmailDto {
-  email: string;
+export class SendPasswordResetEmailDto {
   token: string;
-  type: EMAIL_VERIFY_TYPE;
+  email: string;
 }

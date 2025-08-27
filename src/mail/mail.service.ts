@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { MailerService } from "@nestjs-modules/mailer";
-import { SendVerificationEmailDto } from "./dto/mail.dto";
 import { ConfigService } from "@nestjs/config";
+import { SendPasswordResetEmailDto } from "./dto/mail.dto";
 
 @Injectable()
 export class MailService {
@@ -10,16 +10,14 @@ export class MailService {
     private config: ConfigService,
   ) {}
 
-  async sendVerificationEmail(dto: SendVerificationEmailDto) {
-    const url = `${this.config.get("WEB_HOST")}/confirm/${dto.type}?verify_token=${dto.token}&email=${dto.email}`;
-
+  async sendPasswordResetEmail(dto: SendPasswordResetEmailDto) {
+    const link = `${this.config.get("WEB_HOST")}/password/reset/?verify_token=${dto.token}`;
     await this.mailerService.sendMail({
       to: dto.email,
-      subject: "Welcome to Word3000! Confirm your Email",
-      template: "./confirmation",
+      subject: "Reset your password",
+      template: "./password-reset",
       context: {
-        email: dto.email,
-        url,
+        link,
       },
     });
   }
