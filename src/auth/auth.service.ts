@@ -122,10 +122,6 @@ export class AuthService {
     return {
       accessToken,
       refreshToken,
-      user: {
-        id: user.id,
-        name: user.name,
-      },
     };
   }
 
@@ -192,7 +188,8 @@ export class AuthService {
       email: user.email,
       userId: user.id,
     };
-    const token = this.jwtService.sign(payload, { expiresIn: this.config.get("PASSWORD_RESET_MAIL_TOKEN_EXPIRES") });
+    const expiresIn = this.config.get("PASSWORD_RESET_MAIL_TOKEN_EXPIRES");
+    const token = this.jwtService.sign(payload, { expiresIn });
     const tokenDecoded = this.jwtService.decode(token);
     const tokenExpiredAt = dayjs(tokenDecoded.exp * 1000).toISOString();
 
@@ -209,6 +206,7 @@ export class AuthService {
     await this.mailService.sendPasswordResetEmail({
       email: user.email,
       token,
+      expiresIn,
     });
   }
 
@@ -268,10 +266,12 @@ export class AuthService {
       },
     });
 
-    const token = this.jwtService.sign(
-      { email: user.email, userId: user.id },
-      { expiresIn: this.config.get("REGISTER_MAIL_TOKEN_EXPIRES") },
-    );
+    const payload: RegisterTokenPayload = {
+      email: user.email,
+      userId: user.id,
+    };
+    const expiresIn = this.config.get("REGISTER_MAIL_TOKEN_EXPIRES");
+    const token = this.jwtService.sign(payload, { expiresIn });
     const tokenDecoded = this.jwtService.decode(token);
     const tokenExpiredAt = dayjs(tokenDecoded.exp * 1000).toISOString();
 
@@ -288,6 +288,7 @@ export class AuthService {
     await this.mailService.sendRegisterEmail({
       email: user.email,
       token,
+      expiresIn,
     });
   }
 

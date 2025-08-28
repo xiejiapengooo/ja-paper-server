@@ -16,7 +16,7 @@ import { AllExceptionFilter } from "./filter";
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      envFilePath: `.env.${process.env.ENV}`,
+      envFilePath: `.env.${process.env.NODE_ENV}`,
     }),
     AlsModule,
     LoggerModule,

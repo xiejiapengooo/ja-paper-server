@@ -1,6 +1,7 @@
-import { Body, Controller, Get, Post, Query } from "@nestjs/common";
+import { Body, Controller, Post, Res } from "@nestjs/common";
 import { AuthService } from "./auth.service";
 import { Public, ResponseMessage } from "../decorator";
+import { type Response } from "express";
 import {
   RegisterDto,
   ForgetDto,
@@ -11,23 +12,45 @@ import {
   RefreshDto,
   RegisterCompletionDto,
 } from "./auth.dto";
+import process from "process";
+import ms from "ms";
+import { ConfigService } from "@nestjs/config";
 
 @Controller("auth")
 export class AuthController {
-  constructor(private authService: AuthService) {}
+  constructor(
+    private config: ConfigService,
+    private authService: AuthService,
+  ) {}
+
+  private setTokenCookie({ accessToken, refreshToken }, res: Response) {
+    res.cookie("accessToken", accessToken, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "strict",
+      maxAge: ms(this.config.get("ACCESS_TOKEN_EXPIRES")),
+    });
+
+    res.cookie("refreshToken", refreshToken, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "strict",
+      maxAge: ms(this.config.get("REFRESH_TOKEN_EXPIRES")),
+    });
+  }
 
   @Post("login")
   @Public()
   @ResponseMessage("Login successful.")
-  login(@Body() dto: LoginDto) {
-    return this.authService.login(dto);
+  async login(@Body() dto: LoginDto, @Res({ passthrough: true }) res: Response) {
+    this.setTokenCookie(await this.authService.login(dto), res);
   }
 
   @Post("refresh")
   @Public()
   @ResponseMessage("Refresh successful.")
-  refresh(@Body() dto: RefreshDto) {
-    return this.authService.refresh(dto);
+  async refresh(@Body() dto: RefreshDto, @Res({ passthrough: true }) res: Response) {
+    this.setTokenCookie(await this.authService.refresh(dto), res);
   }
 
   @Post("logout")

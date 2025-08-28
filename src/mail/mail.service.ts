@@ -2,6 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { MailerService } from "@nestjs-modules/mailer";
 import { ConfigService } from "@nestjs/config";
 import { SendPasswordResetEmailDto, SendRegisterEmailDto } from "./dto/mail.dto";
+import ms from "ms";
 
 @Injectable()
 export class MailService {
@@ -18,6 +19,7 @@ export class MailService {
       template: "./password-reset",
       context: {
         link,
+        expiresIn: ms(ms(dto.expiresIn), { long: true }),
       },
     });
   }
@@ -30,6 +32,7 @@ export class MailService {
       template: "./register",
       context: {
         link,
+        expiresIn: ms(ms(dto.expiresIn), { long: true }),
       },
     });
   }
