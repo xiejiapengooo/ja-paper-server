@@ -10,5 +10,11 @@ import { LoggerService } from "./logger/logger.service";
   });
   app.useLogger(app.get(LoggerService));
   app.setGlobalPrefix("api");
+  if (process.env.NODE_ENV === "development") {
+    app.enableCors({
+      origin: true,
+      credentials: true,
+    });
+  }
   await app.listen(process.env.PORT as string);
 })();

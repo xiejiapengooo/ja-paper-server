@@ -46,8 +46,8 @@ export class PasswordResetDto {
 }
 
 export class RegisterDto {
-  @IsEmail()
   @IsNotEmpty()
+  @IsEmail()
   email: string;
 }
 
