@@ -25,7 +25,7 @@ export class MailService {
   }
 
   async sendRegisterEmail(dto: SendRegisterEmailDto) {
-    const link = `${this.config.get("WEB_HOST")}/register?verify_token=${dto.token}`;
+    const link = `${this.config.get("WEB_HOST")}/register/completion?verify_token=${dto.token}`;
     await this.mailerService.sendMail({
       to: dto.email,
       subject: "Complete your registration",

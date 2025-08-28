@@ -249,16 +249,25 @@ export class AuthService {
 
   async register(dto: RegisterDto) {
     const existingUser = await this.prisma.user.findUnique({
-      where: { email: dto.email },
+      where: { email: dto.email, status: { not: UserStatus.PENDING } },
     });
 
     if (existingUser) {
       throw new BusinessException("This email is already registered.");
     }
 
-    const user = await this.prisma.user.create({
-      data: {
+    const user = await this.prisma.user.upsert({
+      where: {
         email: dto.email,
+      },
+      create: {
+        email: dto.email,
+        role: UserRole.USER,
+        status: UserStatus.PENDING,
+        password: "",
+        name: "",
+      },
+      update: {
         role: UserRole.USER,
         status: UserStatus.PENDING,
         password: "",
@@ -285,7 +294,7 @@ export class AuthService {
       },
     });
 
-    await this.mailService.sendRegisterEmail({
+    this.mailService.sendRegisterEmail({
       email: user.email,
       token,
       expiresIn,
