@@ -12,7 +12,6 @@ import {
   RefreshDto,
   RegisterCompletionDto,
 } from "./auth.dto";
-import process from "process";
 import ms from "ms";
 import { ConfigService } from "@nestjs/config";
 
