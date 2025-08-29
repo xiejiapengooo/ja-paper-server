@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException, UnauthorizedException } from "@nestjs/common";
+import { Injectable, UnauthorizedException } from "@nestjs/common";
 import {
   RegisterDto,
   ForgetDto,
@@ -6,7 +6,6 @@ import {
   LogoutAllDto,
   LogoutDto,
   PasswordResetDto,
-  RefreshDto,
   RegisterCompletionDto,
   TokenPayloadDto,
 } from "./auth.dto";
@@ -126,10 +125,10 @@ export class AuthService {
     };
   }
 
-  async refresh(dto: RefreshDto) {
+  async refresh(refreshToken: string) {
     let payload: UserTokenPayload;
     try {
-      payload = this.jwtService.verify<UserTokenPayload>(dto.refreshToken);
+      payload = this.jwtService.verify<UserTokenPayload>(refreshToken);
     } catch (error) {
       throw new UnauthorizedException("The credentials have expired.");
     }
@@ -139,7 +138,7 @@ export class AuthService {
         relatedId: payload.id,
         type: CertificateType.REFRESH_TOKEN,
         userAgent: this.als.getUserAgent(),
-        content: dto.refreshToken,
+        content: refreshToken,
       },
     });
 
@@ -153,7 +152,7 @@ export class AuthService {
       throw new UnauthorizedException("Invalid credentials.");
     }
 
-    const { accessToken, refreshToken, refreshTokenExpiredAt } = this.signNewToken(payload);
+    const { accessToken: newAccessToken, refreshToken: newRefreshToken, refreshTokenExpiredAt } = this.signNewToken(payload);
 
     await this.prisma.certificate.update({
       where: { id: session.id },
@@ -164,7 +163,7 @@ export class AuthService {
       },
     });
 
-    return { accessToken, refreshToken };
+    return { accessToken: newAccessToken, refreshToken: newRefreshToken };
   }
 
   async logout(dto: LogoutDto) {

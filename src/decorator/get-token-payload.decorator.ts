@@ -6,9 +6,6 @@ export const GetTokenPayload = createParamDecorator(
     const request: Request = ctx.switchToHttp().getRequest();
     const payload = (request["tokenPayload"] || {}) as T;
 
-    if (key) {
-      return payload[key];
-    }
-    return payload;
+    return key ? payload[key] : payload;
   },
 );

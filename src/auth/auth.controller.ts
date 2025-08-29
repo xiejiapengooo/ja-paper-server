@@ -9,12 +9,12 @@ import {
   LogoutAllDto,
   LogoutDto,
   PasswordResetDto,
-  RefreshDto,
   RegisterCompletionDto,
   TokenPayloadDto,
 } from "./auth.dto";
 import ms from "ms";
 import { ConfigService } from "@nestjs/config";
+import { Cookies } from "../decorator";
 
 @Controller("auth")
 export class AuthController {
@@ -49,8 +49,8 @@ export class AuthController {
   @Post("refresh")
   @Public()
   @ResponseMessage("Refresh successful.")
-  async refresh(@Body() dto: RefreshDto, @Res({ passthrough: true }) res: Response) {
-    this.setTokenCookie(await this.authService.refresh(dto), res);
+  async refresh(@Cookies() refreshToken: string, @Res({ passthrough: true }) res: Response) {
+    this.setTokenCookie(await this.authService.refresh(refreshToken), res);
   }
 
   @Post("logout")
