@@ -64,3 +64,9 @@ export class RegisterCompletionDto {
   @IsNotEmpty()
   token: string;
 }
+
+export class TokenPayloadDto {
+  @IsString()
+  @IsNotEmpty()
+  token: string;
+}

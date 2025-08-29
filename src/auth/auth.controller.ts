@@ -1,4 +1,4 @@
-import { Body, Controller, Post, Res } from "@nestjs/common";
+import { Body, Controller, Get, Post, Param, Res } from "@nestjs/common";
 import { AuthService } from "./auth.service";
 import { Public, ResponseMessage } from "../decorator";
 import { type Response } from "express";
@@ -11,6 +11,7 @@ import {
   PasswordResetDto,
   RefreshDto,
   RegisterCompletionDto,
+  TokenPayloadDto,
 } from "./auth.dto";
 import ms from "ms";
 import { ConfigService } from "@nestjs/config";
@@ -88,7 +89,13 @@ export class AuthController {
   @Post("register/completion")
   @Public()
   @ResponseMessage("Congratulations, registration successful.")
-  registerCompletion(@Body() dto: RegisterCompletionDto) {
-    return this.authService.registerCompletion(dto);
+  async registerCompletion(@Body() dto: RegisterCompletionDto, @Res({ passthrough: true }) res: Response) {
+    this.setTokenCookie(await this.authService.registerCompletion(dto), res);
+  }
+
+  @Get("token/:token")
+  @Public()
+  tokenPayload(@Param() dto: TokenPayloadDto) {
+    return this.authService.tokenPayload(dto);
   }
 }

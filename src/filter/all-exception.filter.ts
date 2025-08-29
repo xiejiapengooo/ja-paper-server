@@ -1,4 +1,11 @@
-import { ArgumentsHost, Catch, ExceptionFilter, HttpException, HttpStatus } from "@nestjs/common";
+import {
+  ArgumentsHost,
+  Catch,
+  ExceptionFilter,
+  HttpException,
+  HttpStatus,
+  UnauthorizedException,
+} from "@nestjs/common";
 import { Response } from "express";
 import { CommonResponse, StatusCode } from "../types";
 import { LoggerService } from "../logger/logger.service";
@@ -22,11 +29,19 @@ export class AllExceptionFilter implements ExceptionFilter {
       status = exception.getStatus();
       const errorResponse: any = exception.getResponse();
 
-      result = {
-        code: errorResponse.code ?? result.code,
-        message: errorResponse.message ?? exception.message,
-        data: null,
-      };
+      if (exception instanceof UnauthorizedException) {
+        result = {
+          code: StatusCode.INVALID_CREDENTIALS,
+          message: errorResponse.message ?? exception.message,
+          data: null,
+        };
+      } else {
+        result = {
+          code: errorResponse.code ?? result.code,
+          message: errorResponse.message ?? exception.message,
+          data: null,
+        };
+      }
     }
 
     this.logger.error(exception);

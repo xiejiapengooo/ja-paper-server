@@ -3,6 +3,7 @@ import { User, UserRole } from "@prisma/client";
 export enum StatusCode {
   OK = "ok",
   FAIL = "fail",
+  INVALID_CREDENTIALS = "invalid_credentials",
 }
 
 export type CommonResponse<T = any> = {

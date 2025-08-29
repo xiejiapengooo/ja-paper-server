@@ -8,6 +8,7 @@ import {
   PasswordResetDto,
   RefreshDto,
   RegisterCompletionDto,
+  TokenPayloadDto,
 } from "./auth.dto";
 import { PrismaService } from "../prisma/prisma.service";
 import { BusinessException } from "../exception";
@@ -215,7 +216,7 @@ export class AuthService {
     try {
       payload = this.jwtService.verify<PasswordResetTokenPayload>(dto.token);
     } catch (error) {
-      throw new BusinessException("Invalid credential.");
+      throw new UnauthorizedException("The credentials have expired.");
     }
 
     const certificate = await this.prisma.certificate.findUnique({
@@ -224,12 +225,12 @@ export class AuthService {
 
     if (
       !certificate ||
-      !certificate.usedAt ||
+      certificate.usedAt ||
       !certificate.relatedId ||
       dayjs(certificate.expiredAt).isBefore(dayjs()) ||
       payload.userId !== certificate.relatedId
     ) {
-      throw new BusinessException("Invalid credential.");
+      throw new UnauthorizedException("Invalid credential.");
     }
 
     const hashedPassword = await argon.hash(dto.password);
@@ -306,7 +307,7 @@ export class AuthService {
     try {
       payload = this.jwtService.verify<RegisterTokenPayload>(dto.token);
     } catch (error) {
-      throw new BusinessException("Invalid credential.");
+      throw new UnauthorizedException("The credentials have expired.");
     }
 
     const certificate = await this.prisma.certificate.findUnique({
@@ -315,12 +316,12 @@ export class AuthService {
 
     if (
       !certificate ||
-      !certificate.usedAt ||
+      certificate.usedAt ||
       !certificate.relatedId ||
       dayjs(certificate.expiredAt).isBefore(dayjs()) ||
       payload.userId !== certificate.relatedId
     ) {
-      throw new BusinessException("Invalid credential.");
+      throw new UnauthorizedException("Invalid credential.");
     }
 
     const hashedPassword = await argon.hash(dto.password);
@@ -343,5 +344,13 @@ export class AuthService {
       email: user.email,
       password: dto.password,
     });
+  }
+
+  async tokenPayload(dto: TokenPayloadDto) {
+    try {
+      return this.jwtService.verify(dto.token);
+    } catch (error) {
+      throw new UnauthorizedException("The credentials have expired.");
+    }
   }
 }
