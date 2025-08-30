@@ -354,10 +354,24 @@ export class AuthService {
   }
 
   async tokenPayload(dto: TokenPayloadDto) {
+    let payload: Record<string, any>
     try {
-      return this.jwtService.verify(dto.token);
+      payload = this.jwtService.verify(dto.token);
     } catch (error) {
       throw new UnauthorizedException("The credentials have expired.");
     }
+
+    const certificate = await this.prisma.certificate.findUnique({
+      where: { content: dto.token }
+    });
+    if (
+      !certificate ||
+      certificate.usedAt ||
+      dayjs(certificate.expiredAt).isBefore(dayjs())
+    ) {
+      throw new UnauthorizedException("Invalid credential.");
+    }
+
+    return payload
   }
 }
