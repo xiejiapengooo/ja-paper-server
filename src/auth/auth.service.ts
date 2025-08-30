@@ -1,7 +1,7 @@
 import { Injectable, UnauthorizedException } from "@nestjs/common";
 import {
   RegisterDto,
-  ForgetDto,
+  ForgotDto,
   LoginDto,
   LogoutAllDto,
   LogoutDto,
@@ -186,7 +186,7 @@ export class AuthService {
     });
   }
 
-  async passwordForget(dto: ForgetDto) {
+  async passwordForgot(dto: ForgotDto) {
     const user = await this.prisma.user.findUnique({
       where: { email: dto.email },
     });

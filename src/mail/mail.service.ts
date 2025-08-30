@@ -12,7 +12,7 @@ export class MailService {
   ) {}
 
   async sendPasswordResetEmail(dto: SendPasswordResetEmailDto) {
-    const link = `${this.config.get("WEB_HOST")}/password/reset/?verify_token=${dto.token}`;
+    const link = `${this.config.get("WEB_HOST")}/account/password/reset/?verify_token=${dto.token}`;
     await this.mailerService.sendMail({
       to: dto.email,
       subject: "Reset your password",

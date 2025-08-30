@@ -23,7 +23,7 @@ export class LogoutAllDto {
   userId: User["id"];
 }
 
-export class ForgetDto {
+export class ForgotDto {
   @IsEmail()
   @IsNotEmpty()
   email: string;

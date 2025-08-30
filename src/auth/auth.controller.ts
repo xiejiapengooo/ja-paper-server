@@ -4,7 +4,7 @@ import { Public, ResponseMessage } from "../decorator";
 import { type Response } from "express";
 import {
   RegisterDto,
-  ForgetDto,
+  ForgotDto,
   LoginDto,
   LogoutAllDto,
   LogoutDto,
@@ -64,11 +64,11 @@ export class AuthController {
     return this.authService.logoutAll(dto);
   }
 
-  @Post("password/forget")
+  @Post("password/forgot")
   @Public()
   @ResponseMessage("Email has been sent.")
-  passwordForget(@Body() dto: ForgetDto) {
-    return this.authService.passwordForget(dto);
+  passwordForgot(@Body() dto: ForgotDto) {
+    return this.authService.passwordForgot(dto);
   }
 
   @Post("password/reset")
