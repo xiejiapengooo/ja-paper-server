@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Param, Res } from "@nestjs/common";
+import { Body, Controller, Get, Post, Param, Res, UnauthorizedException} from "@nestjs/common";
 import { AuthService } from "./auth.service";
 import { Public, ResponseMessage } from "../decorator";
 import { type Response } from "express";
@@ -18,10 +18,13 @@ import { Cookies } from "../decorator";
 
 @Controller("auth")
 export class AuthController {
+   count = 0
   constructor(
     private config: ConfigService,
     private authService: AuthService,
-  ) {}
+  ) {
+    this.count = 0
+  }
 
   private setTokenCookie({ accessToken, refreshToken }, res: Response) {
     res.cookie("access_token", accessToken, {
@@ -100,6 +103,12 @@ export class AuthController {
 
   @Get("test")
   tokenTest() {
-    return "123";
+    this.count++
+    if (this.count<10) {
+      throw new UnauthorizedException()
+    } else {
+      this.count = 0
+      return "ok"
+    }
   }
 }
