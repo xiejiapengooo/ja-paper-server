@@ -152,12 +152,20 @@ export class AuthService {
       throw new UnauthorizedException("Invalid credentials.");
     }
 
-    const { accessToken: newAccessToken, refreshToken: newRefreshToken, refreshTokenExpiredAt } = this.signNewToken(payload);
+    const user = await this.prisma.user.findUnique({
+      where: { id: payload.id }
+    });
+    if (!user) {
+      throw new BusinessException("User does not exist.");
+    }
+
+    const newPayload = this.getUserTokenPayload(user);
+    const { accessToken: newAccessToken, refreshToken: newRefreshToken, refreshTokenExpiredAt } = this.signNewToken(newPayload);
 
     await this.prisma.certificate.update({
       where: { id: session.id },
       data: {
-        content: refreshToken,
+        content: newRefreshToken,
         usedAt: dayjs().toISOString(),
         expiredAt: refreshTokenExpiredAt,
       },

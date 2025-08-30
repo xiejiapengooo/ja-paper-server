@@ -24,14 +24,13 @@ export class AuthController {
   ) {}
 
   private setTokenCookie({ accessToken, refreshToken }, res: Response) {
-    res.cookie("accessToken", accessToken, {
+    res.cookie("access_token", accessToken, {
       httpOnly: true,
       secure: true,
       sameSite: "strict",
       maxAge: ms(this.config.get("ACCESS_TOKEN_EXPIRES")),
     });
-
-    res.cookie("refreshToken", refreshToken, {
+    res.cookie("refresh_token", refreshToken, {
       httpOnly: true,
       secure: true,
       sameSite: "strict",
@@ -49,7 +48,7 @@ export class AuthController {
   @Post("refresh")
   @Public()
   @ResponseMessage("Refresh successful.")
-  async refresh(@Cookies() refreshToken: string, @Res({ passthrough: true }) res: Response) {
+  async refresh(@Cookies("refresh_token") refreshToken: string, @Res({ passthrough: true }) res: Response) {
     this.setTokenCookie(await this.authService.refresh(refreshToken), res);
   }
 
@@ -97,5 +96,10 @@ export class AuthController {
   @Public()
   tokenPayload(@Param() dto: TokenPayloadDto) {
     return this.authService.tokenPayload(dto);
+  }
+
+  @Get("test")
+  tokenTest() {
+    return "123";
   }
 }
