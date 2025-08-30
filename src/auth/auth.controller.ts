@@ -18,13 +18,10 @@ import { Cookies } from "../decorator";
 
 @Controller("auth")
 export class AuthController {
-   count = 0
   constructor(
     private config: ConfigService,
     private authService: AuthService,
-  ) {
-    this.count = 0
-  }
+  ) {}
 
   private setTokenCookie({ accessToken, refreshToken }, res: Response) {
     res.cookie("access_token", accessToken, {
@@ -99,16 +96,5 @@ export class AuthController {
   @Public()
   tokenPayload(@Param() dto: TokenPayloadDto) {
     return this.authService.tokenPayload(dto);
-  }
-
-  @Get("test")
-  tokenTest() {
-    this.count++
-    if (this.count<10) {
-      throw new UnauthorizedException()
-    } else {
-      this.count = 0
-      return "ok"
-    }
   }
 }
