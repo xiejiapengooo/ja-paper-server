@@ -153,14 +153,18 @@ export class AuthService {
     }
 
     const user = await this.prisma.user.findUnique({
-      where: { id: payload.id }
+      where: { id: payload.id },
     });
     if (!user) {
       throw new BusinessException("User does not exist.");
     }
 
     const newPayload = this.getUserTokenPayload(user);
-    const { accessToken: newAccessToken, refreshToken: newRefreshToken, refreshTokenExpiredAt } = this.signNewToken(newPayload);
+    const {
+      accessToken: newAccessToken,
+      refreshToken: newRefreshToken,
+      refreshTokenExpiredAt,
+    } = this.signNewToken(newPayload);
 
     await this.prisma.certificate.update({
       where: { id: session.id },
@@ -354,7 +358,7 @@ export class AuthService {
   }
 
   async tokenPayload(dto: TokenPayloadDto) {
-    let payload: Record<string, any>
+    let payload: Record<string, any>;
     try {
       payload = this.jwtService.verify(dto.token);
     } catch (error) {
@@ -362,16 +366,12 @@ export class AuthService {
     }
 
     const certificate = await this.prisma.certificate.findUnique({
-      where: { content: dto.token }
+      where: { content: dto.token },
     });
-    if (
-      !certificate ||
-      certificate.usedAt ||
-      dayjs(certificate.expiredAt).isBefore(dayjs())
-    ) {
+    if (!certificate || certificate.usedAt || dayjs(certificate.expiredAt).isBefore(dayjs())) {
       throw new UnauthorizedException("Invalid credential.");
     }
 
-    return payload
+    return payload;
   }
 }
