@@ -44,7 +44,11 @@ export class AllExceptionFilter implements ExceptionFilter {
       }
     }
 
-    this.logger.error(exception);
+    if (exception instanceof UnauthorizedException) {
+      this.logger.warn(exception.message);
+    } else {
+      this.logger.error(exception);
+    }
 
     response.status(status).json(result);
   }

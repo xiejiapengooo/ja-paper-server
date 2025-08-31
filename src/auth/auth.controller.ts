@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Param, Res, UnauthorizedException} from "@nestjs/common";
+import { Body, Controller, Get, Post, Param, Res, UnauthorizedException } from "@nestjs/common";
 import { AuthService } from "./auth.service";
 import { Public, ResponseMessage } from "../decorator";
 import { type Response } from "express";

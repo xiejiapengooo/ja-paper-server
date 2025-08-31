@@ -1,4 +1,4 @@
-import { Body, Controller, Post } from "@nestjs/common";
+import { Body, Controller, Get, Post } from "@nestjs/common";
 import { UserService } from "./user.service";
 import { GetTokenPayload, ResponseMessage } from "../decorator";
 import { UserUpdateDto } from "./user.dto";
@@ -8,7 +8,7 @@ import type { UserTokenPayload } from "../types";
 export class UserController {
   constructor(private userService: UserService) {}
 
-  @Post("me")
+  @Get("me")
   userMe(@GetTokenPayload() userTokenPayload: UserTokenPayload) {
     return this.userService.userMe(userTokenPayload);
   }

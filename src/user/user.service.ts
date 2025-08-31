@@ -8,7 +8,12 @@ export class UserService {
   constructor(private prisma: PrismaService) {}
 
   async userMe(userTokenPayload: UserTokenPayload) {
-    console.log(userTokenPayload);
+    const user = await this.prisma.user.findUnique({
+      where: {
+        id: userTokenPayload.id,
+      },
+    });
+    return user;
   }
 
   async userUpdate(dto: UserUpdateDto, userTokenPayload: UserTokenPayload) {
