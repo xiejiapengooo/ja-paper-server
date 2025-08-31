@@ -36,7 +36,6 @@ export class AuthController {
       sameSite: "strict",
       maxAge: ms(this.config.get("REFRESH_TOKEN_EXPIRES")),
     });
-    return { accessToken, refreshToken };
   }
 
   @Post("login")
@@ -50,7 +49,7 @@ export class AuthController {
   @Public()
   @ResponseMessage("Refresh successful.")
   async refresh(@Cookies("refresh_token") refreshToken: string, @Res({ passthrough: true }) res: Response) {
-    return this.setTokenCookie(await this.authService.refresh(refreshToken), res);
+    this.setTokenCookie(await this.authService.refresh(refreshToken), res);
   }
 
   @Post("logout")
