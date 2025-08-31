@@ -11,6 +11,7 @@ import { AlsModule } from "./als/als.module";
 import { ContextMiddleware, RequestMiddleware } from "./middleware";
 import { ResponseInterceptor } from "./interceptor";
 import { AllExceptionFilter } from "./filter";
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { AllExceptionFilter } from "./filter";
     AuthModule,
     AlsModule,
     MailModule,
+    UserModule,
   ],
   providers: [
     {
