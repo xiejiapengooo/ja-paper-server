@@ -36,7 +36,6 @@ export class AuthController {
       sameSite: "strict",
       maxAge: ms(this.config.get("REFRESH_TOKEN_EXPIRES")),
     });
-
     return { accessToken, refreshToken };
   }
 
