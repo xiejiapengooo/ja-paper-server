@@ -27,7 +27,7 @@ export class UserService {
     };
   }
 
-  async userUpdate(dto: UserUpdateDto, userTokenPayload: UserTokenPayload) {
+  async putMe(dto: UserUpdateDto, userTokenPayload: UserTokenPayload) {
     try {
       await this.prisma.user.update({
         where: {
@@ -37,6 +37,13 @@ export class UserService {
           name: dto.name,
         },
       });
+    } catch (error) {
+      throw new BusinessException("Fail to update account information.");
+    }
+  }
+
+  async deleteMe(userTokenPayload: UserTokenPayload) {
+    try {
     } catch (error) {
       throw new BusinessException("Fail to update account information.");
     }

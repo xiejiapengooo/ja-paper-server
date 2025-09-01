@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Post, Put } from "@nestjs/common";
 import { UserService } from "./user.service";
 import { GetTokenPayload, ResponseMessage } from "../decorator";
 import { UserUpdateDto } from "./user.dto";
@@ -13,9 +13,15 @@ export class UserController {
     return this.userService.userMe(userTokenPayload);
   }
 
-  @Post("update")
-  @ResponseMessage("User information updated successfully.")
-  userUpdate(@Body() dto: UserUpdateDto, @GetTokenPayload() userTokenPayload: UserTokenPayload) {
-    return this.userService.userUpdate(dto, userTokenPayload);
+  @Put("me")
+  @ResponseMessage("Account information updated successfully.")
+  putMe(@Body() dto: UserUpdateDto, @GetTokenPayload() userTokenPayload: UserTokenPayload) {
+    return this.userService.putMe(dto, userTokenPayload);
+  }
+
+  @Delete("me")
+  @ResponseMessage("Account deleted")
+  deleteMe(@GetTokenPayload() userTokenPayload: UserTokenPayload) {
+    return this.userService.deleteMe(userTokenPayload);
   }
 }
