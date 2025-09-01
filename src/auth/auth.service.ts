@@ -265,7 +265,7 @@ export class AuthService {
 
   async register(dto: RegisterDto) {
     const existingUser = await this.prisma.user.findUnique({
-      where: { email: dto.email, status: { not: UserStatus.PENDING } },
+      where: { email: dto.email, status: { not: UserStatus.PENDING }, deletedAt: null },
     });
 
     if (existingUser) {

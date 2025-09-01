@@ -53,8 +53,9 @@ export class AuthController {
   @Post("password/reset")
   @Public()
   @ResponseMessage("Password has been reset, please log in again.")
-  passwordReset(@Body() dto: PasswordResetDto) {
-    return this.authService.passwordReset(dto);
+  async passwordReset(@Body() dto: PasswordResetDto, @Res({ passthrough: true }) res: Response) {
+    await this.authService.passwordReset(dto);
+    this.cookieService.clearTokenCookie(res);
   }
 
   @Post("register")

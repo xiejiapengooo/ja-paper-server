@@ -1,12 +1,17 @@
-import { Body, Controller, Delete, Get, Post, Put } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Post, Put, Res } from "@nestjs/common";
 import { UserService } from "./user.service";
 import { GetTokenPayload, ResponseMessage } from "../decorator";
 import { UserUpdateDto } from "./user.dto";
 import type { UserTokenPayload } from "../types";
+import { CookieService } from "../cookie/cookie.service";
+import type { Response } from "express";
 
 @Controller("user")
 export class UserController {
-  constructor(private userService: UserService) {}
+  constructor(
+    private userService: UserService,
+    private cookieService: CookieService,
+  ) {}
 
   @Get("me")
   userMe(@GetTokenPayload() userTokenPayload: UserTokenPayload) {
@@ -21,7 +26,8 @@ export class UserController {
 
   @Delete("me")
   @ResponseMessage("Account deleted")
-  deleteMe(@GetTokenPayload() userTokenPayload: UserTokenPayload) {
-    return this.userService.deleteMe(userTokenPayload);
+  async deleteMe(@GetTokenPayload() userTokenPayload: UserTokenPayload, @Res({ passthrough: true }) res: Response) {
+    await this.userService.deleteMe(userTokenPayload);
+    this.cookieService.clearTokenCookie(res);
   }
 }
