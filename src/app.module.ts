@@ -11,7 +11,8 @@ import { AlsModule } from "./als/als.module";
 import { ContextMiddleware, RequestMiddleware } from "./middleware";
 import { ResponseInterceptor } from "./interceptor";
 import { AllExceptionFilter } from "./filter";
-import { UserModule } from './user/user.module';
+import { UserModule } from "./user/user.module";
+import { CookieService } from "./cookie/cookie.service";
 
 @Module({
   imports: [
@@ -51,6 +52,7 @@ import { UserModule } from './user/user.module';
       provide: APP_FILTER,
       useClass: AllExceptionFilter,
     },
+    CookieService,
   ],
 })
 export class AppModule implements NestModule {

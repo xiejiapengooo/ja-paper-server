@@ -47,6 +47,7 @@ model User {
   id           String         @id @default(cuid())
   createdAt    DateTime       @default(now())
   updatedAt    DateTime       @updatedAt
+  deletedAt    DateTime?
   email        String         @unique
   name         String?
   role         UserRole

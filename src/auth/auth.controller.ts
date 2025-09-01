@@ -3,68 +3,44 @@ import { AuthService } from "./auth.service";
 import { Public, ResponseMessage } from "../decorator";
 import { type Response } from "express";
 import { RegisterDto, ForgotDto, LoginDto, PasswordResetDto, RegisterCompletionDto, TokenPayloadDto } from "./auth.dto";
-import ms from "ms";
 import { ConfigService } from "@nestjs/config";
 import { Cookies } from "../decorator";
-import { CookieOptions } from "express-serve-static-core";
+import { CookieService } from "../cookie/cookie.service";
 
 @Controller("auth")
 export class AuthController {
   constructor(
     private config: ConfigService,
     private authService: AuthService,
+    private cookieService: CookieService,
   ) {}
-
-  private getTokenCookieOptions(): CookieOptions {
-    return {
-      httpOnly: true,
-      secure: true,
-      sameSite: "strict",
-    };
-  }
-
-  private clearTokenCookie(res: Response) {
-    res.clearCookie("access_token", this.getTokenCookieOptions());
-    res.clearCookie("refresh_token", this.getTokenCookieOptions());
-  }
-
-  private setTokenCookie({ accessToken, refreshToken }, res: Response) {
-    res.cookie("access_token", accessToken, {
-      ...this.getTokenCookieOptions(),
-      maxAge: ms(this.config.get("ACCESS_TOKEN_EXPIRES")),
-    });
-    res.cookie("refresh_token", refreshToken, {
-      ...this.getTokenCookieOptions(),
-      maxAge: ms(this.config.get("REFRESH_TOKEN_EXPIRES")),
-    });
-  }
 
   @Post("login")
   @Public()
   @ResponseMessage("Login successful.")
   async login(@Body() dto: LoginDto, @Res({ passthrough: true }) res: Response) {
-    this.setTokenCookie(await this.authService.login(dto), res);
+    this.cookieService.setTokenCookie(await this.authService.login(dto), res);
   }
 
   @Post("refresh")
   @Public()
   @ResponseMessage("Refresh successful.")
   async refresh(@Cookies("refresh_token") refreshToken: string, @Res({ passthrough: true }) res: Response) {
-    this.setTokenCookie(await this.authService.refresh(refreshToken), res);
+    this.cookieService.setTokenCookie(await this.authService.refresh(refreshToken), res);
   }
 
   @Post("logout")
   @ResponseMessage("Logged out.")
   async logout(@Cookies("refresh_token") refreshToken: string, @Res({ passthrough: true }) res: Response) {
     await this.authService.logout(refreshToken);
-    this.clearTokenCookie(res);
+    this.cookieService.clearTokenCookie(res);
   }
 
   @Post("logout/all")
   @ResponseMessage("Logged out of all devices.")
   async logoutAll(@Cookies("refresh_token") refreshToken: string, @Res({ passthrough: true }) res: Response) {
     await this.authService.logoutAll(refreshToken);
-    this.clearTokenCookie(res);
+    this.cookieService.clearTokenCookie(res);
   }
 
   @Post("password/forgot")
@@ -92,7 +68,7 @@ export class AuthController {
   @Public()
   @ResponseMessage("Congratulations, registration successful.")
   async registerCompletion(@Body() dto: RegisterCompletionDto, @Res({ passthrough: true }) res: Response) {
-    this.setTokenCookie(await this.authService.registerCompletion(dto), res);
+    this.cookieService.setTokenCookie(await this.authService.registerCompletion(dto), res);
   }
 
   @Get("token/:token")

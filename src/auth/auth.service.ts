@@ -59,6 +59,7 @@ export class AuthService {
   async login(dto: LoginDto) {
     const user = await this.prisma.user.findUnique({
       where: {
+        deletedAt: null,
         email: dto.email,
       },
     });
@@ -144,7 +145,7 @@ export class AuthService {
     }
 
     const user = await this.prisma.user.findUnique({
-      where: { id: payload.id },
+      where: { id: payload.id, deletedAt: null },
     });
     if (!user) {
       throw new BusinessException("User does not exist.");
@@ -193,7 +194,7 @@ export class AuthService {
 
   async passwordForgot(dto: ForgotDto) {
     const user = await this.prisma.user.findUnique({
-      where: { email: dto.email },
+      where: { email: dto.email, deletedAt: null },
     });
     if (!user) throw new BusinessException("User does not exist.");
 
@@ -248,7 +249,7 @@ export class AuthService {
     const hashedPassword = await argon.hash(dto.password);
 
     await this.prisma.user.update({
-      where: { id: certificate.relatedId },
+      where: { id: certificate.relatedId, deletedAt: null },
       data: { password: hashedPassword },
     });
 
@@ -283,6 +284,7 @@ export class AuthService {
         name: "",
       },
       update: {
+        deletedAt: null,
         role: UserRole.USER,
         status: UserStatus.PENDING,
         password: "",
@@ -341,7 +343,7 @@ export class AuthService {
     const hashedPassword = await argon.hash(dto.password);
 
     const user = await this.prisma.user.update({
-      where: { id: certificate.relatedId },
+      where: { id: certificate.relatedId, deletedAt: null },
       data: {
         password: hashedPassword,
         name: dto.name,

@@ -4,6 +4,7 @@ import { UserUpdateDto } from "./user.dto";
 import { UserTokenPayload } from "../types";
 import { BusinessException } from "../exception";
 import { CertificateType } from "@prisma/client";
+import dayjs from "dayjs";
 
 @Injectable()
 export class UserService {
@@ -13,6 +14,7 @@ export class UserService {
     const user = await this.prisma.user.findUnique({
       where: {
         id: userTokenPayload.id,
+        deletedAt: null,
       },
     });
 
@@ -32,6 +34,7 @@ export class UserService {
       await this.prisma.user.update({
         where: {
           id: userTokenPayload.id,
+          deletedAt: null,
         },
         data: {
           name: dto.name,
@@ -44,8 +47,19 @@ export class UserService {
 
   async deleteMe(userTokenPayload: UserTokenPayload) {
     try {
+      await this.prisma.certificate.deleteMany({
+        where: { relatedId: userTokenPayload.id, type: CertificateType.REFRESH_TOKEN },
+      });
+      await this.prisma.user.update({
+        where: {
+          id: userTokenPayload.id,
+        },
+        data: {
+          deletedAt: dayjs().toISOString(),
+        },
+      });
     } catch (error) {
-      throw new BusinessException("Fail to update account information.");
+      throw new BusinessException("Fail to delete account.");
     }
   }
 }
