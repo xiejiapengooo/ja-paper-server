@@ -1,14 +1,5 @@
 import { Injectable, UnauthorizedException } from "@nestjs/common";
-import {
-  RegisterDto,
-  ForgotDto,
-  LoginDto,
-  LogoutAllDto,
-  LogoutDto,
-  PasswordResetDto,
-  RegisterCompletionDto,
-  TokenPayloadDto,
-} from "./auth.dto";
+import { RegisterDto, ForgotDto, LoginDto, PasswordResetDto, RegisterCompletionDto, TokenPayloadDto } from "./auth.dto";
 import { PrismaService } from "../prisma/prisma.service";
 import { BusinessException } from "../exception";
 import { PasswordResetTokenPayload, RegisterTokenPayload, UserTokenPayload } from "../types";
@@ -178,15 +169,25 @@ export class AuthService {
     return { accessToken: newAccessToken, refreshToken: newRefreshToken };
   }
 
-  async logout(dto: LogoutDto) {
-    await this.prisma.certificate.deleteMany({
-      where: { content: dto.refreshToken },
-    });
+  async logout(refreshToken: string) {
+    try {
+      await this.prisma.certificate.delete({
+        where: { content: refreshToken, userAgent: this.als.getUserAgent(), type: CertificateType.REFRESH_TOKEN },
+      });
+    } catch (error) {
+      throw new BusinessException("Fail to sign out.");
+    }
   }
 
-  async logoutAll(dto: LogoutAllDto) {
+  async logoutAll(refreshToken: string) {
+    const certificate = await this.prisma.certificate.findUnique({
+      where: { content: refreshToken, userAgent: this.als.getUserAgent(), type: CertificateType.REFRESH_TOKEN },
+    });
+    if (!certificate) {
+      throw new BusinessException("Fail to sign out.");
+    }
     await this.prisma.certificate.deleteMany({
-      where: { relatedId: dto.userId, type: CertificateType.REFRESH_TOKEN },
+      where: { relatedId: certificate.relatedId, type: CertificateType.REFRESH_TOKEN },
     });
   }
 
@@ -256,7 +257,9 @@ export class AuthService {
       data: { usedAt: dayjs().toISOString() },
     });
 
-    await this.logoutAll({ userId: certificate.relatedId });
+    await this.prisma.certificate.deleteMany({
+      where: { relatedId: certificate.relatedId, type: CertificateType.REFRESH_TOKEN },
+    });
   }
 
   async register(dto: RegisterDto) {

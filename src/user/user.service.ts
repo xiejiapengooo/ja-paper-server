@@ -3,6 +3,7 @@ import { PrismaService } from "../prisma/prisma.service";
 import { UserUpdateDto } from "./user.dto";
 import { UserTokenPayload } from "../types";
 import { BusinessException } from "../exception";
+import { CertificateType } from "@prisma/client";
 
 @Injectable()
 export class UserService {
@@ -27,6 +28,17 @@ export class UserService {
   }
 
   async userUpdate(dto: UserUpdateDto, userTokenPayload: UserTokenPayload) {
-    console.log(dto, userTokenPayload);
+    try {
+      await this.prisma.user.update({
+        where: {
+          id: userTokenPayload.id,
+        },
+        data: {
+          name: dto.name,
+        },
+      });
+    } catch (error) {
+      throw new BusinessException("Fail to update account information.");
+    }
   }
 }

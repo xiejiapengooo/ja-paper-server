@@ -2,19 +2,11 @@ import { Body, Controller, Get, Post, Param, Res, UnauthorizedException } from "
 import { AuthService } from "./auth.service";
 import { Public, ResponseMessage } from "../decorator";
 import { type Response } from "express";
-import {
-  RegisterDto,
-  ForgotDto,
-  LoginDto,
-  LogoutAllDto,
-  LogoutDto,
-  PasswordResetDto,
-  RegisterCompletionDto,
-  TokenPayloadDto,
-} from "./auth.dto";
+import { RegisterDto, ForgotDto, LoginDto, PasswordResetDto, RegisterCompletionDto, TokenPayloadDto } from "./auth.dto";
 import ms from "ms";
 import { ConfigService } from "@nestjs/config";
 import { Cookies } from "../decorator";
+import { CookieOptions } from "express-serve-static-core";
 
 @Controller("auth")
 export class AuthController {
@@ -23,17 +15,26 @@ export class AuthController {
     private authService: AuthService,
   ) {}
 
-  private setTokenCookie({ accessToken, refreshToken }, res: Response) {
-    res.cookie("access_token", accessToken, {
+  private getTokenCookieOptions(): CookieOptions {
+    return {
       httpOnly: true,
       secure: true,
       sameSite: "strict",
+    };
+  }
+
+  private clearTokenCookie(res: Response) {
+    res.clearCookie("access_token", this.getTokenCookieOptions());
+    res.clearCookie("refresh_token", this.getTokenCookieOptions());
+  }
+
+  private setTokenCookie({ accessToken, refreshToken }, res: Response) {
+    res.cookie("access_token", accessToken, {
+      ...this.getTokenCookieOptions(),
       maxAge: ms(this.config.get("ACCESS_TOKEN_EXPIRES")),
     });
     res.cookie("refresh_token", refreshToken, {
-      httpOnly: true,
-      secure: true,
-      sameSite: "strict",
+      ...this.getTokenCookieOptions(),
       maxAge: ms(this.config.get("REFRESH_TOKEN_EXPIRES")),
     });
   }
@@ -54,14 +55,16 @@ export class AuthController {
 
   @Post("logout")
   @ResponseMessage("Logged out.")
-  logout(@Body() dto: LogoutDto) {
-    return this.authService.logout(dto);
+  async logout(@Cookies("refresh_token") refreshToken: string, @Res({ passthrough: true }) res: Response) {
+    await this.authService.logout(refreshToken);
+    this.clearTokenCookie(res);
   }
 
   @Post("logout/all")
   @ResponseMessage("Logged out of all devices.")
-  logoutAll(@Body() dto: LogoutAllDto) {
-    return this.authService.logoutAll(dto);
+  async logoutAll(@Cookies("refresh_token") refreshToken: string, @Res({ passthrough: true }) res: Response) {
+    await this.authService.logoutAll(refreshToken);
+    this.clearTokenCookie(res);
   }
 
   @Post("password/forgot")

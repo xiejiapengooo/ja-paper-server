@@ -11,18 +11,6 @@ export class LoginDto {
   password: string;
 }
 
-export class LogoutDto {
-  @IsString()
-  @IsNotEmpty()
-  refreshToken: string;
-}
-
-export class LogoutAllDto {
-  @IsString()
-  @IsNotEmpty()
-  userId: User["id"];
-}
-
 export class ForgotDto {
   @IsEmail()
   @IsNotEmpty()
