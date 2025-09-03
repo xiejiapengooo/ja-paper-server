@@ -125,7 +125,7 @@ export class AuthService {
       throw new UnauthorizedException("The credentials have expired.");
     }
 
-    const session = await this.prisma.certificate.findFirst({
+    const session = await this.prisma.certificate.findUnique({
       where: {
         relatedId: payload.id,
         type: CertificateType.REFRESH_TOKEN,
@@ -171,13 +171,9 @@ export class AuthService {
   }
 
   async logout(refreshToken: string) {
-    try {
-      await this.prisma.certificate.delete({
-        where: { content: refreshToken, userAgent: this.als.getUserAgent(), type: CertificateType.REFRESH_TOKEN },
-      });
-    } catch (error) {
-      throw new BusinessException("Fail to sign out.");
-    }
+    await this.prisma.certificate.deleteMany({
+      where: { content: refreshToken, type: CertificateType.REFRESH_TOKEN },
+    });
   }
 
   async logoutAll(refreshToken: string) {
