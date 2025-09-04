@@ -12,7 +12,7 @@ enum UserRole {
   USER
 }
 
-enum JLPTLevel {
+enum PaperLevel {
   N1
   N2
   N3
@@ -88,24 +88,36 @@ model UserQuestion {
 }
 
 model Paper {
-  id          String    @id @default(cuid())
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
-  level       JLPTLevel
+  id          String     @id @default(cuid())
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  level       PaperLevel
   year        Int
   month       Int
-  title       String    @db.VarChar(255)
-  description String?   @db.Text
+  title       String     @db.VarChar(255)
+  description String?    @db.Text
 
   sections PaperSection[]
 
   @@index([level, year, month])
 }
 
+model PaperPart {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  title     String
+  duration  Int
+
+  sections PaperSection[]
+}
+
 model PaperSection {
   id        String      @id @default(cuid())
   createdAt DateTime    @default(now())
   updatedAt DateTime    @updatedAt
+  partId    String
+  part      PaperPart   @relation(fields: [partId], references: [id])
   paperId   String
   paper     Paper       @relation(fields: [paperId], references: [id], onDelete: Cascade)
   mediaId   String?
@@ -113,40 +125,25 @@ model PaperSection {
   type      SectionType
   title     String      @db.VarChar(255)
   order     Int
-  duration  Int
 
-  passages  PaperPassage[]
   questions PaperQuestion[]
 
   @@index([paperId, order])
   @@index([type])
 }
 
-model PaperPassage {
+model PaperQuestion {
   id        String       @id @default(cuid())
   createdAt DateTime     @default(now())
   updatedAt DateTime     @updatedAt
   sectionId String
   section   PaperSection @relation(fields: [sectionId], references: [id], onDelete: Cascade)
-  content   String       @db.Text
-
-  questions PaperQuestion[]
-}
-
-model PaperQuestion {
-  id        String        @id @default(cuid())
-  createdAt DateTime      @default(now())
-  updatedAt DateTime      @updatedAt
-  sectionId String
-  section   PaperSection  @relation(fields: [sectionId], references: [id], onDelete: Cascade)
-  passageId String?
-  passage   PaperPassage? @relation(fields: [passageId], references: [id])
   type      QuestionType
   order     Int
-  point     Int
-  prompt    String        @db.Text
+  prompt    String       @db.Text
+  analysis  String?      @db.Text
   mediaId   String?
-  media     PaperMedia?   @relation(fields: [mediaId], references: [id])
+  media     PaperMedia?  @relation(fields: [mediaId], references: [id])
 
   choices       QuestionChoice[]
   userQuestions UserQuestion[]
