@@ -736,7 +736,7 @@ export const data: Data = {
           order: 1,
           prompt: "加工",
           analysis:
-            "“加工”主要用于对物质材料进行切削、组合或化学处理等，制作出新产品。\\n选项2的“余った木材を加工した商品”正是典型用法。\\n1、3、4 均把“加工”用于非物理材料（生活习惯、房屋、规章制度），不自然，应分别改为“改善”“改装”“改定”。",
+            "“加工”主要用于对物质材料进行切削、组合或化学处理等，制作出新产品。\n选项2的“余った木材を加工した商品”正是典型用法。\n1、3、4 均把“加工”用于非物理材料（生活习惯、房屋、规章制度），不自然，应分别改为“改善”“改装”“改定”。",
           mediaId: "",
           choices: [
             {
@@ -771,7 +771,7 @@ export const data: Data = {
           order: 2,
           prompt: "養う",
           analysis:
-            "“養う”常指供给生活所需以抚养人。\\n选项4“養っている”指“抚养孩子”最贴切。\\n1 多用“飼う”，“饲养”虫子；\\n2 栽种植物多用“育てる”；\\n3 “养公司”说法也不自然。",
+            "“養う”常指供给生活所需以抚养人。\n选项4“養っている”指“抚养孩子”最贴切。\n1 多用“飼う”，“饲养”虫子；\n2 栽种植物多用“育てる”；\n3 “养公司”说法也不自然。",
           mediaId: "",
           choices: [
             {
@@ -806,7 +806,7 @@ export const data: Data = {
           order: 3,
           prompt: "資質",
           analysis:
-            "“資質”侧重指人或动物的天赋、素质。\\n选项4用在“人作为运动员的天赋”最自然。\\n1 用在“设备”上不合；\\n2 虽可指“动物本性”，但不如 4 常见；\\n3 “产品质量”应为“品質”。",
+            "“資質”侧重指人或动物的天赋、素质。\n选项4用在“人作为运动员的天赋”最自然。\n1 用在“设备”上不合；\n2 虽可指“动物本性”，但不如 4 常见；\n3 “产品质量”应为“品質”。",
           mediaId: "",
           choices: [
             {
@@ -841,7 +841,7 @@ export const data: Data = {
           order: 4,
           prompt: "正当",
           analysis:
-            "“正当”可指“合理、合情理”或“应得、合法”。\\n选项 3 “正当な評価を受ける”表示“得到应得的评价”，用法最恰当。\\n1 应用“正しく”；\\n2 应说“正式な名前”；\\n4 应说“順調に”或“着々と”。",
+            "“正当”可指“合理、合情理”或“应得、合法”。\n选项 3 “正当な評価を受ける”表示“得到应得的评价”，用法最恰当。\n1 应用“正しく”；\n2 应说“正式な名前”；\n4 应说“順調に”或“着々と”。",
           mediaId: "",
           choices: [
             {
@@ -876,7 +876,7 @@ export const data: Data = {
           order: 5,
           prompt: "ありきたり",
           analysis:
-            "“ありきたり”指“平凡、老套、陈词滥调”。\\n选项2用来评价小说情节“老套”，最典型；\\n3 虽也自然，但更常见于评价“事物或表达”，首推 2；\\n1 、4 用法不当。",
+            "“ありきたり”指“平凡、老套、陈词滥调”。\n选项2用来评价小说情节“老套”，最典型；\n3 虽也自然，但更常见于评价“事物或表达”，首推 2；\n1 、4 用法不当。",
           mediaId: "",
           choices: [
             {
@@ -911,7 +911,7 @@ export const data: Data = {
           order: 6,
           prompt: "間柄",
           analysis:
-            "“間柄”多用于人与人之间的关系。\\n选项1“親しい間柄”描述人际关系最自然。\\n2 、3 、4 虽也谈“关系”，但均偏向国家、事物或抽象环境，不如人际用法贴切。",
+            "“間柄”多用于人与人之间的关系。\n选项1“親しい間柄”描述人际关系最自然。\n2 、3 、4 虽也谈“关系”，但均偏向国家、事物或抽象环境，不如人际用法贴切。",
           mediaId: "",
           choices: [
             {
@@ -936,6 +936,367 @@ export const data: Data = {
               id: "",
               label: "4.",
               text: "父漁民、小さい頃から、海と<u>間柄</u>の深い暮らしをしてきしてきた",
+              isCorrect: false,
+            },
+          ],
+        },
+      ],
+    },
+    {
+      id: "",
+      partId: "",
+      mediaId: "",
+      type: SectionType.VOCAB_GRAMMAR,
+      title: "問題5 次の文の（　　　）に入れるのに最もよいものを、１・２・３・４から一つ選びなさい。",
+      order: 5,
+      questions: [
+        {
+          id: "",
+          type: QuestionType.SINGLE_CHOICE,
+          order: 1,
+          prompt: "宝くじ売り場があるよ、買ってみない?\nどうせ当たらないんだから、買う(　)無駄だったよ。",
+          analysis:
+            "反正不会中奖，买了也是浪费。\nこの文は、宝くじを買ったことが無駄だったという意味を表しています。「どうせ当たらないんだから、買うだけ無駄だったよ。」のように、「だけ」を使うことで、「買うことが無駄であった」ということを強調しています。選択肢の中で、「だけ」が最も適切な表現です。",
+          mediaId: "",
+          choices: [
+            {
+              id: "",
+              label: "1.",
+              text: "より",
+              isCorrect: false,
+            },
+            {
+              id: "",
+              label: "2.",
+              text: "のみ",
+              isCorrect: false,
+            },
+            {
+              id: "",
+              label: "3.",
+              text: "には",
+              isCorrect: false,
+            },
+            {
+              id: "",
+              label: "4.",
+              text: "だけ",
+              isCorrect: true,
+            },
+          ],
+        },
+        {
+          id: "",
+          type: QuestionType.SINGLE_CHOICE,
+          order: 2,
+          prompt: "近年の健康意識の高まり(　)健康食品は急成長している。",
+          analysis:
+            "随着近年来健康意识的提高，健康食品行业飞速发展。\n「～を受けて」表示“受…影响”，说明前项是后项现象的背景原因。",
+          mediaId: "",
+          choices: [
+            {
+              id: "",
+              label: "1.",
+              text: "に次いで",
+              isCorrect: false,
+            },
+            {
+              id: "",
+              label: "2.",
+              text: "にわたって",
+              isCorrect: false,
+            },
+            {
+              id: "",
+              label: "3.",
+              text: "を受けて",
+              isCorrect: true,
+            },
+            {
+              id: "",
+              label: "4.",
+              text: "をめぐって",
+              isCorrect: false,
+            },
+          ],
+        },
+        {
+          id: "",
+          type: QuestionType.SINGLE_CHOICE,
+          order: 3,
+          prompt: "息子はサッカーの練習でよほど疲れていたのか、家に(　)食事もとらず、寝てしまった。",
+          analysis:
+            "儿子大概是足球练习太累了，一回家饭也不吃就睡了。\n「～なり」接动词原形，表示动作完成后立刻发生另一动作，强调紧接性。",
+          mediaId: "",
+          choices: [
+            {
+              id: "",
+              label: "1.",
+              text: "帰り次第",
+              isCorrect: false,
+            },
+            {
+              id: "",
+              label: "2.",
+              text: "帰るなり",
+              isCorrect: true,
+            },
+            {
+              id: "",
+              label: "3.",
+              text: "帰ったなり",
+              isCorrect: false,
+            },
+            {
+              id: "",
+              label: "4.",
+              text: "帰るとなれば",
+              isCorrect: false,
+            },
+          ],
+        },
+        {
+          id: "",
+          type: QuestionType.SINGLE_CHOICE,
+          order: 4,
+          prompt:
+            "ウェブサイトごとに異なるパスワードを設定するのは面倒だが、第三者が不正にアクセスされる(　)、やむを得ない。",
+          analysis:
+            "虽然给每个网站设不同密码很麻烦，但既然存在第三方非法访问的风险，就不得不这么做。\n「～以上」表示“既然…就…”，强调前项条件成立时后项的必然性。",
+          mediaId: "",
+          choices: [
+            {
+              id: "",
+              label: "1.",
+              text: "しかない以上",
+              isCorrect: false,
+            },
+            {
+              id: "",
+              label: "2.",
+              text: "しかない反面",
+              isCorrect: false,
+            },
+            {
+              id: "",
+              label: "3.",
+              text: "恐れがある以上",
+              isCorrect: true,
+            },
+            {
+              id: "",
+              label: "4.",
+              text: "恐れがある反面",
+              isCorrect: false,
+            },
+          ],
+        },
+        {
+          id: "",
+          type: QuestionType.SINGLE_CHOICE,
+          order: 5,
+          prompt: "昨日行った美術館は、一日では(　)作品が展示されていた。",
+          analysis: "昨天去的美术馆，展出的作品多到一天看不完。\n「～ほどの」表示程度，强调数量多到无法完成某动作。",
+          mediaId: "",
+          choices: [
+            {
+              id: "",
+              label: "1.",
+              text: "見きれないほどの",
+              isCorrect: true,
+            },
+            {
+              id: "",
+              label: "2.",
+              text: "見ずにはいられないほどの",
+              isCorrect: false,
+            },
+            {
+              id: "",
+              label: "3.",
+              text: "見きれないといった",
+              isCorrect: false,
+            },
+            {
+              id: "",
+              label: "4.",
+              text: "見ずにはいられないといった",
+              isCorrect: false,
+            },
+          ],
+        },
+        {
+          id: "",
+          type: QuestionType.SINGLE_CHOICE,
+          order: 6,
+          prompt: "引っ越しを控えているので、なるべく余計な出費を(　)、友人に誘われたスキー旅行に行くことにした。",
+          analysis:
+            "因为马上要搬家，虽然想尽量控制额外开支，但还是决定参加朋友邀请的滑雪旅行。\n「～たいところだが」表示“虽然想…但…”，体现计划与现实的矛盾。",
+          mediaId: "",
+          choices: [
+            {
+              id: "",
+              label: "1.",
+              text: "押さえたら抑えたで",
+              isCorrect: false,
+            },
+            {
+              id: "",
+              label: "2.",
+              text: "抑えられるものなら",
+              isCorrect: false,
+            },
+            {
+              id: "",
+              label: "3.",
+              text: "抑えるには抑えずに",
+              isCorrect: false,
+            },
+            {
+              id: "",
+              label: "4.",
+              text: "押さえたいところだが",
+              isCorrect: true,
+            },
+          ],
+        },
+        {
+          id: "",
+          type: QuestionType.SINGLE_CHOICE,
+          order: 7,
+          prompt: "驚いたことに、その小学生は、高校レベルの数学の問題をすらすらと(　)。",
+          analysis:
+            "正确答案：4.解いてみせた\n令人惊讶的是，那个小学生流畅地解开了高中水平的数学题。\n解析：“解けるとは”的“〜とは…（思わなかった/驚いた）”表示惊讶，“思わなかった”或“驚いた”在该句中被省略。但此处的主语为“那个小学生”而不是“我”，因此选项1不选。\n“解いてみせた”表示“那个小学生成功解出这道题（给别人看）了”，符合语义，选项1正确。",
+          mediaId: "",
+          choices: [
+            {
+              id: "",
+              label: "1.",
+              text: "解けるとは",
+              isCorrect: false,
+            },
+            {
+              id: "",
+              label: "2.",
+              text: "解けるものなら",
+              isCorrect: false,
+            },
+            {
+              id: "",
+              label: "3.",
+              text: "解いたまでだ",
+              isCorrect: false,
+            },
+            {
+              id: "",
+              label: "4.",
+              text: "解いてみせた",
+              isCorrect: true,
+            },
+          ],
+        },
+        {
+          id: "",
+          type: QuestionType.SINGLE_CHOICE,
+          order: 8,
+          prompt: "専門家の話では、かつてこの地域一帯は海だった(　）。",
+          analysis: "专家称，这一带过去曾是一片海洋。\n「～という」用于转述他人观点，客观引述信息。",
+          mediaId: "",
+          choices: [
+            {
+              id: "",
+              label: "1.",
+              text: "という",
+              isCorrect: true,
+            },
+            {
+              id: "",
+              label: "2.",
+              text: "といえる",
+              isCorrect: false,
+            },
+            {
+              id: "",
+              label: "3.",
+              text: "といった",
+              isCorrect: false,
+            },
+            {
+              id: "",
+              label: "4.",
+              text: "といわれる",
+              isCorrect: false,
+            },
+          ],
+        },
+        {
+          id: "",
+          type: QuestionType.SINGLE_CHOICE,
+          order: 9,
+          prompt:
+            "子どもは生まれてくる家庭環境を選べない。だからこそ、親の経済状況によって、子どもの教育機会が奪われること(　)。",
+          analysis:
+            "孩子无法选择出身家庭。正因如此，绝不允许因父母经济状况剥夺孩子的教育机会。\n「～あってはならない」表示“不允许存在…”，强调社会规范的否定。",
+          mediaId: "",
+          choices: [
+            {
+              id: "",
+              label: "1.",
+              text: "があるわけではない",
+              isCorrect: false,
+            },
+            {
+              id: "",
+              label: "2.",
+              text: "であるわけではない",
+              isCorrect: false,
+            },
+            {
+              id: "",
+              label: "3.",
+              text: "があってはならない",
+              isCorrect: true,
+            },
+            {
+              id: "",
+              label: "4.",
+              text: "であってはならない",
+              isCorrect: false,
+            },
+          ],
+        },
+        {
+          id: "",
+          type: QuestionType.SINGLE_CHOICE,
+          order: 10,
+          prompt:
+            "(大学で)\n先生「青木さん、今度の報告誌のモデルを青木さんにお願いできたらと思うんだけど、どうかな」\n青木「やりたいです。でも、私(　)」\n先生「もちろん」",
+          analysis:
+            "「〜なんか」是典型的自谦表达：“像我这样的人也行吗？”\n “私なんかでいいんですか？”：表达对自己能力的怀疑与谦虚，是非常自然的回应。",
+          mediaId: "",
+          choices: [
+            {
+              id: "",
+              label: "1.",
+              text: "だったらいいんですか",
+              isCorrect: false,
+            },
+            {
+              id: "",
+              label: "2.",
+              text: "なんかでいいんですか",
+              isCorrect: true,
+            },
+            {
+              id: "",
+              label: "3.",
+              text: "だったらいいんでしょう",
+              isCorrect: false,
+            },
+            {
+              id: "",
+              label: "4.",
+              text: "なんかでいいんでしょう",
               isCorrect: false,
             },
           ],
