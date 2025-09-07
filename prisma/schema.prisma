@@ -43,6 +43,18 @@ enum UserStatus {
   DISABLED
 }
 
+enum PaperFileType {
+  JSON
+  AUDIO
+  VIDEO
+  IMAGE
+}
+
+enum PaperFileRelatedType {
+  PAPER_PART
+  PAPER_QUESTION
+}
+
 model User {
   id           String         @id @default(cuid())
   createdAt    DateTime       @default(now())
@@ -120,8 +132,6 @@ model PaperSection {
   part      PaperPart   @relation(fields: [partId], references: [id])
   paperId   String
   paper     Paper       @relation(fields: [paperId], references: [id], onDelete: Cascade)
-  mediaId   String?
-  media     PaperMedia? @relation(fields: [mediaId], references: [id])
   type      SectionType
   title     String      @db.VarChar(255)
   order     Int
@@ -142,8 +152,6 @@ model PaperQuestion {
   order     Int
   prompt    String       @db.Text
   analysis  String?      @db.Text
-  mediaId   String?
-  media     PaperMedia?  @relation(fields: [mediaId], references: [id])
 
   choices       QuestionChoice[]
   userQuestions UserQuestion[]
@@ -165,13 +173,15 @@ model QuestionChoice {
   @@index([questionId])
 }
 
-model PaperMedia {
-  id        String   @id @default(cuid())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  key       String   @db.Text
-  duration  Int?
+model PaperFile {
+  id          String               @id @default(cuid())
+  createdAt   DateTime             @default(now())
+  updatedAt   DateTime             @updatedAt
+  key         String               @db.Text
+  type        PaperFileType
+  relatedId   String
+  relatedType PaperFileRelatedType
+  duration    Int?
 
-  questions PaperQuestion[]
-  sections  PaperSection[]
+  @@index([relatedId, relatedType])
 }
