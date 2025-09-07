@@ -1303,5 +1303,190 @@ export const data: Data = {
         },
       ],
     },
+    {
+      id: "",
+      partId: "",
+      mediaId: "",
+      type: SectionType.VOCAB_GRAMMAR,
+      title: "問題6 次の文の__★__に入る最もよいものを、１・２・３・４から一つ選びなさい。",
+      order: 6,
+      questions: [
+        {
+          id: "",
+          type: QuestionType.SINGLE_CHOICE,
+          order: 1,
+          prompt: "昨日はとても寒く、積り___　___　_★_　___はずっと雪が降っていた。",
+          analysis:
+            "排序：2 → 3 → 1 → 4\n昨日はとても寒く、積りこそしなかったが午前中ずっと雪が降っていた。\n\nは前面一定是名词，只有“午前中”符合，所以最后一个空是选项4。\n动词简体形后只能放が，表示转折，形成“しなかったが”。\n【动词连用形/たり+こそ+しない】相当于【动词连用形/たり+は+しない】，是动词ない形的强调语气。因此为【積りこそしなかった】。",
+          mediaId: "",
+          choices: [
+            {
+              id: "",
+              label: "1.",
+              text: "が",
+              isCorrect: true,
+            },
+            {
+              id: "",
+              label: "2.",
+              text: "こそ",
+              isCorrect: false,
+            },
+            {
+              id: "",
+              label: "3.",
+              text: "しなかった",
+              isCorrect: false,
+            },
+            {
+              id: "",
+              label: "4.",
+              text: "午前中",
+              isCorrect: false,
+            },
+          ],
+        },
+        {
+          id: "",
+          type: QuestionType.SINGLE_CHOICE,
+          order: 2,
+          prompt: "この映画はあまりにも正直で___　___　_★_　___、コメディー作品だ。",
+          analysis:
+            "排序：1 → 3 → 2 → 4\nこの映画はあまりにも正直で真面目すぎるがゆえに周りの人々とのトラブルが絶えない男の日常を描いた、コメディー作品だ。\n\n「正直で真面目すぎる」构成原因，后续「がゆえに」（正因为）连接结果。\n「トラブルが絶えない」是具体情节，最后用「男の日常を描いた」修饰「コメディー作品」",
+          mediaId: "",
+          choices: [
+            {
+              id: "",
+              label: "1.",
+              text: "真面目すぎる",
+              isCorrect: false,
+            },
+            {
+              id: "",
+              label: "2.",
+              text: "周りの人々とのトラブルが絶えない",
+              isCorrect: true,
+            },
+            {
+              id: "",
+              label: "3.",
+              text: "がゆえに",
+              isCorrect: true,
+            },
+            {
+              id: "",
+              label: "4.",
+              text: "男の日常を描いた",
+              isCorrect: false,
+            },
+          ],
+        },
+        {
+          id: "",
+          type: QuestionType.SINGLE_CHOICE,
+          order: 3,
+          prompt: "___　___　_★_　___読みやすいように、最近は、ビジネス理論を漫画でわかりやすく解説したものが多い。",
+          analysis:
+            "排序：3 → 1 → 4 → 2\n一般的にビジネス書というと堅苦しいものと思われるがちだが、ビジネス書に抵抗がある人にも読みやすいように、最近は、ビジネス理論を漫画でわかりやすく解説したものが多い。\n\n「一般的にビジネス書というと」引出普遍印象，后续「堅苦しいと思われるがちだが」表示转折。\n「ビジネス書に抵抗がある人にも」点明目标人群，整体逻辑为：\n“通常认为商业书籍枯燥，但为了让抵触的人也能读，用漫画通俗化”。",
+          mediaId: "",
+          choices: [
+            {
+              id: "",
+              label: "1.",
+              text: "堅苦しいものと思われるがちだが",
+              isCorrect: false,
+            },
+            {
+              id: "",
+              label: "2.",
+              text: "抵抗がある人にも",
+              isCorrect: false,
+            },
+            {
+              id: "",
+              label: "3.",
+              text: "一般的にビジネス書というと",
+              isCorrect: false,
+            },
+            {
+              id: "",
+              label: "4.",
+              text: "ビジネス書に",
+              isCorrect: true,
+            },
+          ],
+        },
+        {
+          id: "",
+          type: QuestionType.SINGLE_CHOICE,
+          order: 4,
+          prompt: "渋滞の中を___　___　_★_　___遊園地に入る前から疲れてしまった。",
+          analysis:
+            "正确选项：1\n参考排序：2 → 4 → 1 → 3\n渋滞の中を3時間運転して、ようやくついたと思ったら、今度は駐車場が混雑していて、遊園地に入る前から疲れてしまった。\n3時間運転して——说明在堵塞的车流中“开了三个小时的车”；\nようやくついたと思ったら——接着“刚以为终于到达的时候”；\n今度は駐車場が混雑していて——紧接着“这次又遇上停车场堵着的情况”，导致“在进游园地之前就已经累坏了”。",
+          mediaId: "",
+          choices: [
+            {
+              id: "",
+              label: "1.",
+              text: "今度は",
+              isCorrect: true,
+            },
+            {
+              id: "",
+              label: "2.",
+              text: "3時間運転して",
+              isCorrect: false,
+            },
+            {
+              id: "",
+              label: "3.",
+              text: "駐車場が混雑していて",
+              isCorrect: false,
+            },
+            {
+              id: "",
+              label: "4.",
+              text: "ようやくついたと思ったら",
+              isCorrect: false,
+            },
+          ],
+        },
+        {
+          id: "",
+          type: QuestionType.SINGLE_CHOICE,
+          order: 5,
+          prompt: "商品やサービスが___　___　_★_　___ない。",
+          analysis:
+            "排序：4 → 2 → 3 → 1\n商品やサービスがどんなに良い物でもその存在が知られないことには売れるも売れないもない。\n\n「どんなに良い物でも」强调品质，后续「存在が知られないことには」表条件，最后「売れるも売れないもない」总结结果。\n句意：再好的商品，若无人知晓，根本谈不上是否畅销。",
+          mediaId: "",
+          choices: [
+            {
+              id: "",
+              label: "1.",
+              text: "売れるも売れないも",
+              isCorrect: false,
+            },
+            {
+              id: "",
+              label: "2.",
+              text: "その存在が",
+              isCorrect: false,
+            },
+            {
+              id: "",
+              label: "3.",
+              text: "知られないことには",
+              isCorrect: true,
+            },
+            {
+              id: "",
+              label: "4.",
+              text: "どんなに良い物でも",
+              isCorrect: false,
+            },
+          ],
+        },
+      ],
+    },
   ],
 };
