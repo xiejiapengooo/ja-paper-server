@@ -44,15 +44,9 @@ enum UserStatus {
 }
 
 enum PaperFileType {
-  JSON
   AUDIO
   VIDEO
   IMAGE
-}
-
-enum PaperFileRelatedType {
-  PAPER_PART
-  PAPER_QUESTION
 }
 
 model User {
@@ -125,16 +119,18 @@ model PaperPart {
 }
 
 model PaperSection {
-  id        String      @id @default(cuid())
-  createdAt DateTime    @default(now())
-  updatedAt DateTime    @updatedAt
-  partId    String
-  part      PaperPart   @relation(fields: [partId], references: [id])
-  paperId   String
-  paper     Paper       @relation(fields: [paperId], references: [id], onDelete: Cascade)
-  type      SectionType
-  title     String      @db.VarChar(255)
-  order     Int
+  id                       String      @id @default(cuid())
+  createdAt                DateTime    @default(now())
+  updatedAt                DateTime    @updatedAt
+  partId                   String
+  part                     PaperPart   @relation(fields: [partId], references: [id])
+  paperId                  String
+  paper                    Paper       @relation(fields: [paperId], references: [id], onDelete: Cascade)
+  type                     SectionType
+  title                    String      @db.VarChar(255)
+  order                    Int
+  content                  String?     @db.Text
+  contentTranslationZhHans String?     @db.Text
 
   questions PaperQuestion[]
 
@@ -155,6 +151,7 @@ model PaperQuestion {
 
   choices       QuestionChoice[]
   userQuestions UserQuestion[]
+  paperFileId   String?
 
   @@index([sectionId, order])
   @@index([type])
@@ -174,14 +171,10 @@ model QuestionChoice {
 }
 
 model PaperFile {
-  id          String               @id @default(cuid())
-  createdAt   DateTime             @default(now())
-  updatedAt   DateTime             @updatedAt
-  key         String               @db.Text
-  type        PaperFileType
-  relatedId   String
-  relatedType PaperFileRelatedType
-  duration    Int?
-
-  @@index([relatedId, relatedType])
+  id        String        @id @default(cuid())
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+  key       String        @db.Text
+  type      PaperFileType
+  duration  Int?
 }

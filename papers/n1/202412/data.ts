@@ -9,6 +9,8 @@ type Data = {
     type: PaperSection["type"];
     title: PaperSection["title"];
     order: PaperSection["order"];
+    content: string;
+    contentTranslationZhHans: string;
     questions: Array<{
       id: PaperQuestion["id"];
       type: PaperQuestion["type"];
@@ -32,6 +34,8 @@ export const data: Data = {
     {
       id: "",
       partId: "",
+      content: "",
+      contentTranslationZhHans: "",
       type: SectionType.VOCAB_GRAMMAR,
       title: "問題1 _____の言葉の読み方として最もよいものを、1・2・3・4から一つ選びなさい。",
       order: 1,
@@ -241,6 +245,8 @@ export const data: Data = {
     {
       id: "",
       partId: "",
+      content: "",
+      contentTranslationZhHans: "",
       type: SectionType.VOCAB_GRAMMAR,
       title: "問題2 （　　　）に入れるのに最もよいものを、1・2・3・4から一つ選びなさい。",
       order: 2,
@@ -488,7 +494,8 @@ export const data: Data = {
     {
       id: "",
       partId: "",
-
+      content: "",
+      contentTranslationZhHans: "",
       type: SectionType.VOCAB_GRAMMAR,
       title: "問題3 _____の言葉に意味が最も近いものを、１・２・３・４から一つ選びなさい。",
       order: 3,
@@ -708,7 +715,8 @@ export const data: Data = {
     {
       id: "",
       partId: "",
-
+      content: "",
+      contentTranslationZhHans: "",
       type: SectionType.VOCAB_GRAMMAR,
       title: "問題4 次の言葉の使い方として最もよいものを、１・２・３・４から一つ選びなさい。",
       order: 4,
@@ -928,7 +936,8 @@ export const data: Data = {
     {
       id: "",
       partId: "",
-
+      content: "",
+      contentTranslationZhHans: "",
       type: SectionType.VOCAB_GRAMMAR,
       title: "問題5 次の文の（　　　）に入れるのに最もよいものを、１・２・３・４から一つ選びなさい。",
       order: 5,
@@ -1283,6 +1292,8 @@ export const data: Data = {
     {
       id: "",
       partId: "",
+      content: "",
+      contentTranslationZhHans: "",
       type: SectionType.VOCAB_GRAMMAR,
       title: "問題6 次の文の__★__に入る最もよいものを、１・２・３・４から一つ選びなさい。",
       order: 6,
@@ -1462,10 +1473,151 @@ export const data: Data = {
     {
       id: "",
       partId: "",
+      content:
+        "<p>寂しい片耳</p><p>澤田瞳子</p><p>久しぶりに少し、落ち込んでいる。お気に入りのピアスを片方、落としてしまったからだ。</p><p>これが一人で行動している昼間なら、諦めがつくまで探しに戻るが、生憎、紛失に気付いたのは夜。それも編集者の方々に丸一日取材にご同行いただいた末、お疲れさまと入った店であった。</p><p>ようやく一息ついてらっしゃる編集者さんたちに、（　41　）。動揺を押し殺してさりげなく周りを見回し、やっぱりない、と片耳に触れるのが精いっぱい。朝からほうぼう歩き回った後のため、探しに行くのはどう考えても不可能で、そのまますごすごと家に引き上げた。</p><p>親しいお店で作っていただいたピアスなので、片方だけ発注するのは難しくない。</p><p>（　42　）自分でも珍しいほど落ち込んだのは、それが三、四年ぶりの落とし物だったからだ。</p><p>ピアスホールを開けて間がない二十代の頃は、着用に慣れていなかったため、二、三か月に一度は必ずピアスを落とした。三十代からは徐々にそれが間違になり、この数年ほとんと失敗をしていない。</p><p>最初から自分の迂闊さを（　43　）、何を落とそうともがっかりはしない。もはやそんなことはあるまいと高を括っていただけに、傲慢な自分がなおさら情けなくなる。顧みれば逆上がりも九九も苦手だった子供の頃は、「できないこと」をたくさん抱えているのが当然で、どんなミスをしても平気だった。大人になればなるほど、失敗が怖く、人の眼が気になってきたのは、知らず知らずのうちに自分が「できる」人間と考えるに至ったからかもしれない。</p><p>だがそもそも、年を重ねたから失敗をしないというのは、幻想だ。ピアス（　44　）、最近たまたま落とさない日々が続いていただけで、明日からは毎日紛失を重ねるかもしれない。いや、自分のうっかり工合を考えれば、むしろその方が自然だと自分に言い聞かせながら、私はまだピアスの消えた片耳を撫で続けている。</p>",
+      contentTranslationZhHans:
+        '<p>寂寞的单耳环</p><p>泽田瞳子</p><p>最近少有地有些消沉。只因弄丢了一只心爱的耳环。</p><p>若是白天独自外出时发生此事，我肯定会坚持找到最后。不巧发现遗失时正值深夜，更是在与编辑部诸位结束整日取材工作后休息的店里。</p><p>实在不忍让疲惫的编辑们再费心。我强压着慌乱，佯装无事地环视四周，但果然还是没有。最终也只能轻抚耳垂，这已是我所能做的全部。考虑到白天里辗转多处的行程，折返寻找已无可能，只得黯然归家。</p><p>这是在熟人店铺里定制的耳环，所以单独补做一只并不难。</p><p>即便如此，我还是出乎自己意料地感到沮丧，因为这是我三四年来第一次弄丢东西。</p><p>二十多岁初穿耳洞时，我还不习惯佩戴饰品，每两三个月必会丢失耳环。步入三十岁后，那种情况逐渐变少，近些年几乎再未出错。</p><p>若早知自己本性粗疏，本不会为任何遗失所困。正因自以为不会再犯，此刻的傲慢之态更显难堪。回想儿时无论单杠翻身上杠还是九九乘法表都难以掌握，总觉得"做不到"才是人生常态，犯再多错也坦然。年岁愈增愈畏惧失误，愈发在意他人眼光，或许正因为在不知不觉中，将自己当作了一个“能干的人”吧。</p><p>但归根结底，认为年岁增长就不会犯错不过是虚妄。即使是耳环，这些日子的安然无恙或许只是侥幸，从明天起可能又会每天都丢。不，以我这粗心大意的性格，这才是应有的常态吧。如此自我劝解着，手指却仍不住摩挲着那只空荡的耳垂。</p>',
       type: SectionType.VOCAB_GRAMMAR,
       title: "問題7 次の文章を読んで、41から44の中に入る最もよいものを、１・２・３・４から一つ選びなさい。",
       order: 7,
-      questions: [],
+      questions: [
+        {
+          id: "",
+          type: QuestionType.SINGLE_CHOICE,
+          order: 1,
+          prompt: "",
+          analysis:
+            "这里空处前面说：「编辑们总算能够松口气了」，后文描述自己只能压抑住动摇、偷偷四处张望……也就是说，既然编辑们辛苦了一天，“绝对不会让他们为我担心（去帮我找耳环）”。\n「気を使わせる」＝“让（别人）费心、担心”；\n加上否定强化「～はしない」＝“绝不会（让人担心）”；\n中间的「られ」是可能态，将「使わせる」强化为更强烈的否定。\n因此用「気を使わせられはしない」最恰当，表达“我可不会让他们替我操心”的意思。",
+          choices: [
+            {
+              id: "",
+              label: "1.",
+              text: "気を使えはしない",
+              isCorrect: false,
+            },
+            {
+              id: "",
+              label: "2.",
+              text: "気を使ってなどいない",
+              isCorrect: false,
+            },
+            {
+              id: "",
+              label: "3.",
+              text: "気を使わせられはしない",
+              isCorrect: true,
+            },
+            {
+              id: "",
+              label: "4.",
+              text: "気をつかわせてなどいない",
+              isCorrect: false,
+            },
+          ],
+        },
+        {
+          id: "",
+          type: QuestionType.SINGLE_CHOICE,
+          order: 2,
+          prompt: "",
+          analysis:
+            "前一句说“因为是常去的店里定做的，只订一只也不难”，本应无伤大雅；但下文却说“自己都觉得前所未有地沮丧”，后面给出原因“因为这是时隔三四年才第一次丢东西”。句意是“尽管单买并不困难，然而我还是异常沮丧”，所以用转折接续「それにもかかわらず」（“虽说如此/尽管如此”）。",
+          choices: [
+            {
+              id: "",
+              label: "1.",
+              text: "それによって",
+              isCorrect: false,
+            },
+            {
+              id: "",
+              label: "2.",
+              text: "そればかりでなく",
+              isCorrect: false,
+            },
+            {
+              id: "",
+              label: "3.",
+              text: "それどころか",
+              isCorrect: false,
+            },
+            {
+              id: "",
+              label: "4.",
+              text: "それにもかかわらず",
+              isCorrect: true,
+            },
+          ],
+        },
+        {
+          id: "",
+          type: QuestionType.SINGLE_CHOICE,
+          order: 3,
+          prompt: "",
+          analysis:
+            "句型是“如果……”＋“就不会……”：\n「最初から自分の迂闊さを承知していれば、何を落とそうともがっかりはしない。」\n意即“如果从一开始就意识到自己的粗心，无论丢什么也不会失望”。这里要用假定形「～していれば」表示“如果……的话”。",
+          choices: [
+            {
+              id: "",
+              label: "1.",
+              text: "承知していれば",
+              isCorrect: true,
+            },
+            {
+              id: "",
+              label: "2.",
+              text: "承知していて",
+              isCorrect: false,
+            },
+            {
+              id: "",
+              label: "3.",
+              text: "承知していたのか",
+              isCorrect: false,
+            },
+            {
+              id: "",
+              label: "4.",
+              text: "承知していたかのように",
+              isCorrect: false,
+            },
+          ],
+        },
+        {
+          id: "",
+          type: QuestionType.SINGLE_CHOICE,
+          order: 4,
+          prompt: "",
+          analysis:
+            "「だって」可以表示“就算是……”的意思。\n「ピアスだって、最近たまたま落とさない日々が続いていただけで……」\n相当于“就算是耳环，只是最近恰好一直没丢而已，明天开始说不定又天天丢”。",
+          choices: [
+            {
+              id: "",
+              label: "1.",
+              text: "なら",
+              isCorrect: false,
+            },
+            {
+              id: "",
+              label: "2.",
+              text: "だって",
+              isCorrect: true,
+            },
+            {
+              id: "",
+              label: "3.",
+              text: "でさえ",
+              isCorrect: false,
+            },
+            {
+              id: "",
+              label: "4.",
+              text: "といって",
+              isCorrect: false,
+            },
+          ],
+        },
+      ],
     },
   ],
 };
