@@ -2185,26 +2185,27 @@ export const data: Data = {
           type: QuestionType.SINGLE_CHOICE,
           order: 1,
           prompt: "1番",
-          analysis: "",
+          analysis:
+            '问题：女学生接下来必须做什么？\n正确选项：3. 决定当天的任务分配\n\n1.错误\n女生已经完成"挑选三个候选场景"，之后由部长负责选择具体场景。所以不需要女生再做。\n\n2.错误\n打印台词是部长明确表示"我来选我来印"，女生不参与。\n\n3.正确\n部长明确指示"需要你分配每个人的工作（割り振ってほしい）"，这是女生接下来的任务。\n\n4.错误\n传单印刷已明确交给二年级学生，且部长会直接联系，与女生无关。\n\n关键点梳理：注意动词主体：\n女生已完成：场景初选\n女生待办：人员分工\n他人负责：部长选场景印台词、二年级印传单',
           choices: [
             {
               label: "1.",
-              text: "交通10,000円と、宿泊6,000円を2泊分。",
-              isCorrect: true,
+              text: "体験会で使うシーンを選ぶ",
+              isCorrect: false,
             },
             {
               label: "2.",
-              text: "交通10,000円と、宿泊6,000円を3泊分。",
+              text: "セリフを印刷する",
               isCorrect: false,
             },
             {
               label: "3.",
-              text: "交通12,000円と、宿泊7,000円を2泊分。",
-              isCorrect: false,
+              text: "当日の仕事の担当を決める",
+              isCorrect: true,
             },
             {
               label: "4.",
-              text: "交通12,000円と、宿泊7,000円を3泊分。",
+              text: "ちらしを印刷する",
               isCorrect: false,
             },
           ],
