@@ -2743,5 +2743,332 @@ export const data: Data = {
         },
       ],
     },
+    {
+      partId: "",
+      type: SectionType.LISTENING,
+      title:
+        "問題4 では、問題用紙に何も印刷されていません。まず文を聞いてください。それから、それに対する返事を聞いて、１から３の中から、最もよいものを一つ選んでください。",
+      order: 23,
+      questions: [
+        {
+          type: QuestionType.SINGLE_CHOICE,
+          listeningAudio: "./listening_4_1.mp3",
+          listeningContent:
+            '<p data-starttime="00:00:04,675" data-endtime="00:00:08,725">先輩、テニスの全国大会、きっと優勝してみせます。</p><p data-starttime="00:00:11,075" data-endtime="00:00:13,900">1.全力を出してくるよ。</p><p data-starttime="00:00:15,125" data-endtime="00:00:18,200">2.あきらめるのは早いんじゃない？</p><p data-starttime="00:00:19,575" data-endtime="00:00:22,850">3.うん、期待してるからね。</p>',
+          listeningContentTranslationZhHans:
+            "<p>前辈，网球全国赛我一定会拿冠军的！</p><p>我会全力以赴的。</p><p>现在放弃也太早了吧？</p><p>嗯，我很期待哦。</p>",
+          order: 1,
+          prompt: "1番",
+          analysis:
+            "对方表达的是“我一定会赢”的自信和信心，此时作为听者，最自然的回应是表达“对你的表现很期待”，选项3用“我很期待”正好做到了肯定和鼓励。而选项1又变成了对方自言自语，选项2则会让人误解对方有放弃的意思，故排除。",
+          choices: [
+            {
+              label: "1.",
+              text: "①",
+              isCorrect: false,
+            },
+            {
+              label: "2.",
+              text: "②",
+              isCorrect: false,
+            },
+            {
+              label: "3.",
+              text: "③",
+              isCorrect: true,
+            },
+          ],
+        },
+        {
+          type: QuestionType.SINGLE_CHOICE,
+          listeningAudio: "./listening_4_2.mp3",
+          listeningContent:
+            '<p data-starttime="00:00:05,725" data-endtime="00:00:11,125">ねえ、歌手のもりなお、明日のコンサートを最後に引退するって、知ってた？</p><p data-starttime="00:00:12,200" data-endtime="00:00:16,725">1.えっ、明日で引退するの？どうして？</p><p data-starttime="00:00:17,525" data-endtime="00:00:21,375">2.えっ、コンサートだけは続けるんだ。</p><p data-starttime="00:00:21,825" data-endtime="00:00:26,175">3.えっ、明日のコンサート中止になったの？</p>',
+          listeningContentTranslationZhHans:
+            "<p>诶，你知道吗？歌手森直听说明天的演唱会之后就要退出歌坛了。</p><p>诶，明天就退出了？为什么啊？</p><p>诶，就只有演唱会继续开啊。</p><p>诶，明天的演唱会取消了吗？</p>",
+          order: 2,
+          prompt: "2番",
+          analysis:
+            "题干是在问“你知道森直要在明天的演唱会后退出歌坛吗？”，重点是“退出歌坛”，所以最自然的反应是表达惊讶并追问“为什么要退休？”，即选项1。",
+          choices: [
+            {
+              label: "1.",
+              text: "①",
+              isCorrect: true,
+            },
+            {
+              label: "2.",
+              text: "②",
+              isCorrect: false,
+            },
+            {
+              label: "3.",
+              text: "③",
+              isCorrect: false,
+            },
+          ],
+        },
+        {
+          type: QuestionType.SINGLE_CHOICE,
+          listeningAudio: "./listening_4_3.mp3",
+          listeningContent:
+            '<p data-starttime="00:00:05,400" data-endtime="00:00:09,000">ゼミでやった実験、データを整理するのに手こずったね。</p><p data-starttime="00:00:10,425" data-endtime="00:00:13,575">1.確かにスムーズにいったよね。</p><p data-starttime="00:00:14,375" data-endtime="00:00:18,250">2.あ、もっと大変だと思っていたんだね。</p><p data-starttime="00:00:19,500" data-endtime="00:00:23,400">3.本当、途中で嫌になっちゃったよ。</p>',
+          listeningContentTranslationZhHans:
+            "<p>在研究班做实验，整理数据的时候真是费了好大劲儿。</p><p>确实挺顺利的嘛。</p><p>你是不是还以为会更难呀。</p><p>真的，中途都不想做了。</p>",
+          order: 3,
+          prompt: "3番",
+          analysis: "说话人感叹“费劲儿”，听者以“中途都不想做了。”来呼应说话人的无奈，选项2最贴切。",
+          choices: [
+            {
+              label: "1.",
+              text: "①",
+              isCorrect: false,
+            },
+            {
+              label: "2.",
+              text: "②",
+              isCorrect: false,
+            },
+            {
+              label: "3.",
+              text: "③",
+              isCorrect: true,
+            },
+          ],
+        },
+        {
+          type: QuestionType.SINGLE_CHOICE,
+          listeningAudio: "./listening_4_4.mp3",
+          listeningContent:
+            '<p data-starttime="00:00:04,975" data-endtime="00:00:08,650">美容師さんに言われるままにパーマかけちゃったけど、どうかな？</p><p data-starttime="00:00:09,325" data-endtime="00:00:13,650">1.え一？美容師さんにアドバイスもらわなかったんだ。</p><p data-starttime="00:00:14,400" data-endtime="00:00:18,025">2.美容師さんの言うとおりにして正解だよ。</p><p data-starttime="00:00:18,925" data-endtime="00:00:23,200">3.美容師さんのすすめるスタイルにすればよかったかもね。</p>',
+          listeningContentTranslationZhHans:
+            "<p>我听美发师的建议烫了这个头发，你觉得怎么样？</p><p>诶？美发师没给你建议？</p><p>听美发师的真是没错。</p><p>也许该剪美容师推荐的发型才对。</p>",
+          order: 4,
+          prompt: "4番",
+          analysis:
+            "说话人问“怎么样”，想确认自己听从美容师建议是否正确。选项2直接肯定“听美容师的没错”，是最恰当的回应。选项1反问对方没采纳建议，和实际不符；选项3又显得对方有错，也不符合“怎么样”的询问意图。",
+          choices: [
+            {
+              label: "1.",
+              text: "①",
+              isCorrect: false,
+            },
+            {
+              label: "2.",
+              text: "②",
+              isCorrect: true,
+            },
+            {
+              label: "3.",
+              text: "③",
+              isCorrect: false,
+            },
+          ],
+        },
+        {
+          type: QuestionType.SINGLE_CHOICE,
+          listeningAudio: "./listening_4_5.mp3",
+          listeningContent:
+            '<p data-starttime="00:00:05,325" data-endtime="00:00:09,725">研究会の発表の事前練習、明日なら見てあげられなくもないよ。</p><p data-starttime="00:00:11,025" data-endtime="00:00:14,625">1.どうしても明日は難しいですか？</p><p data-starttime="00:00:15,425" data-endtime="00:00:19,825">2.すみません、では明日お願いします。</p><p data-starttime="00:00:20,450" data-endtime="00:00:24,200">3.じゃあ、今日の方がいいんですね。</p>',
+          listeningContentTranslationZhHans:
+            "<p>明天的话，我也不是不可以帮你预演一下研讨会发言。</p><p>你明天真的是完全不行吗？</p><p>不好意思，那就麻烦你明天帮忙了。</p><p>那今天可以是吗？</p>",
+          order: 5,
+          prompt: "5番",
+          analysis:
+            "对方是“明天也可以帮你看”，意思是“如果你要的话，明天行”。此时要接受这个好意，选项2“那就明天拜托你了”最自然",
+          choices: [
+            {
+              label: "1.",
+              text: "①",
+              isCorrect: false,
+            },
+            {
+              label: "2.",
+              text: "②",
+              isCorrect: true,
+            },
+            {
+              label: "3.",
+              text: "③",
+              isCorrect: false,
+            },
+          ],
+        },
+        {
+          type: QuestionType.SINGLE_CHOICE,
+          listeningAudio: "./listening_4_6.mp3",
+          listeningContent:
+            '<p data-starttime="00:00:05,900" data-endtime="00:00:11,375">ねえ、私たち午後から出張だけど、新幹線、今運転を見合わせるって。</p><p data-starttime="00:00:12,325" data-endtime="00:00:16,375">1.えっ、いつ頃通転を再開するんだろう。</p><p data-starttime="00:00:17,300" data-endtime="00:00:21,800">2.あっ、新幹線動いたんだ。良かった。</p><p data-starttime="00:00:22,600" data-endtime="00:00:26,725">3.じゃあ、予定を変更しなくてよさそうだね。</p>',
+          listeningContentTranslationZhHans:
+            "<p>我们下午要出差，但是听说新干线现在停运了。</p><p>诶，不知道大概什么时候会恢复啊。</p><p>啊，新干线在运行啊，太好了。</p><p>那看来我们不用改日程了吧。</p>",
+          order: 6,
+          prompt: "6番",
+          analysis:
+            "说话人只报告“暂停运行”，并未提恢复信息，听者最自然会追问“什么时候能恢复？”，选项1符合。选项2明显和“暂停”矛盾，选项3则错误地认为可以按原计划走，也与“暂停中”不符。",
+          choices: [
+            {
+              label: "1.",
+              text: "①",
+              isCorrect: true,
+            },
+            {
+              label: "2.",
+              text: "②",
+              isCorrect: false,
+            },
+            {
+              label: "3.",
+              text: "③",
+              isCorrect: false,
+            },
+          ],
+        },
+        {
+          type: QuestionType.SINGLE_CHOICE,
+          listeningAudio: "./listening_4_7.mp3",
+          listeningContent:
+            '<p data-starttime="00:00:05,400" data-endtime="00:00:11,350">あの、このカウンターで3,000円以上のレシートと引き換えにお皿がもらえるって聞いたんですが。</p><p data-starttime="00:00:12,325" data-endtime="00:00:16,875">1.あっ、商品のお取り替えをご希望ですね。</p><p data-starttime="00:00:18,025" data-endtime="00:00:21,925">2.3,000円のご予算でお求めでしょうか。</p><p data-starttime="00:00:22,600" data-endtime="00:00:27,075">3.あっ、はい。レシートをお預かりします。</p>',
+          listeningContentTranslationZhHans:
+            "<p>那个，我听说来这个柜台用消费金额3000日元以上的收据可以换盘子，是真的吗？</p><p>啊，您是想退换商品是吧</p><p>您是想用3000日元预算买东西吗？</p><p>啊，好的。我来看看您的收据。</p>",
+          order: 7,
+          prompt: "7番",
+          analysis:
+            "顾客是来凭收据换盘子，店员应该“收下收据”进行换取，选项3最合适；选项1误以为顾客要换商品，选项2又变成预算询问，都不对。",
+          choices: [
+            {
+              label: "1.",
+              text: "①",
+              isCorrect: false,
+            },
+            {
+              label: "2.",
+              text: "②",
+              isCorrect: false,
+            },
+            {
+              label: "3.",
+              text: "③",
+              isCorrect: true,
+            },
+          ],
+        },
+        {
+          type: QuestionType.SINGLE_CHOICE,
+          listeningAudio: "./listening_4_8.mp3",
+          listeningContent:
+            '<p data-starttime="00:00:05,825" data-endtime="00:00:12,025">ゼミの食事会、いつもの店に電話したんだけど、キャンセルが出ない限り、席確保できないって。</p><p data-starttime="00:00:13,025" data-endtime="00:00:16,675">1.ああ、キャンセルできないんだね。</p><p data-starttime="00:00:17,750" data-endtime="00:00:21,800">2.じゃあ何とか予約取れそうだね。</p><p data-starttime="00:00:22,575" data-endtime="00:00:26,575">3.じゃあ、他の店探すしかないね</p>',
+          listeningContentTranslationZhHans:
+            "<p>我给研讨会小组聚餐常去的那家店打过电话了，他们说只要没有客人取消，就订不到座位。</p><p>啊，就没法取消了吗？</p><p>那看来还能订到吧？</p><p>那我们只能找别家店了。</p>",
+          order: 8,
+          prompt: "8番",
+          analysis:
+            "店家明确“除非有人取消，否则无法提供座位”，也就是说当前无法订位。对策是“只能另找别家”，选项3贴切。选项1和2都和事实相悖。",
+          choices: [
+            {
+              label: "1.",
+              text: "①",
+              isCorrect: false,
+            },
+            {
+              label: "2.",
+              text: "②",
+              isCorrect: false,
+            },
+            {
+              label: "3.",
+              text: "③",
+              isCorrect: true,
+            },
+          ],
+        },
+        {
+          type: QuestionType.SINGLE_CHOICE,
+          listeningAudio: "./listening_4_9.mp3",
+          listeningContent:
+            '<p data-starttime="00:00:05,300" data-endtime="00:00:11,500">山本課長って先月この支店に異動してきたと思ったら、海外に転勤だって。</p><p data-starttime="00:00:12,650" data-endtime="00:00:16,475">1.この間来たばかりなのにまた異動？</p><p data-starttime="00:00:17,025" data-endtime="00:00:21,725">2.えっ、この支店に来るはずが海外転勤になったの？</p><p data-starttime="00:00:22,475" data-endtime="00:00:26,675">3.課長、長いことこの支店にいたもんね。</p>',
+          listeningContentTranslationZhHans:
+            "<p>山本课长上个月才刚调到这家分店，现在又要调去海外了。</p><p>之前才刚来，又要调动了？</p><p>诶，明明要来这家分店的，结果是调去海外了？</p><p>课长在这家分店待了很久了吧。</p>",
+          order: 9,
+          prompt: "9番",
+          analysis:
+            "对方表达“刚调来就要再调走”，最自然的反应是感叹“才刚来就又要调动？”，即选项1。选项2语序奇怪且把重点放在“原本要来这里”；选项3则说“待了很久”，与“才来一个月”矛盾。",
+          choices: [
+            {
+              label: "1.",
+              text: "①",
+              isCorrect: true,
+            },
+            {
+              label: "2.",
+              text: "②",
+              isCorrect: false,
+            },
+            {
+              label: "3.",
+              text: "③",
+              isCorrect: false,
+            },
+          ],
+        },
+        {
+          type: QuestionType.SINGLE_CHOICE,
+          listeningAudio: "./listening_4_10.mp3",
+          listeningContent:
+            '<p data-starttime="00:00:06,075" data-endtime="00:00:09,925">卒業論文の提出まであと10日で、切羽詰まってきたよ。</p><p data-starttime="00:00:10,975" data-endtime="00:00:14,125">1.ヘえー、余裕あるんだね。</p><p data-starttime="00:00:15,425" data-endtime="00:00:18,650">2.あと少しだから頑張って。</p><p data-starttime="00:00:19,325" data-endtime="00:00:22,950">3.すごい、もう書き終わったんだ。</p>',
+          listeningContentTranslationZhHans:
+            "<p>离毕业论文提交只有10天了，我都快赶不及了。</p><p>哇，你还挺从容的啊。</p><p>快到最后关头了，加油吧。</p><p>哇，你都写完了啊？</p>",
+          order: 10,
+          prompt: "10番",
+          analysis:
+            "说话人是“时间紧迫很焦虑”，听者应给予鼓励，“最后关头加油”最合适，即选项2。选项1误以为对方很从容，选项3则误解为已完成。",
+          choices: [
+            {
+              label: "1.",
+              text: "①",
+              isCorrect: false,
+            },
+            {
+              label: "2.",
+              text: "②",
+              isCorrect: true,
+            },
+            {
+              label: "3.",
+              text: "③",
+              isCorrect: false,
+            },
+          ],
+        },
+        {
+          type: QuestionType.SINGLE_CHOICE,
+          listeningAudio: "./listening_4_11.mp3",
+          listeningContent:
+            '<p data-starttime="00:00:05,475" data-endtime="00:00:09,900">みどり社との共同研究、中止を余儀なくされたって課長が言ってたよ。</p><p data-starttime="00:00:10,775" data-endtime="00:00:14,925">1.今になって中止にはできないもんね。</p><p data-starttime="00:00:15,925" data-endtime="00:00:19,550">2.えっ、いったい何があったの？</p><p data-starttime="00:00:20,425" data-endtime="00:00:24,350">3.あー、続けられることになったんだね。</p>',
+          listeningContentTranslationZhHans:
+            "<p>课长说和绿公司的联合研究被迫中止了。</p><p>现在想要中止也不行了吧。</p><p>诶，到底发生了什么事？</p><p>啊，原来又能继续下去了啊。</p>",
+          order: 11,
+          prompt: "11番",
+          analysis:
+            "信息是“联合研究被迫中止”，听者最自然会好奇“到底为什么要中止？发生了什么？”即选项2。选项1和3都与“中止”的事实不符。",
+          choices: [
+            {
+              label: "1.",
+              text: "①",
+              isCorrect: false,
+            },
+            {
+              label: "2.",
+              text: "②",
+              isCorrect: true,
+            },
+            {
+              label: "3.",
+              text: "③",
+              isCorrect: false,
+            },
+          ],
+        },
+      ],
+    },
   ],
 };
