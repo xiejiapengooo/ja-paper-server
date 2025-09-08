@@ -131,6 +131,7 @@ model PaperSection {
   order                    Int
   content                  String?     @db.Text
   contentTranslationZhHans String?     @db.Text
+  imageContent             String?
 
   questions PaperQuestion[]
 
@@ -151,7 +152,6 @@ model PaperQuestion {
 
   choices       QuestionChoice[]
   userQuestions UserQuestion[]
-  paperFileId   String?
 
   @@index([sectionId, order])
   @@index([type])
