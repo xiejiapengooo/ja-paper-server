@@ -140,15 +140,18 @@ model PaperSection {
 }
 
 model PaperQuestion {
-  id        String       @id @default(cuid())
-  createdAt DateTime     @default(now())
-  updatedAt DateTime     @updatedAt
-  sectionId String
-  section   PaperSection @relation(fields: [sectionId], references: [id], onDelete: Cascade)
-  type      QuestionType
-  order     Int
-  prompt    String       @db.Text
-  analysis  String?      @db.Text
+  id                                String       @id @default(cuid())
+  createdAt                         DateTime     @default(now())
+  updatedAt                         DateTime     @updatedAt
+  sectionId                         String
+  section                           PaperSection @relation(fields: [sectionId], references: [id], onDelete: Cascade)
+  type                              QuestionType
+  order                             Int
+  prompt                            String       @db.Text
+  analysis                          String?      @db.Text
+  listeningAudio                    String?
+  listeningContent                  String?      @db.Text
+  listeningContentTranslationZhHans String?      @db.Text
 
   choices       QuestionChoice[]
   userQuestions UserQuestion[]
