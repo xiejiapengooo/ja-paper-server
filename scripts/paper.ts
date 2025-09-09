@@ -26,7 +26,6 @@ async function main() {
       title: data.title,
     },
   });
-  console.log(paper);
 
   for (const partItem of data.parts) {
     const part = await prisma.paperPart.upsert({
