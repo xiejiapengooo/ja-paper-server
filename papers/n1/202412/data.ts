@@ -9,7 +9,7 @@ import {
   SectionType,
 } from "@prisma/client";
 
-type Data = {
+export type Data = {
   id?: Paper["id"];
   level: Paper["level"];
   year: Paper["year"];

@@ -1,14 +1,66 @@
-import { PrismaClient } from "@prisma/client";
-// import { ConfigService } from "@nestjs/config";
-import { data } from "../papers/n1/202412/data";
+import { Paper, PrismaClient } from "@prisma/client";
+import { ConsoleLogger } from "@nestjs/common";
+import { data, type Data } from "../papers/n1/202412/data";
 
 const prisma = new PrismaClient();
+const logger = new ConsoleLogger();
 
 main()
   .then(() => {})
   .catch(console.log);
 
+async function getData(paperId: Paper["id"]): Data {
+  const paper = await prisma.paper.findUnique({
+    where: {
+      id: paperId,
+    },
+    include: {
+      parts: {
+        include: {
+          sections: {
+            include: {
+              questions: {
+                include: {
+                  choices: true,
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+  });
+  return {
+    id: paper.id,
+    title: paper.title,
+    level: paper.level,
+    year: paper.year,
+    month: paper.month,
+    parts: paper.parts.map((part) => {
+      return {
+        id: part.id,
+        title: part.title,
+        duration: part.duration,
+        listeningAudio: part.listeningAudio,
+        sections: part.sections.map((section) => {
+          return {
+            id: section.id,
+            type: section.type,
+            title: section.title,
+            order: section.order,
+            content: section.content,
+            contentTranslationZhHans: section.contentTranslationZhHans,
+            imageContent: section.imageContent,
+          };
+        }),
+      };
+    }),
+  };
+}
+
 async function main() {
+  logger.log("Starting upsert...");
+
   const paper = await prisma.paper.upsert({
     where: {
       id: data.id || "",
@@ -26,6 +78,7 @@ async function main() {
       title: data.title,
     },
   });
+  logger.log(`Paper ${paper.id} upserted.`);
 
   for (const partItem of data.parts) {
     const part = await prisma.paperPart.upsert({
@@ -45,6 +98,7 @@ async function main() {
         listeningAudio: partItem.listeningAudio,
       },
     });
+    logger.log(`Paper part ${part.id} upserted.`);
 
     for (const sectionItem of partItem.sections) {
       const section = await prisma.paperSection.upsert({
@@ -72,6 +126,7 @@ async function main() {
           imageContent: sectionItem.imageContent || "",
         },
       });
+      logger.log(`Paper section ${section.id} upserted.`);
 
       for (const questionItem of sectionItem.questions) {
         const question = await prisma.paperQuestion.upsert({
@@ -103,6 +158,7 @@ async function main() {
             listeningContentTranslationZhHans: questionItem.listeningContentTranslationZhHans || "",
           },
         });
+        logger.log(`Paper question ${question.id} upserted.`);
 
         for (const choiceItem of questionItem.choices) {
           await prisma.questionChoice.upsert({
@@ -122,8 +178,13 @@ async function main() {
               questionId: question.id,
             },
           });
+          logger.log(`Question choice ${choiceItem.id} upserted.`);
         }
       }
     }
   }
+
+  logger.log("Upsert Done!");
+
+  await prisma.$disconnect();
 }
