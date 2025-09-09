@@ -103,19 +103,26 @@ model Paper {
   title       String     @db.VarChar(255)
   description String?    @db.Text
 
-  sections PaperSection[]
+  sections  PaperSection[]
+  parts     PaperPart[]
+  questions PaperQuestion[]
 
   @@index([level, year, month])
 }
 
 model PaperPart {
-  id        String   @id @default(cuid())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  title     String
-  duration  Int
+  id             String   @id @default(cuid())
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  title          String
+  duration       Int
+  listeningAudio String?
 
-  sections PaperSection[]
+  paperId String
+  paper   Paper  @relation(fields: [paperId], references: [id], onDelete: Cascade)
+
+  sections  PaperSection[]
+  questions PaperQuestion[]
 }
 
 model PaperSection {
@@ -143,6 +150,10 @@ model PaperQuestion {
   id                                String       @id @default(cuid())
   createdAt                         DateTime     @default(now())
   updatedAt                         DateTime     @updatedAt
+  paperId                           String
+  paper                             Paper        @relation(fields: [paperId], references: [id], onDelete: Cascade)
+  partId                            String
+  part                              PaperPart    @relation(fields: [partId], references: [id])
   sectionId                         String
   section                           PaperSection @relation(fields: [sectionId], references: [id], onDelete: Cascade)
   type                              QuestionType
@@ -171,13 +182,4 @@ model QuestionChoice {
   question   PaperQuestion @relation(fields: [questionId], references: [id], onDelete: Cascade)
 
   @@index([questionId])
-}
-
-model PaperFile {
-  id        String        @id @default(cuid())
-  createdAt DateTime      @default(now())
-  updatedAt DateTime      @updatedAt
-  key       String        @db.Text
-  type      PaperFileType
-  duration  Int?
 }

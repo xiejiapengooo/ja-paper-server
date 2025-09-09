@@ -1,11 +1,25 @@
-import { PaperPart, PaperQuestion, PaperSection, QuestionChoice, QuestionType, SectionType } from "@prisma/client";
+import {
+  Paper,
+  PaperLevel,
+  PaperPart,
+  PaperQuestion,
+  PaperSection,
+  QuestionChoice,
+  QuestionType,
+  SectionType,
+} from "@prisma/client";
 
 type Data = {
-  id?: string;
-  title: string;
+  id?: Paper["id"];
+  level: Paper["level"];
+  year: Paper["year"];
+  month: Paper["month"];
+  title: Paper["title"];
   parts: Array<{
     id?: PaperPart["id"];
-    title: string;
+    title: PaperPart["title"];
+    duration: PaperPart["duration"];
+    listeningAudio?: PaperPart["listeningAudio"];
     sections: Array<{
       id?: PaperSection["id"];
       partId?: PaperSection["partId"];
@@ -36,10 +50,14 @@ type Data = {
 };
 
 export const data: Data = {
-  title: "2024年12月",
+  title: "2024-12",
+  level: PaperLevel.N1,
+  month: 12,
+  year: 2024,
   parts: [
     {
       title: "言語知識（文字・語彙・文法）・読解",
+      duration: 110 * 60 * 60 * 1000,
       sections: [
         {
           type: SectionType.VOCAB_GRAMMAR,
@@ -2096,7 +2114,7 @@ export const data: Data = {
           ],
         },
         {
-          imageContent: "./13_1.webp",
+          imageContent: "13_1.webp",
           type: SectionType.READING,
           title:
             "問題13 右のページは、ある大学の研究活動助成の案内である。\n下の問いに対する答えとして最もよいものを、1・2・3・4から一つ選びなさい。",
@@ -2168,6 +2186,8 @@ export const data: Data = {
     },
     {
       title: "聴解",
+      duration: 61 * 60 * 60 * 1000,
+      listeningAudio: "listening_0.mp3",
       sections: [
         {
           type: SectionType.LISTENING,
@@ -2177,7 +2197,7 @@ export const data: Data = {
           questions: [
             {
               type: QuestionType.SINGLE_CHOICE,
-              listeningAudio: "./listening_1_1.mp3",
+              listeningAudio: "listening_1_1.mp3",
               listeningContent:
                 '<p data-start-time="00:00:04,850" data-end-time="00:00:15,175">大学の演劇サークルで、女の学生と部長の男の学生と話しています。女の学生は、この後何をしなければなりませんか？</p><p data-start-time="00:00:18,475" data-end-time="00:00:27,575">女：鈴木さん、来週の新入生勧誘のためのサークル体験会、ポスターを見た人から早速参加の申し込みが来てますね。</p><p data-start-time="00:00:27,575" data-end-time="00:00:39,075">男：うん、準備進めないとね。当日来てくれた人には、演劇を一部実際に体験してもらうよね。その時に使うシーン、台本から候補を選ぶのお願いしてたけど、どう？</p><p data-start-time="00:00:39,300" data-end-time="00:00:44,650">女：はい、体験者が多くても使えそうなシーンを3つ、ピックアップしました。</p><p data-start-time="00:00:44,875" data-end-time="00:00:55,575">男：じゃあ、その中から僕が選んで、セリフを印刷しておくよ。あと、当日は受付とか誘導とか、みんなにも手伝ってもらうから、誰が何を担当するか割り振ってほしいんだ。</p><p data-start-time="00:00:55,700" data-end-time="00:01:01,050">女：わかりました。えっと、当日配る入部案内のチラシの準備は？</p><p data-start-time="00:01:01,200" data-end-time="00:01:06,525">男：ああ、それは2年生に印刷してもらおうと思ってるんだ。僕から頼んでおくよ。</p><p data-start-time="00:01:06,800" data-end-time="00:01:07,925">女：わかりました。</p><p data-start-time="00:01:11,275" data-end-time="00:01:15,400">女の学生は、この後何をしなければなりませんか？</p>',
               listeningContentTranslationZhHans:
@@ -2211,7 +2231,7 @@ export const data: Data = {
             },
             {
               type: QuestionType.SINGLE_CHOICE,
-              listeningAudio: "./listening_1_2.mp3",
+              listeningAudio: "listening_1_2.mp3",
               listeningContent:
                 '<p data-starttime="00:00:05,950" data-endtime="00:00:17,225">食品の会社で、男の課長と女の人が、開発中の焼きそばについて話しています。女の人は、この後どのように焼きそばを改良しますか？</p><p data-starttime="00:00:20,750" data-endtime="00:00:26,825">男：植田さん、植田さんが開発担当の冷凍焼きそばですが、試食会のアンケート結果を見ました。</p><p data-starttime="00:00:26,925" data-endtime="00:00:27,525">女：はい。</p><p data-starttime="00:00:27,800" data-endtime="00:00:33,075">男：植田さんがセールスポイントにしたいと言っていた「具がたっぷり入っている」という点は好評でしたね。</p><p data-starttime="00:00:33,250" data-endtime="00:00:35,125">女：はい、ありがとうございます。</p><p data-starttime="00:00:35,350" data-endtime="00:00:51,175">男：味については濃いとか、しょっぱいとかいうコメントが思ったよりも多かったですね。塩分量をもう少し抑えて作ってください。それから麵は適量とやや少ないと答えた人に分かれていました。でも原価から考えると麵の量を増やすのは難しいですね。</p><p data-starttime="00:00:51,475" data-endtime="00:00:57,400">女：そうなんですよね。麵を太くして食べ応えが出るようにするのも一案かと思うのですが。</p><p data-starttime="00:00:57,525" data-endtime="00:01:07,850">男：でも麵の太さについて否定的な評価はなかったし、具とのバランスもあるからとりあえず現状維持で。では次の試食会までに改良をお願いします。</p><p data-starttime="00:01:08,200" data-endtime="00:01:09,400">女：わかりました。</p><p data-starttime="00:01:14,150" data-endtime="00:01:18,850">女の人は、この後どのように焼きそばを改良しますか？</p>',
               listeningContentTranslationZhHans:
@@ -2245,7 +2265,7 @@ export const data: Data = {
             },
             {
               type: QuestionType.SINGLE_CHOICE,
-              listeningAudio: "./listening_1_3.mp3",
+              listeningAudio: "listening_1_3.mp3",
               listeningContent:
                 '<p data-starttime="00:00:05,975" data-endtime="00:00:14,975">森の自然教室で、ガイドが話しています。冬の森の散策ツアーに参加する人は、この後まず何をしますか？</p><p data-starttime="00:00:17,825" data-endtime="00:00:21,675">今日は冬の森の散策ツアーにご参加、ありがとうございます。</p><p data-starttime="00:00:21,825" data-endtime="00:00:27,425">後ほど外に出て雪の上を歩くためのスノーシューという道具を靴につけて散策します。</p><p data-starttime="00:00:27,750" data-endtime="00:00:37,825">通常ですと、先にこの森に住む動物を紹介したビデオをご覧いただくのですが、この後天気が崩れるようなので順番を入れ替え、先に散策をします。</p><p data-starttime="00:00:38,100" data-endtime="00:00:42,600">これから記念写真を撮るので、この建物の入り口に集まってください。</p><p data-starttime="00:00:42,875" data-endtime="00:00:45,350">その後スノーシューを履きましょう。</p><p data-starttime="00:00:45,550" data-endtime="00:00:49,500">先ほど受付でお渡しした地図は散策の時に使います。</p><p data-starttime="00:00:53,100" data-endtime="00:00:58,650">冬の森の散策ツアーに参加する人は、この後まず何をしますか？</p>',
               listeningContentTranslationZhHans:
@@ -2279,7 +2299,7 @@ export const data: Data = {
             },
             {
               type: QuestionType.SINGLE_CHOICE,
-              listeningAudio: "./listening_1_4.mp3",
+              listeningAudio: "listening_1_4.mp3",
               listeningContent:
                 '<p data-starttime="00:00:07,250" data-endtime="00:00:18,625">電話で、カフェの店長と建築会社の男の人が、店のリフォームについて話しています。男の人は今回のリフォーム案の何を直しますか？</p><p data-starttime="00:00:21,050" data-endtime="00:00:28,100">女：もしもし、カフェチェリーの本田です。メールで送ってもらった店のリフォームの修正案、拝見しました。</p><p data-starttime="00:00:28,275" data-endtime="00:00:35,700">男：お世話になっております。前回のご要望をもとに床の素材を木に変えたんですが、イメージ画像はいかがでしょうか。</p><p data-starttime="00:00:35,825" data-endtime="00:00:43,950">女：ええ、温かみが出ましたね。ただ、店内が前より暗く見えるんですが、壁と照明は前回と同じですよね。</p><p data-starttime="00:00:44,225" data-endtime="00:00:52,100">男：壁はレンガ色のままですし、照明も同じです。床を同じ素材でもう少し明るいものに変えることもできますが…</p><p data-starttime="00:00:52,275" data-endtime="00:01:01,400">女：床はこれでいいと思うので…壁の色のトーンを変えた案を作ってもらえますか。それを見て、場合によっては照明器具の変更を検討しようかな。</p><p data-starttime="00:01:01,650" data-endtime="00:01:10,675">男：承知しました。じゃあ、トーンを上げて修正したものをお送りします。あの、カウンターのデザインも変更していますが、いかがでしょうか。</p><p data-starttime="00:01:10,775" data-endtime="00:01:14,075">女：あ、気に入りました。これでお願いします。</p><p data-starttime="00:01:14,700" data-endtime="00:01:15,950">男：かしこまりました。</p><p data-starttime="00:01:19,225" data-endtime="00:01:23,600">男の人は今回のリフォーム案の何を直しますか？</p>',
               listeningContentTranslationZhHans:
@@ -2313,7 +2333,7 @@ export const data: Data = {
             },
             {
               type: QuestionType.SINGLE_CHOICE,
-              listeningAudio: "./listening_1_4.mp3",
+              listeningAudio: "listening_1_4.mp3",
               listeningContent:
                 '<p data-starttime="00:00:06,675" data-endtime="00:00:16,175">介護用品を作る会社で、課長と男の人と話しています。男の人は、今日何をしなければなりませんか？</p><p data-starttime="00:00:17,900" data-endtime="00:00:22,425">女：田中さん、来月の介護用品の展示会のことで話したいんですが。</p><p data-starttime="00:00:22,575" data-endtime="00:00:24,000">男：はい、課長。</p><p data-starttime="00:00:24,275" data-endtime="00:00:31,750">女：田中さんの担当は、会場で使う備品のレンタルの予約、顧客への案内状の送付、それからカタログの用意ですね。</p><p data-starttime="00:00:31,900" data-endtime="00:00:38,775">男：はい、取引先への案内状の文面案とレンタル会社に送る予定の注文書は昨日課長にお送りしたかと。</p><p data-starttime="00:00:39,025" data-endtime="00:00:54,475">女：ええ、案内状はあれでいいので、今週中に取引先に送ってください。備品のレンタルですが、会場でしきりに使うパネルとか机とか去年と同じ数になっていますよね。今年は商談のスペースが3つ増えるので、その分を増やしてください。</p><p data-starttime="00:00:54,625" data-endtime="00:00:56,200">男：あっ、すみません。</p><p data-starttime="00:00:56,625" data-endtime="00:01:02,900">女：レンタル会社への注文前に、私が会計課に承認をもらうので、今日中に修正お願いします。</p><p data-starttime="00:01:03,075" data-endtime="00:01:04,075">男：わかりました。</p><p data-starttime="00:01:04,475" data-endtime="00:01:09,825">女：それからカタログは最新のものが納品されますから、当日はそれを持っていってください。</p><p data-starttime="00:01:13,825" data-endtime="00:01:17,875">男の人は、今日何をしなければなりませんか？</p>',
               listeningContentTranslationZhHans:
@@ -2355,7 +2375,7 @@ export const data: Data = {
           questions: [
             {
               type: QuestionType.SINGLE_CHOICE,
-              listeningAudio: "./listening_2_1.mp3",
+              listeningAudio: "listening_2_1.mp3",
               listeningContent:
                 '<p data-starttime="00:00:05,450" data-endtime="00:00:16,225">ラジオで、アナウンサーと花火の会社で働く男の人が話しています。男の人が花火の職人になりたいと思ったきっかけは何ですか？</p><p data-starttime="00:00:35,475" data-endtime="00:00:45,675">女：今日は花火の製作と打ち上げの仕事をされている森田さんにお話を伺います。森田さん、花火のお仕事は「代々家業を受け継がれて」という方が多いそうですね。</p><p data-starttime="00:00:45,800" data-endtime="00:00:48,975">男：そうですね、僕の場合は違うんですけど。</p><p data-starttime="00:00:49,275" data-endtime="00:00:50,525">女：そうなんですか。</p><p data-starttime="00:00:50,875" data-endtime="00:01:07,825">男：大学の時、初めて花火大会の会場で間近で花火を見たんですが、花火響くような音、その圧倒的な力強さに心を奪われたんです。こんな花火を作って打ち上げてみたいと思って、家が花火の会社をしている友人に頼み込んで、この道に入りました。</p><p data-starttime="00:01:07,975" data-endtime="00:01:11,375">女：そうですか、この仕事をされてみていかがですか。</p><p data-starttime="00:01:11,600" data-endtime="00:01:24,300">男：玉を半分にしたものに花火材料を並べていくんですが、少しでもズレがあると空では大きく歪んでしまうんです。正確に詰めるのが難しいのでうまくいった時の達成感は何にも変え難いものです。</p><p data-starttime="00:01:27,550" data-endtime="00:01:32,575">男の人が花火の職人になりたいと思ったきっかけは何ですか？</p>',
               listeningContentTranslationZhHans:
@@ -2389,7 +2409,7 @@ export const data: Data = {
             },
             {
               type: QuestionType.SINGLE_CHOICE,
-              listeningAudio: "./listening_2_2.mp3",
+              listeningAudio: "listening_2_2.mp3",
               listeningContent:
                 '<p data-starttime="00:00:06,175" data-endtime="00:00:11,275">宇宙科学館のコンテストで司会者と女の人が話しています。</p><p data-starttime="00:00:11,400" data-endtime="00:00:17,750">女の人は宇宙食の開発で最も大変だったことは何だと言っていますか？</p><p data-starttime="00:00:37,625" data-endtime="00:00:43,775">男：宇宙食開発コンテスト優勝チームのリーダー、中山さんです。おめでとうございます。</p><p data-starttime="00:00:44,025" data-endtime="00:00:45,625">女：ありがとうございます。</p><p data-starttime="00:00:45,825" data-endtime="00:00:52,775">男：中山さんのチームは魚の缶詰を開発されました。ここまで開発するのは大変だったんじゃないですか？</p><p data-starttime="00:00:53,025" data-endtime="00:01:01,450">女：そうですね、宇宙で美味しく食べられるものにするのは大変でした。魚の栄養もできるだけ損ねないようにしました。</p><p data-starttime="00:01:01,500" data-endtime="00:01:05,325">男：先ほど一口いただいたんですが、味がずいぶん濃いですね。</p><p data-starttime="00:01:05,600" data-endtime="00:01:13,950">女：ええ、宇宙では味覚が鈍るそうなので、かなり濃い味にしました。タレも飛び散らないようにとろみをつけました。</p><p data-starttime="00:01:14,150" data-endtime="00:01:18,050">男：そうなんですか。硬さもちょうどよくて食べやすいですね。</p><p data-starttime="00:01:18,250" data-endtime="00:01:32,825">女：そこが最大の難関でした。宇宙ではスプーンしか使わないそうなので、柔らかくしたんですが、食感も楽しめるように工夫しました。最後まで試行錯誤してようやく今の柔らかさにたどり着いたんです。</p><p data-starttime="00:01:35,525" data-endtime="00:01:41,950">女の人は宇宙食の開発で最も大変だったことは何だと言っていますか？</p>',
               listeningContentTranslationZhHans:
@@ -2423,7 +2443,7 @@ export const data: Data = {
             },
             {
               type: QuestionType.SINGLE_CHOICE,
-              listeningAudio: "./listening_2_3.mp3",
+              listeningAudio: "listening_2_3.mp3",
               listeningContent:
                 '<p data-starttime="00:00:05,800" data-endtime="00:00:09,575">会社のリーダー研修で講師が話しています。</p><p data-starttime="00:00:09,850" data-endtime="00:00:15,625">講師は部下と接するときに何を忘れないようにしていたと言っていますか？</p><p data-starttime="00:00:34,275" data-endtime="00:00:39,100">チームで仕事を成功させるコツは、リーダーが部下と良好な関係を築くことです。</p><p data-starttime="00:00:39,300" data-endtime="00:00:44,675">そのためには部下への感謝の気持ちを忘れてはいけないと聞いたことがあるかもしれません。</p><p data-starttime="00:00:44,875" data-endtime="00:00:54,350">部下には笑顔で接するべきだとも言われますね。とはいえ、私自身も部下の言い分ばかりを聞てはいられず、厳しい指摘をせざるを得ないこともありました。</p><p data-starttime="00:00:54,500" data-endtime="00:01:03,275">ただそんな時でも話の最後は「これを糧に次は頑張ろう」などと、部下の意識がプラスに転じることを言うように心がけていました。</p><p data-starttime="00:01:03,400" data-endtime="00:01:10,800">部下との関係を築く方法は、一つではありません。今日の研修を通して自分なりの方法を見出してください。</p><p data-starttime="00:01:13,475" data-endtime="00:01:19,175">講師は部下と接するときに何を忘れないようにしていたと言っていますか？</p>',
               listeningContentTranslationZhHans:
@@ -2457,7 +2477,7 @@ export const data: Data = {
             },
             {
               type: QuestionType.SINGLE_CHOICE,
-              listeningAudio: "./listening_2_4.mp3",
+              listeningAudio: "listening_2_4.mp3",
               listeningContent:
                 '<p data-starttime="00:00:06,425" data-endtime="00:00:11,575">テレビでアナウンサーの男の人と花屋の店長が話しています。</p><p data-starttime="00:00:11,900" data-endtime="00:00:18,175">店長は花を届けるサービスのどんな点が最も客に喜ばれていると言っていますか？</p><p data-starttime="00:00:36,500" data-endtime="00:00:41,550">男：こちらのお店ではお客様に定期的に花を届けるサービスが好評だそうですね。</p><p data-starttime="00:00:41,650" data-endtime="00:00:53,150">女：はい、私どもの花の定期便では、お客様が希望された色の系統で花束を作ってお届けしています。花は長く咲き続けるよう丁寧に処理をしているんです。</p><p data-starttime="00:00:53,600" data-endtime="00:00:57,750">男：そうですか。あの、どのくらいの頻度で届くんですか？</p><p data-starttime="00:00:58,000" data-endtime="00:01:02,800">女：每月、毎週、もしくは2週間に一度からお選びいただけます。</p><p data-starttime="00:01:03,175" data-endtime="00:01:07,000">男：それはいいですね。花束の大きさも選べるんでしょうか？</p><p data-starttime="00:01:07,200" data-endtime="00:01:19,300">女：大きさは決まっていて、小さなテーブルでも飾りやすいボリュームにしています。毎回自分の好みの色を選択できるので、その点がお客様に何より高い評価をいただいていると感じています。</p><p data-starttime="00:01:19,650" data-endtime="00:01:20,950">男：そうなんですね。</p><p data-starttime="00:01:24,325" data-endtime="00:01:30,600">店長は花を届けるサービスのどんな点が最も客に喜ばれていると言っていますか？</p>',
               listeningContentTranslationZhHans:
@@ -2491,7 +2511,7 @@ export const data: Data = {
             },
             {
               type: QuestionType.SINGLE_CHOICE,
-              listeningAudio: "./listening_2_5.mp3",
+              listeningAudio: "listening_2_5.mp3",
               listeningContent:
                 '<p data-starttime="00:00:09,375" data-endtime="00:00:19,375">高校サッカーの大会でアナウンサーが監督にインタビューしています。監督はどうして今日の試合に勝てたと言っていますか？</p><p data-starttime="00:00:38,100" data-endtime="00:00:42,825">女：監督、おめでとうございます！今日の試合いかがでしたでしょうか？</p><p data-starttime="00:00:43,175" data-endtime="00:00:53,850">男：選手がよくやってくれました。去年の優勝候補が相手だったので覚悟はしていたんですが、前半先制されてなかなか普段の練習通りにはプレーできませんでした。</p><p data-starttime="00:00:54,400" data-endtime="00:01:00,975">でも劣勢の中、攻撃の手を緩めず最後まで粘り強く戦ったことが勝利につながったと思います。</p><p data-starttime="00:01:01,125" data-endtime="00:01:07,475">このような試合を戦い抜くことで、選手の技術面も精神面も成長してくれることを願っています。</p><p data-starttime="00:01:07,725" data-endtime="00:01:12,700">作戦面では選手交代のタイミングなど、改善すべき点はあると思っています。</p><p data-starttime="00:01:15,575" data-endtime="00:01:19,800">監督はどうして今日の試合に勝てたと言っていますか？</p>',
               listeningContentTranslationZhHans:
@@ -2525,7 +2545,7 @@ export const data: Data = {
             },
             {
               type: QuestionType.SINGLE_CHOICE,
-              listeningAudio: "./listening_2_6.mp3",
+              listeningAudio: "listening_2_6.mp3",
               listeningContent:
                 '<p data-starttime="00:00:05,600" data-endtime="00:00:11,850">市役所で女の上司と男の職員が市民向けのセミナーについて話しています。</p><p data-starttime="00:00:11,850" data-endtime="00:00:18,425">二人は次のセミナーの企画として会議でどんな提案をすることにしましたか？</p><p data-starttime="00:00:37,100" data-endtime="00:00:47,525">女：伊藤さん、起業したい人向けのセミナーですが、今年の企画を来週の会議にかけたいんです。去年の参加者アンケートを踏まえて案を考えておいてくれましたか？</p><p data-starttime="00:00:47,700" data-endtime="00:01:02,475">男：はい、去年は有名企業家を講師に招きましたが、アンケートでは具体的なノウハウをもっと知りたかったってコメントが結構ありました。金融機関の人に資本金や融資などの資金調達について講演してもらうのはどうですか？</p><p data-starttime="00:01:02,525" data-endtime="00:01:03,675">女：そうですね。</p><p data-starttime="00:01:03,850" data-endtime="00:01:15,800">男：他には弁護士の先生に会社設立のための法手続きの話を頼むのもいいかと。あっ、あと、企業経験者を呼んで業種別のグループで話す機会を設けてほしいなんていう意見もありました。</p><p data-starttime="00:01:15,925" data-endtime="00:01:21,000">女：うーん、座談会は会場の見直しが必要ですから、別の機会にしましょう。</p><p data-starttime="00:01:21,075" data-endtime="00:01:21,775">男：はい。</p><p data-starttime="00:01:21,950" data-endtime="00:01:30,200">女：両方の分野の人に講演をお願いしたいところですが、予算がね。アンケートではどちらに対するコメントが多かったですか？</p><p data-starttime="00:01:30,600" data-endtime="00:01:38,950">男：そうですね、会社を立ち上げる際の法手続きに自信がないというコメントもありましたが、資金調達に関するものの方が目につきました。</p><p data-starttime="00:01:39,250" data-endtime="00:01:43,800">女：では、その方面の専門家を呼ぶことを次の企画として図りましょう。</p><p data-starttime="00:01:47,350" data-endtime="00:01:53,275">二人は次のセミナーの企画として会議でどんな提案をすることにしましたか？</p>',
               listeningContentTranslationZhHans:
@@ -2567,7 +2587,7 @@ export const data: Data = {
           questions: [
             {
               type: QuestionType.SINGLE_CHOICE,
-              listeningAudio: "./listening_3_1.mp3",
+              listeningAudio: "listening_3_1.mp3",
               listeningContent:
                 '<p data-starttime="00:00:04,925" data-endtime="00:00:10,850">親子向けのクラシックコンサートの会場で、オーケストラの指揮者が話しています。</p><p data-starttime="00:00:13,950" data-endtime="00:00:16,325">緑オーケストラ指揮者の山田です。</p><p data-starttime="00:00:16,600" data-endtime="00:00:26,500">オーケストラには色々な楽器がありますが、指揮者は指揮棒1本だけです。リズムを取るぐらいで簡単そうに見えるかもしれませんが、そんなことはありません。</p><p data-starttime="00:00:26,725" data-endtime="00:00:38,125">というのは、曲に対して持つイメージって人によってバラバラなんですよね。同じ曲の楽譜を見ても、山場がどこにあるとか、この部分は何を表しているのかなどの解釈が違います。</p><p data-starttime="00:00:38,475" data-endtime="00:00:51,500">指揮者は自分なりの解釈をオーケストラの団員に伝えて、演奏をまとめ上げるんです。それだけでなく、団員との信頼関係を築き、演奏者が持つ表現力を最大限に引き出すことも求められるんです。</p><p data-starttime="00:00:53,625" data-endtime="00:00:56,525">指揮者は何について話していますか？</p><p data-starttime="00:00:57,950" data-endtime="00:01:01,600">1.楽器による演奏法の違い</p><p data-starttime="00:01:03,325" data-endtime="00:01:06,775">2.演奏会を楽しみ方</p><p data-starttime="00:01:08,200" data-endtime="00:01:12,575">3.団員の能力を信じることの大切さ</p><p data-starttime="00:01:13,525" data-endtime="00:01:16,425">4.指揮者の役割</p>',
               listeningContentTranslationZhHans:
@@ -2601,7 +2621,7 @@ export const data: Data = {
             },
             {
               type: QuestionType.SINGLE_CHOICE,
-              listeningAudio: "./listening_3_2.mp3",
+              listeningAudio: "listening_3_2.mp3",
               listeningContent:
                 '<p data-starttime="00:00:05,925" data-endtime="00:00:12,250">テレビでアナウンサーの男の人は、商店街の代表の人にインタビューしています。</p><p data-starttime="00:00:13,025" data-endtime="00:00:20,050">男：地方の商店街が衰退していく傾向がある中で、この桜通り商店街はたくさんのお客様で賑わっていますね。</p><p data-starttime="00:00:20,250" data-endtime="00:00:35,600">女：ありがとうございます。一時はお客様が減って、商店街全体が寂しい時期もありました。それで、3年ほど前から、若い店主たちを中心に、お客様に喜んでもらえるような商店街全体のイベントを企画しているんです。</p><p data-starttime="00:00:35,750" data-endtime="00:00:39,325">男：そうなんですか。どんなイベントをやっていらっしゃるんですか。</p><p data-starttime="00:00:39,700" data-endtime="00:00:48,525">女：例えば、学生デーを設けて、その日は全店舗で学生割引を行ったり、七タなど季節ごとにイベントを開催したりしています。</p><p data-starttime="00:00:48,725" data-endtime="00:00:49,775">男：そうですか。</p><p data-starttime="00:00:50,100" data-endtime="00:01:04,425">女：ほかにも、飲食店で写真を撮りたくなるような盛り付けを工夫したメニューを開発し、それをインターネットで発信したりしています。おかげさまで、近隣の方だけでなく、ネットの記事を見た遠方の方も来てくださっています。</p><p data-starttime="00:01:06,650" data-endtime="00:01:10,725">商店街の代表の人は何について話していますか？</p><p data-starttime="00:01:11,925" data-endtime="00:01:15,775">1.商店街の店の入れ替わり</p><p data-starttime="00:01:16,950" data-endtime="00:01:21,050">2.商店の活性化の取り組み</p><p data-starttime="00:01:21,600" data-endtime="00:01:25,950">3.商店街で新たに取り組むべき課題</p><p data-starttime="00:01:26,550" data-endtime="00:01:30,900">4.商店街で一番人気があるイベント</p>',
               listeningContentTranslationZhHans:
@@ -2635,7 +2655,7 @@ export const data: Data = {
             },
             {
               type: QuestionType.SINGLE_CHOICE,
-              listeningAudio: "./listening_3_3.mp3",
+              listeningAudio: "listening_3_3.mp3",
               listeningContent:
                 '<p data-starttime="00:00:06,825" data-endtime="00:00:11,600">テレビの動物番組で、専門家がゴリラについて話しています。</p><p data-starttime="00:00:13,075" data-endtime="00:00:21,825">私はゴリラの生態を研究しています。私の研究は、ジャングルで野生のゴリラの群れを追いかけ、観察することから始まります。</p><p data-starttime="00:00:22,075" data-endtime="00:00:39,525">ただ、警戒しているゴリラに近づいて殴られたりすると危険ですから、少しずつ距離を縮めるんです。ゴリラは他の動物を見ると相手を知ろうと近づきますが、相手が怖がって下を向いたり目を逸らしたりすると、相手を敵だと認識して威嚇してきます。</p><p data-starttime="00:00:39,825" data-endtime="00:00:53,675">なので、我々もひるまずに目を合わせます。そして、ゴリラの行為を真似して、ゴロッと横になったり食べたりしているうちに、ゴリラは我々には敵意がないと認識してくれ、近づくことを許すようになります。</p><p data-starttime="00:00:56,775" data-endtime="00:01:00,025">専門家は何について話していますか？</p><p data-starttime="00:01:00,725" data-endtime="00:01:04,750">1.ゴリラが敵を攻撃する方法</p><p data-starttime="00:01:05,475" data-endtime="00:01:08,775">2.ゴリラの記憶力の良さ</p><p data-starttime="00:01:09,325" data-endtime="00:01:13,775">3.ゴリラとの信頼関係を築く方法</p><p data-starttime="00:01:14,275" data-endtime="00:01:18,150">4.ゴリラの研究を始めた理由</p>',
               listeningContentTranslationZhHans:
@@ -2669,7 +2689,7 @@ export const data: Data = {
             },
             {
               type: QuestionType.SINGLE_CHOICE,
-              listeningAudio: "./listening_3_4.mp3",
+              listeningAudio: "listening_3_4.mp3",
               listeningContent:
                 '<p data-starttime="00:00:06,875" data-endtime="00:00:10,525">ラジオで、ある島の医師が話しています。</p><p data-starttime="00:00:11,550" data-endtime="00:00:24,950">私は、都会の大学病院に10年勤務し、3年前に小さな島の診療所に赴任しました。ここでは、様々な病気や怪我に対応する必要があり、医師としての総合的な技量が高められると感じています。</p><p data-starttime="00:00:25,325" data-endtime="00:00:30,150">島の患者さんとの距離が近く、診療所以外にも患者さんによく会います。</p><p data-starttime="00:00:30,500" data-endtime="00:00:38,150">薬や治療の効果について直接聞けたり、患者さんと一緒に病気に向き合っているという実感があって手応えが感じられます。</p><p data-starttime="00:00:38,450" data-endtime="00:00:46,800">また生活習慣について島の人たちに積極的にアドバイスするなど、地域の予防医療に貢献できることにも魅力を感じています。</p><p data-starttime="00:00:48,450" data-endtime="00:00:51,825">この島の医師は何について話していますか？</p><p data-starttime="00:00:52,500" data-endtime="00:00:56,050">1.この島の医師になったきっかけ</p><p data-starttime="00:00:56,900" data-endtime="00:01:00,375">2.この島の医師としてのやりがい</p><p data-starttime="00:01:00,725" data-endtime="00:01:04,625">3.この島の医療の困難な点</p><p data-starttime="00:01:05,250" data-endtime="00:01:09,650">4.この島の生活習慣と病気の関係</p>',
               listeningContentTranslationZhHans:
@@ -2703,7 +2723,7 @@ export const data: Data = {
             },
             {
               type: QuestionType.SINGLE_CHOICE,
-              listeningAudio: "./listening_3_5.mp3",
+              listeningAudio: "listening_3_5.mp3",
               listeningContent:
                 '<p data-starttime="00:00:06,600" data-endtime="00:00:10,875">市民講座で発酵食品について講師が話しています。</p><p data-starttime="00:00:12,225" data-endtime="00:00:16,500">皆さん、ヨーグルトやチーズなどの発酵食品は好きですか？</p><p data-starttime="00:00:17,000" data-endtime="00:00:30,000">発酵食品は色々な実験を通して健康効果が実証されていますが、加熱すると有益な菌の働きが損なわれるので、できるだけそのまま食べることをお勧めします。</p><p data-starttime="00:00:30,800" data-endtime="00:00:35,250">毎日継続して摂取すると、より効果が期待できます。</p><p data-starttime="00:00:36,025" data-endtime="00:00:48,550">それから、食べ物の組み合わせにも注意を払いたいですね。バナナやごぼうのように食物繊維が含まれているものと一緒に摂ると、菌の活動が活発になるんです。</p><p data-starttime="00:00:52,225" data-endtime="00:00:55,175">講師は何について話していますか？</p><p data-starttime="00:00:56,275" data-endtime="00:01:00,075">1.発酵食品に含まれる成分</p><p data-starttime="00:01:00,700" data-endtime="00:01:04,325">2.発酵食品を使った料理</p><p data-starttime="00:01:04,850" data-endtime="00:01:08,950">3.発酵食品が好まれる理由</p><p data-starttime="00:01:09,575" data-endtime="00:01:13,825">4.発酵食品の効果的な食べ方</p>',
               listeningContentTranslationZhHans:
@@ -2744,7 +2764,7 @@ export const data: Data = {
           questions: [
             {
               type: QuestionType.SINGLE_CHOICE,
-              listeningAudio: "./listening_4_1.mp3",
+              listeningAudio: "listening_4_1.mp3",
               listeningContent:
                 '<p data-starttime="00:00:04,675" data-endtime="00:00:08,725">先輩、テニスの全国大会、きっと優勝してみせます。</p><p data-starttime="00:00:11,075" data-endtime="00:00:13,900">1.全力を出してくるよ。</p><p data-starttime="00:00:15,125" data-endtime="00:00:18,200">2.あきらめるのは早いんじゃない？</p><p data-starttime="00:00:19,575" data-endtime="00:00:22,850">3.うん、期待してるからね。</p>',
               listeningContentTranslationZhHans:
@@ -2773,7 +2793,7 @@ export const data: Data = {
             },
             {
               type: QuestionType.SINGLE_CHOICE,
-              listeningAudio: "./listening_4_2.mp3",
+              listeningAudio: "listening_4_2.mp3",
               listeningContent:
                 '<p data-starttime="00:00:05,725" data-endtime="00:00:11,125">ねえ、歌手のもりなお、明日のコンサートを最後に引退するって、知ってた？</p><p data-starttime="00:00:12,200" data-endtime="00:00:16,725">1.えっ、明日で引退するの？どうして？</p><p data-starttime="00:00:17,525" data-endtime="00:00:21,375">2.えっ、コンサートだけは続けるんだ。</p><p data-starttime="00:00:21,825" data-endtime="00:00:26,175">3.えっ、明日のコンサート中止になったの？</p>',
               listeningContentTranslationZhHans:
@@ -2802,7 +2822,7 @@ export const data: Data = {
             },
             {
               type: QuestionType.SINGLE_CHOICE,
-              listeningAudio: "./listening_4_3.mp3",
+              listeningAudio: "listening_4_3.mp3",
               listeningContent:
                 '<p data-starttime="00:00:05,400" data-endtime="00:00:09,000">ゼミでやった実験、データを整理するのに手こずったね。</p><p data-starttime="00:00:10,425" data-endtime="00:00:13,575">1.確かにスムーズにいったよね。</p><p data-starttime="00:00:14,375" data-endtime="00:00:18,250">2.あ、もっと大変だと思っていたんだね。</p><p data-starttime="00:00:19,500" data-endtime="00:00:23,400">3.本当、途中で嫌になっちゃったよ。</p>',
               listeningContentTranslationZhHans:
@@ -2830,7 +2850,7 @@ export const data: Data = {
             },
             {
               type: QuestionType.SINGLE_CHOICE,
-              listeningAudio: "./listening_4_4.mp3",
+              listeningAudio: "listening_4_4.mp3",
               listeningContent:
                 '<p data-starttime="00:00:04,975" data-endtime="00:00:08,650">美容師さんに言われるままにパーマかけちゃったけど、どうかな？</p><p data-starttime="00:00:09,325" data-endtime="00:00:13,650">1.え一？美容師さんにアドバイスもらわなかったんだ。</p><p data-starttime="00:00:14,400" data-endtime="00:00:18,025">2.美容師さんの言うとおりにして正解だよ。</p><p data-starttime="00:00:18,925" data-endtime="00:00:23,200">3.美容師さんのすすめるスタイルにすればよかったかもね。</p>',
               listeningContentTranslationZhHans:
@@ -2859,7 +2879,7 @@ export const data: Data = {
             },
             {
               type: QuestionType.SINGLE_CHOICE,
-              listeningAudio: "./listening_4_5.mp3",
+              listeningAudio: "listening_4_5.mp3",
               listeningContent:
                 '<p data-starttime="00:00:05,325" data-endtime="00:00:09,725">研究会の発表の事前練習、明日なら見てあげられなくもないよ。</p><p data-starttime="00:00:11,025" data-endtime="00:00:14,625">1.どうしても明日は難しいですか？</p><p data-starttime="00:00:15,425" data-endtime="00:00:19,825">2.すみません、では明日お願いします。</p><p data-starttime="00:00:20,450" data-endtime="00:00:24,200">3.じゃあ、今日の方がいいんですね。</p>',
               listeningContentTranslationZhHans:
@@ -2888,7 +2908,7 @@ export const data: Data = {
             },
             {
               type: QuestionType.SINGLE_CHOICE,
-              listeningAudio: "./listening_4_6.mp3",
+              listeningAudio: "listening_4_6.mp3",
               listeningContent:
                 '<p data-starttime="00:00:05,900" data-endtime="00:00:11,375">ねえ、私たち午後から出張だけど、新幹線、今運転を見合わせるって。</p><p data-starttime="00:00:12,325" data-endtime="00:00:16,375">1.えっ、いつ頃通転を再開するんだろう。</p><p data-starttime="00:00:17,300" data-endtime="00:00:21,800">2.あっ、新幹線動いたんだ。良かった。</p><p data-starttime="00:00:22,600" data-endtime="00:00:26,725">3.じゃあ、予定を変更しなくてよさそうだね。</p>',
               listeningContentTranslationZhHans:
@@ -2917,7 +2937,7 @@ export const data: Data = {
             },
             {
               type: QuestionType.SINGLE_CHOICE,
-              listeningAudio: "./listening_4_7.mp3",
+              listeningAudio: "listening_4_7.mp3",
               listeningContent:
                 '<p data-starttime="00:00:05,400" data-endtime="00:00:11,350">あの、このカウンターで3,000円以上のレシートと引き換えにお皿がもらえるって聞いたんですが。</p><p data-starttime="00:00:12,325" data-endtime="00:00:16,875">1.あっ、商品のお取り替えをご希望ですね。</p><p data-starttime="00:00:18,025" data-endtime="00:00:21,925">2.3,000円のご予算でお求めでしょうか。</p><p data-starttime="00:00:22,600" data-endtime="00:00:27,075">3.あっ、はい。レシートをお預かりします。</p>',
               listeningContentTranslationZhHans:
@@ -2946,7 +2966,7 @@ export const data: Data = {
             },
             {
               type: QuestionType.SINGLE_CHOICE,
-              listeningAudio: "./listening_4_8.mp3",
+              listeningAudio: "listening_4_8.mp3",
               listeningContent:
                 '<p data-starttime="00:00:05,825" data-endtime="00:00:12,025">ゼミの食事会、いつもの店に電話したんだけど、キャンセルが出ない限り、席確保できないって。</p><p data-starttime="00:00:13,025" data-endtime="00:00:16,675">1.ああ、キャンセルできないんだね。</p><p data-starttime="00:00:17,750" data-endtime="00:00:21,800">2.じゃあ何とか予約取れそうだね。</p><p data-starttime="00:00:22,575" data-endtime="00:00:26,575">3.じゃあ、他の店探すしかないね</p>',
               listeningContentTranslationZhHans:
@@ -2975,7 +2995,7 @@ export const data: Data = {
             },
             {
               type: QuestionType.SINGLE_CHOICE,
-              listeningAudio: "./listening_4_9.mp3",
+              listeningAudio: "listening_4_9.mp3",
               listeningContent:
                 '<p data-starttime="00:00:05,300" data-endtime="00:00:11,500">山本課長って先月この支店に異動してきたと思ったら、海外に転勤だって。</p><p data-starttime="00:00:12,650" data-endtime="00:00:16,475">1.この間来たばかりなのにまた異動？</p><p data-starttime="00:00:17,025" data-endtime="00:00:21,725">2.えっ、この支店に来るはずが海外転勤になったの？</p><p data-starttime="00:00:22,475" data-endtime="00:00:26,675">3.課長、長いことこの支店にいたもんね。</p>',
               listeningContentTranslationZhHans:
@@ -3004,7 +3024,7 @@ export const data: Data = {
             },
             {
               type: QuestionType.SINGLE_CHOICE,
-              listeningAudio: "./listening_4_10.mp3",
+              listeningAudio: "listening_4_10.mp3",
               listeningContent:
                 '<p data-starttime="00:00:06,075" data-endtime="00:00:09,925">卒業論文の提出まであと10日で、切羽詰まってきたよ。</p><p data-starttime="00:00:10,975" data-endtime="00:00:14,125">1.ヘえー、余裕あるんだね。</p><p data-starttime="00:00:15,425" data-endtime="00:00:18,650">2.あと少しだから頑張って。</p><p data-starttime="00:00:19,325" data-endtime="00:00:22,950">3.すごい、もう書き終わったんだ。</p>',
               listeningContentTranslationZhHans:
@@ -3033,7 +3053,7 @@ export const data: Data = {
             },
             {
               type: QuestionType.SINGLE_CHOICE,
-              listeningAudio: "./listening_4_11.mp3",
+              listeningAudio: "listening_4_11.mp3",
               listeningContent:
                 '<p data-starttime="00:00:05,475" data-endtime="00:00:09,900">みどり社との共同研究、中止を余儀なくされたって課長が言ってたよ。</p><p data-starttime="00:00:10,775" data-endtime="00:00:14,925">1.今になって中止にはできないもんね。</p><p data-starttime="00:00:15,925" data-endtime="00:00:19,550">2.えっ、いったい何があったの？</p><p data-starttime="00:00:20,425" data-endtime="00:00:24,350">3.あー、続けられることになったんだね。</p>',
               listeningContentTranslationZhHans:
@@ -3070,7 +3090,7 @@ export const data: Data = {
           questions: [
             {
               type: QuestionType.SINGLE_CHOICE,
-              listeningAudio: "./listening_5_1.mp3",
+              listeningAudio: "listening_5_1.mp3",
               listeningContent:
                 '<p data-starttime="00:00:02,225" data-endtime="00:00:05,600">書店で店長と店員二人が話しています。</p><p data-starttime="00:00:06,825" data-endtime="00:00:15,475">店長：最近お客さんが減って、売り上げが落ちてるんだよね。駅の近くに新しい書店もできたし。何か売上を回復するいい案ないかな？</p><p data-starttime="00:00:15,525" data-endtime="00:00:25,775">店員A：今全国の売り上げランキングで上位に入ってる本を入口近くに置いてますけど、もっとお客様の目に留まりやすいようにレジの近いところに置くのはどうですか？</p><p data-starttime="00:00:25,975" data-endtime="00:00:37,025">店員B：うちは近くにデザイン関係の会社が多いからか、以前からデザイン関連の本がよく売れてますよね。それに店員の推薦文を書いたカードをつけてもっと目立たせたらどうですか？</p><p data-starttime="00:00:37,275" data-endtime="00:00:40,175">店長：前にやったことあるけど、手間がかかるんだよね。</p><p data-starttime="00:00:40,375" data-endtime="00:00:51,375">店員A：それか、雑誌をより充実させるのはどうでしょうか。最近は種類も増えているので。雑誌が揃っていれば、それを目当てに来てくれる新しいお客さんも増えるかもしれません。</p><p data-starttime="00:00:51,800" data-endtime="00:00:52,525">店長：そうだね。</p><p data-starttime="00:00:52,725" data-endtime="00:01:07,125">店員B：私は以前からのお客様を引き続きターゲットにした方がいいと思うんです。写真集とか雑誌とか種類に関わらず、デザインに関連する本を1ヵ所にまとめたコーナーを作るのはどうですか？それがうちの強みになると思うんです。</p><p data-starttime="00:01:07,275" data-endtime="00:01:10,825">店員A：新しいコーナーですか？場所はどうするんですか？</p><p data-starttime="00:01:10,975" data-endtime="00:01:23,075">店長：うーん…じゃ、ソファーが置いてある閲覧スペースに棚を増やして、そこに集めようか。1ヵ所にまとめてある方がアピールになるね。推薦文のカードをつけるのは様子を見てからにしよう。</p><p data-starttime="00:01:25,925" data-endtime="00:01:31,375">書店の売り上げを回復するために、まずどうすることにしましたか？</p><p data-starttime="00:01:31,725" data-endtime="00:01:35,375">1.売れている本をレジの近くに置く。</p><p data-starttime="00:01:38,225" data-endtime="00:01:43,150">2.デザイン関連の本に推薦文のカードをつける。</p><p data-starttime="00:01:46,175" data-endtime="00:01:49,725">3.雑誌のコーナーを広くする</p><p data-starttime="00:01:52,775" data-endtime="00:01:56,875">4.デザイン関連の本のコーナーを作る。</p>',
               listeningContentTranslationZhHans:
@@ -3104,7 +3124,7 @@ export const data: Data = {
             },
             {
               type: QuestionType.SINGLE_CHOICE,
-              listeningAudio: "./listening_5_2.mp3",
+              listeningAudio: "listening_5_2.mp3",
               listeningContent:
                 '<p data-starttime="00:00:03,000" data-endtime="00:00:05,925">テレビを見ながら夫婦が話しています。</p><p data-starttime="00:00:07,600" data-endtime="00:00:12,000">テレビ：最近、一般の人が製品の工場を見学できるところがあります。</p><p data-starttime="00:00:12,175" data-endtime="00:00:15,025">今日はその中から四つご紹介します。</p><p data-starttime="00:00:15,125" data-endtime="00:00:27,475">まず、ヒガシヤの工場。こちらではカップスープの製造工程を見学したあと、カップに好きな具と粉末のスープを組み合わせて入れて、オリジナルのカップスープを作って持って帰れます。</p><p data-starttime="00:00:27,725" data-endtime="00:00:45,225">次はニシマル牛乳工場です。こちらでは製造管理のため味覚の専門家が、製品の風味を自分の舌で確認するシステムを取り入れています。見学の際、味覚の専門家から実際の牛乳の検査方法などについて聞くことができます。</p><p data-starttime="00:00:45,450" data-endtime="00:00:58,475">ミナミはサッカーボールの工場です。ボール用の皮が次第に立体的になっていく様子に目を見張ります。小さなボールに色付けする作業を体験できて、できたものはお土産に持って帰れます。</p><p data-starttime="00:00:58,850" data-endtime="00:01:12,050">最後はおもちゃメーカーのキタヤ。この工場では車や電車のおもちゃを作る過程が見学できます。ここでしか入手できないオリジナル商品が購入可能なのも人気の理由なんだそうですよ。</p><p data-starttime="00:01:14,350" data-endtime="00:01:18,250">女：ヘー、面白そう。今度子供を連れて行ってみない？</p><p data-starttime="00:01:18,400" data-endtime="00:01:30,400">男：うん、いいね。僕は機械化されてる工場でも最終的には人間の舌で確認しているっていうの興味深かったけど。でも、まぁ子供も一緒だから実際に作れるところの方がいいな。</p><p data-starttime="00:01:30,625" data-endtime="00:01:32,050">女：あ、ボールね。</p><p data-starttime="00:01:32,100" data-endtime="00:01:43,400">男：あ、そっちじゃなくて。いつも飲んでるのとちょっと違う味にできるなんて面白そう。行くならそこがいいな。君はどこがいいと思う？涼太が好きな乗り物？</p><p data-starttime="00:01:43,650" data-endtime="00:01:53,850">女：うーん、そこはオリジナル商品をねだられて買う羽目になりそう。お土産をもらえるところならその心配がないからいいよね。うちに帰ってから遊べるし。</p><p data-starttime="00:01:54,125" data-endtime="00:01:57,400">男：うん、じゃあ涼太にも聞いてから決めよう。</p><p data-starttime="00:02:04,500" data-endtime="00:02:09,925">質問1：男の人はどの工場に行きたいと言っていますか？</p><p data-starttime="00:02:19,850" data-endtime="00:02:25,000">質問2：女の人はどの工場に行きたいと言っていますか？</p>',
               listeningContentTranslationZhHans:
@@ -3138,7 +3158,7 @@ export const data: Data = {
             },
             {
               type: QuestionType.SINGLE_CHOICE,
-              listeningAudio: "./listening_5_2.mp3",
+              listeningAudio: "listening_5_2.mp3",
               listeningContent:
                 '<p data-starttime="00:00:03,000" data-endtime="00:00:05,925">テレビを見ながら夫婦が話しています。</p><p data-starttime="00:00:07,600" data-endtime="00:00:12,000">テレビ：最近、一般の人が製品の工場を見学できるところがあります。</p><p data-starttime="00:00:12,175" data-endtime="00:00:15,025">今日はその中から四つご紹介します。</p><p data-starttime="00:00:15,125" data-endtime="00:00:27,475">まず、ヒガシヤの工場。こちらではカップスープの製造工程を見学したあと、カップに好きな具と粉末のスープを組み合わせて入れて、オリジナルのカップスープを作って持って帰れます。</p><p data-starttime="00:00:27,725" data-endtime="00:00:45,225">次はニシマル牛乳工場です。こちらでは製造管理のため味覚の専門家が、製品の風味を自分の舌で確認するシステムを取り入れています。見学の際、味覚の専門家から実際の牛乳の検査方法などについて聞くことができます。</p><p data-starttime="00:00:45,450" data-endtime="00:00:58,475">ミナミはサッカーボールの工場です。ボール用の皮が次第に立体的になっていく様子に目を見張ります。小さなボールに色付けする作業を体験できて、できたものはお土産に持って帰れます。</p><p data-starttime="00:00:58,850" data-endtime="00:01:12,050">最後はおもちゃメーカーのキタヤ。この工場では車や電車のおもちゃを作る過程が見学できます。ここでしか入手できないオリジナル商品が購入可能なのも人気の理由なんだそうですよ。</p><p data-starttime="00:01:14,350" data-endtime="00:01:18,250">女：ヘー、面白そう。今度子供を連れて行ってみない？</p><p data-starttime="00:01:18,400" data-endtime="00:01:30,400">男：うん、いいね。僕は機械化されてる工場でも最終的には人間の舌で確認しているっていうの興味深かったけど。でも、まぁ子供も一緒だから実際に作れるところの方がいいな。</p><p data-starttime="00:01:30,625" data-endtime="00:01:32,050">女：あ、ボールね。</p><p data-starttime="00:01:32,100" data-endtime="00:01:43,400">男：あ、そっちじゃなくて。いつも飲んでるのとちょっと違う味にできるなんて面白そう。行くならそこがいいな。君はどこがいいと思う？涼太が好きな乗り物？</p><p data-starttime="00:01:43,650" data-endtime="00:01:53,850">女：うーん、そこはオリジナル商品をねだられて買う羽目になりそう。お土産をもらえるところならその心配がないからいいよね。うちに帰ってから遊べるし。</p><p data-starttime="00:01:54,125" data-endtime="00:01:57,400">男：うん、じゃあ涼太にも聞いてから決めよう。</p><p data-starttime="00:02:04,500" data-endtime="00:02:09,925">質問1：男の人はどの工場に行きたいと言っていますか？</p><p data-starttime="00:02:19,850" data-endtime="00:02:25,000">質問2：女の人はどの工場に行きたいと言っていますか？</p>',
               listeningContentTranslationZhHans:
