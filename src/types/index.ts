@@ -1,14 +1,14 @@
 import { User, UserRole } from "@prisma/client";
 
-export enum StatusCode {
-  OK = "ok",
-  FAIL = "fail",
-  INVALID_CREDENTIALS = "invalid_credentials",
-}
+export const StatusCode = {
+  OK: "ok",
+  FAIL: "fail",
+  INVALID_CREDENTIALS: "invalid_credentials",
+} as const;
 
 export type CommonResponse<T = any> = {
   data: T;
-  code: StatusCode;
+  code: (typeof StatusCode)[keyof typeof StatusCode];
   message: string;
 };
 

@@ -9,55 +9,6 @@ main()
   .then(() => {})
   .catch(console.log);
 
-async function getData(paperId: Paper["id"]): Data {
-  const paper = await prisma.paper.findUnique({
-    where: {
-      id: paperId,
-    },
-    include: {
-      parts: {
-        include: {
-          sections: {
-            include: {
-              questions: {
-                include: {
-                  choices: true,
-                },
-              },
-            },
-          },
-        },
-      },
-    },
-  });
-  return {
-    id: paper.id,
-    title: paper.title,
-    level: paper.level,
-    year: paper.year,
-    month: paper.month,
-    parts: paper.parts.map((part) => {
-      return {
-        id: part.id,
-        title: part.title,
-        duration: part.duration,
-        listeningAudio: part.listeningAudio,
-        sections: part.sections.map((section) => {
-          return {
-            id: section.id,
-            type: section.type,
-            title: section.title,
-            order: section.order,
-            content: section.content,
-            contentTranslationZhHans: section.contentTranslationZhHans,
-            imageContent: section.imageContent,
-          };
-        }),
-      };
-    }),
-  };
-}
-
 async function main() {
   logger.log("Starting upsert...");
 
