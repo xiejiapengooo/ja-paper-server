@@ -8,16 +8,15 @@ export class PaperService {
 
   async getList() {
     const groups = await this.prisma.paper.groupBy({
-      by: ["year"],
-      orderBy: { year: "desc" },
+      by: ["level"],
     });
 
     return Promise.all(
       groups.map(async (group) => {
         const papers = await this.prisma.paper.findMany({
-          where: { year: group.year },
+          where: { level: group.level },
         });
-        return { year: group.year, papers };
+        return { level: group.level, items: papers };
       }),
     );
   }
