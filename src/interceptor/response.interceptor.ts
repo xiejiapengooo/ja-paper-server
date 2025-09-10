@@ -8,7 +8,7 @@ import { RESPONSE_MESSAGE_KEY } from "../decorator";
 
 export interface CommonResponse<T = any> {
   data: T;
-  code: StatusCode;
+  code: (typeof StatusCode)[keyof typeof StatusCode];
   message: string;
 }
 

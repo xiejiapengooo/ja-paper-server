@@ -112,7 +112,7 @@ async function main() {
         logger.log(`Paper question ${question.id} upserted.`);
 
         for (const choiceItem of questionItem.choices) {
-          await prisma.questionChoice.upsert({
+          const choice = await prisma.questionChoice.upsert({
             where: {
               id: choiceItem.id || "",
             },
@@ -129,7 +129,7 @@ async function main() {
               questionId: question.id,
             },
           });
-          logger.log(`Question choice ${choiceItem.id} upserted.`);
+          logger.log(`Question choice ${choice.id} upserted.`);
         }
       }
     }

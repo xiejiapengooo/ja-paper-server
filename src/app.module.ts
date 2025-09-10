@@ -13,6 +13,7 @@ import { ResponseInterceptor } from "./interceptor";
 import { AllExceptionFilter } from "./filter";
 import { UserModule } from "./user/user.module";
 import { CookieService } from "./cookie/cookie.service";
+import { PaperModule } from './paper/paper.module';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { CookieService } from "./cookie/cookie.service";
     AlsModule,
     MailModule,
     UserModule,
+    PaperModule,
   ],
   providers: [
     {
