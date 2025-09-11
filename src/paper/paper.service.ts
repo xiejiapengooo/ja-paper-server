@@ -1,6 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { PrismaService } from "../prisma/prisma.service";
-import { GetPartsDto, GetSectionDto } from "./paper.dto";
+import { GetPaperDto, GetPartsDto, GetSectionDto } from "./paper.dto";
+import { BusinessException } from "../exception";
 
 @Injectable()
 export class PaperService {
@@ -19,6 +20,26 @@ export class PaperService {
         return { level: group.level, items: papers };
       }),
     );
+  }
+
+  async getPaper(dto: GetPaperDto) {
+    const year = Number(dto.yearMonth.slice(0, 4));
+    const month = Number(dto.yearMonth.slice(4, 6));
+    const paper = await this.prisma.paper.findFirst({
+      where: {
+        level: dto.level,
+        year,
+        month,
+      },
+      include: {
+        parts: true,
+      },
+    });
+    if (!paper) {
+      throw new BusinessException("Paper not Found");
+    } else {
+      return paper;
+    }
   }
 
   getParts(dto: GetPartsDto) {

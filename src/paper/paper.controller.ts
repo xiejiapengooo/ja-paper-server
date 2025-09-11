@@ -1,6 +1,6 @@
 import { Controller, Get, Param, Post, Query, Res } from "@nestjs/common";
 import { PaperService } from "./paper.service";
-import { GetPartsDto, GetSectionDto } from "./paper.dto";
+import { GetPaperDto, GetPartsDto, GetSectionDto } from "./paper.dto";
 
 @Controller("paper")
 export class PaperController {
@@ -9,6 +9,11 @@ export class PaperController {
   @Get("list")
   async getList() {
     return this.paperService.getList();
+  }
+
+  @Get("")
+  async getPaper(@Query() dto: GetPaperDto) {
+    return this.paperService.getPaper(dto);
   }
 
   @Get("parts")

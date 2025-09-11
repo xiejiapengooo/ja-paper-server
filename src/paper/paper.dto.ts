@@ -1,4 +1,14 @@
-import { IsNotEmpty, IsString } from "class-validator";
+import { IsEnum, IsNotEmpty, IsString } from "class-validator";
+import { PaperLevel } from "@prisma/client";
+
+export class GetPaperDto {
+  @IsEnum(PaperLevel)
+  level: PaperLevel;
+
+  @IsString()
+  @IsNotEmpty()
+  yearMonth: string;
+}
 
 export class GetPartsDto {
   @IsString()
