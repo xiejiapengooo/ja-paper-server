@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { PrismaService } from "../prisma/prisma.service";
-import { GetPaperDto, GetPartsDto, GetSectionDto } from "./paper.dto";
+import { GetPaperDto, GetSectionDto, GetSectionsDto } from "./paper.dto";
 import { BusinessException } from "../exception";
 
 @Injectable()
@@ -42,10 +42,23 @@ export class PaperService {
     }
   }
 
-  getParts(dto: GetPartsDto) {
-    return this.prisma.paperPart.findMany({
+  getSections(dto: GetSectionsDto) {
+    return this.prisma.paperSection.findMany({
       where: {
-        paperId: dto.paperId,
+        partId: dto.partId,
+      },
+      orderBy: {
+        order: "asc",
+      },
+      include: {
+        questions: {
+          orderBy: {
+            order: "asc",
+          },
+          include: {
+            choices: true,
+          },
+        },
       },
     });
   }

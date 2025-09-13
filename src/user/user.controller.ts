@@ -14,7 +14,7 @@ export class UserController {
   ) {}
 
   @Get("me")
-  userMe(@GetTokenPayload() userTokenPayload: UserTokenPayload) {
+  async userMe(@GetTokenPayload() userTokenPayload: UserTokenPayload) {
     return this.userService.userMe(userTokenPayload);
   }
 

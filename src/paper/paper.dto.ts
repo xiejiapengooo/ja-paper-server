@@ -10,10 +10,10 @@ export class GetPaperDto {
   yearMonth: string;
 }
 
-export class GetPartsDto {
+export class GetSectionsDto {
   @IsString()
   @IsNotEmpty()
-  paperId: string;
+  partId: string;
 }
 
 export class GetSectionDto {
