@@ -113,7 +113,8 @@ async function main() {
         });
         logger.log(`Paper question ${question.id} upserted.`);
 
-        for (const choiceItem of questionItem.choices) {
+        for (let choiceItemIndex = 0; choiceItemIndex < questionItem.choices.length; choiceItemIndex++) {
+          const choiceItem = questionItem.choices[choiceItemIndex];
           const choice = await prisma.questionChoice.upsert({
             where: {
               id: choiceItem.id || "",
@@ -123,12 +124,14 @@ async function main() {
               text: choiceItem.text,
               isCorrect: choiceItem.isCorrect,
               questionId: question.id,
+              order: choiceItemIndex,
             },
             update: {
               label: choiceItem.label,
               text: choiceItem.text,
               isCorrect: choiceItem.isCorrect,
               questionId: question.id,
+              order: choiceItemIndex,
             },
           });
           logger.log(`Question choice ${choice.id} upserted.`);
