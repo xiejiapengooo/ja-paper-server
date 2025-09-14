@@ -2,6 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { PrismaService } from "../prisma/prisma.service";
 import { GetPaperDto, GetSectionDto, GetSectionsDto } from "./paper.dto";
 import { BusinessException } from "../exception";
+import { SECTION_TYPE_LABEL } from "../constant";
 
 @Injectable()
 export class PaperService {
@@ -42,25 +43,34 @@ export class PaperService {
     }
   }
 
-  getSections(dto: GetSectionsDto) {
-    return this.prisma.paperSection.findMany({
-      where: {
-        partId: dto.partId,
-      },
-      orderBy: {
-        order: "asc",
-      },
-      include: {
-        questions: {
-          orderBy: {
-            order: "asc",
-          },
-          include: {
-            choices: true,
-          },
-        },
-      },
+  async getSections(dto: GetSectionsDto) {
+    const sectionTypes = await this.prisma.paperSection.groupBy({
+      where: { partId: dto.partId },
+      by: ["type"],
     });
+    return Promise.all(
+      sectionTypes.map(async (sectionType) => {
+        return {
+          label: SECTION_TYPE_LABEL[sectionType.type],
+          items: await this.prisma.paperSection.findMany({
+            where: { type: sectionType.type, partId: dto.partId },
+            orderBy: {
+              order: "asc",
+            },
+            include: {
+              questions: {
+                orderBy: {
+                  order: "asc",
+                },
+                include: {
+                  choices: true,
+                },
+              },
+            },
+          }),
+        };
+      }),
+    );
   }
 
   getSection(dto: GetSectionDto) {
