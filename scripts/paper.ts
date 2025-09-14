@@ -51,7 +51,8 @@ async function main() {
     });
     logger.log(`Paper part ${part.id} upserted.`);
 
-    for (const sectionItem of partItem.sections) {
+    for (let sectionItemIndex = 0; sectionItemIndex < partItem.sections.length; sectionItemIndex++) {
+      const sectionItem = partItem.sections[sectionItemIndex];
       const section = await prisma.paperSection.upsert({
         where: {
           id: sectionItem.id || "",
@@ -61,7 +62,7 @@ async function main() {
           paperId: paper.id,
           type: sectionItem.type,
           title: sectionItem.title,
-          order: sectionItem.order,
+          order: sectionItemIndex,
           content: sectionItem.content || "",
           contentTranslationZhHans: sectionItem.contentTranslationZhHans || "",
           imageContent: sectionItem.imageContent || "",
@@ -71,7 +72,7 @@ async function main() {
           paperId: paper.id,
           type: sectionItem.type,
           title: sectionItem.title,
-          order: sectionItem.order,
+          order: sectionItemIndex,
           content: sectionItem.content || "",
           contentTranslationZhHans: sectionItem.contentTranslationZhHans || "",
           imageContent: sectionItem.imageContent || "",
@@ -79,7 +80,8 @@ async function main() {
       });
       logger.log(`Paper section ${section.id} upserted.`);
 
-      for (const questionItem of sectionItem.questions) {
+      for (let questionItemIndex = 0; questionItemIndex < sectionItem.questions.length; questionItemIndex++) {
+        const questionItem = sectionItem.questions[questionItemIndex];
         const question = await prisma.paperQuestion.upsert({
           where: {
             id: questionItem.id || "",
@@ -89,7 +91,7 @@ async function main() {
             partId: part.id,
             sectionId: section.id,
             type: questionItem.type,
-            order: questionItem.order,
+            order: questionItemIndex,
             prompt: questionItem.prompt,
             analysis: questionItem.analysis || "",
             listeningAudio: questionItem.listeningAudio || "",
@@ -101,7 +103,7 @@ async function main() {
             partId: part.id,
             sectionId: section.id,
             type: questionItem.type,
-            order: questionItem.order,
+            order: questionItemIndex,
             prompt: questionItem.prompt,
             analysis: questionItem.analysis || "",
             listeningAudio: questionItem.listeningAudio || "",

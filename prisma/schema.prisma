@@ -141,9 +141,6 @@ model PaperSection {
   imageContent             String?
 
   questions PaperQuestion[]
-
-  @@index([paperId, order])
-  @@index([type])
 }
 
 model PaperQuestion {
@@ -166,9 +163,6 @@ model PaperQuestion {
 
   choices       QuestionChoice[]
   userQuestions UserQuestion[]
-
-  @@index([sectionId, order])
-  @@index([type])
 }
 
 model QuestionChoice {
@@ -177,6 +171,7 @@ model QuestionChoice {
   updatedAt  DateTime      @updatedAt
   label      String        @db.VarChar(8)
   text       String        @db.Text
+  order      Int
   isCorrect  Boolean
   questionId String
   question   PaperQuestion @relation(fields: [questionId], references: [id], onDelete: Cascade)
