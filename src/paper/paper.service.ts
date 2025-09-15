@@ -63,7 +63,11 @@ export class PaperService {
                   order: "asc",
                 },
                 include: {
-                  choices: true,
+                  choices: {
+                    orderBy: {
+                      order: "asc",
+                    },
+                  },
                 },
               },
             },

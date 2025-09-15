@@ -51,6 +51,7 @@ async function main() {
     });
     logger.log(`Paper part ${part.id} upserted.`);
 
+    let questionOrder = 1;
     for (let sectionItemIndex = 0; sectionItemIndex < partItem.sections.length; sectionItemIndex++) {
       const sectionItem = partItem.sections[sectionItemIndex];
       const section = await prisma.paperSection.upsert({
@@ -62,7 +63,7 @@ async function main() {
           paperId: paper.id,
           type: sectionItem.type,
           title: sectionItem.title,
-          order: sectionItemIndex,
+          order: sectionItemIndex + 1,
           content: sectionItem.content || "",
           contentTranslationZhHans: sectionItem.contentTranslationZhHans || "",
           imageContent: sectionItem.imageContent || "",
@@ -72,7 +73,7 @@ async function main() {
           paperId: paper.id,
           type: sectionItem.type,
           title: sectionItem.title,
-          order: sectionItemIndex,
+          order: sectionItemIndex + 1,
           content: sectionItem.content || "",
           contentTranslationZhHans: sectionItem.contentTranslationZhHans || "",
           imageContent: sectionItem.imageContent || "",
@@ -91,7 +92,7 @@ async function main() {
             partId: part.id,
             sectionId: section.id,
             type: questionItem.type,
-            order: questionItemIndex,
+            order: questionOrder,
             prompt: questionItem.prompt,
             analysis: questionItem.analysis || "",
             listeningAudio: questionItem.listeningAudio || "",
@@ -103,7 +104,7 @@ async function main() {
             partId: part.id,
             sectionId: section.id,
             type: questionItem.type,
-            order: questionItemIndex,
+            order: questionOrder,
             prompt: questionItem.prompt,
             analysis: questionItem.analysis || "",
             listeningAudio: questionItem.listeningAudio || "",
@@ -111,6 +112,7 @@ async function main() {
             listeningContentTranslationZhHans: questionItem.listeningContentTranslationZhHans || "",
           },
         });
+        questionOrder++;
         logger.log(`Paper question ${question.id} upserted.`);
 
         for (let choiceItemIndex = 0; choiceItemIndex < questionItem.choices.length; choiceItemIndex++) {
@@ -124,14 +126,14 @@ async function main() {
               text: choiceItem.text,
               isCorrect: choiceItem.isCorrect,
               questionId: question.id,
-              order: choiceItemIndex,
+              order: choiceItemIndex + 1,
             },
             update: {
               label: choiceItem.label,
               text: choiceItem.text,
               isCorrect: choiceItem.isCorrect,
               questionId: question.id,
-              order: choiceItemIndex,
+              order: choiceItemIndex + 1,
             },
           });
           logger.log(`Question choice ${choice.id} upserted.`);
