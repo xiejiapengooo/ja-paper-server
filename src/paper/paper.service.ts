@@ -33,7 +33,11 @@ export class PaperService {
         month,
       },
       include: {
-        parts: true,
+        parts: {
+          include: {
+            sections: true,
+          },
+        },
       },
     });
     if (!paper) {
