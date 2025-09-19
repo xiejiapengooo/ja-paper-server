@@ -117,6 +117,7 @@ model PaperPart {
   title          String
   duration       Int
   listeningAudio String?
+  order          Int
 
   paperId String
   paper   Paper  @relation(fields: [paperId], references: [id], onDelete: Cascade)

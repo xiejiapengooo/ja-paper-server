@@ -31,18 +31,21 @@ async function main() {
   });
   logger.log(`Paper ${paper.id} upserted.`);
 
-  for (const partItem of data.parts) {
+  for (let partItemIndex = 0; partItemIndex < data.parts.length; partItemIndex++) {
+    const partItem = data.parts[partItemIndex];
     const part = await prisma.paperPart.upsert({
       where: {
         id: partItem.id || "",
       },
       create: {
+        order: partItemIndex + 1,
         paperId: paper.id,
         title: partItem.title,
         duration: partItem.duration,
         listeningAudio: partItem.listeningAudio,
       },
       update: {
+        order: partItemIndex + 1,
         paperId: paper.id,
         title: partItem.title,
         duration: partItem.duration,

@@ -34,6 +34,9 @@ export class PaperService {
       },
       include: {
         parts: {
+          orderBy: {
+            order: "asc",
+          },
           include: {
             sections: true,
           },
