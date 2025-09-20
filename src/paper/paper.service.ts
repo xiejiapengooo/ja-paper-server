@@ -51,37 +51,39 @@ export class PaperService {
   }
 
   async getSections(dto: GetSectionsDto) {
-    const sectionTypes = await this.prisma.paperSection.groupBy({
+    const sections = await this.prisma.paperSection.findMany({
       where: { partId: dto.partId },
-      by: ["type"],
-    });
-    return Promise.all(
-      sectionTypes.map(async (sectionType) => {
-        return {
-          label: SECTION_TYPE_LABEL[sectionType.type],
-          items: await this.prisma.paperSection.findMany({
-            where: { type: sectionType.type, partId: dto.partId },
-            orderBy: {
-              order: "asc",
-            },
-            include: {
-              questions: {
-                orderBy: {
-                  order: "asc",
-                },
-                include: {
-                  choices: {
-                    orderBy: {
-                      order: "asc",
-                    },
-                  },
-                },
+      orderBy: {
+        order: "asc",
+      },
+      include: {
+        questions: {
+          orderBy: {
+            order: "asc",
+          },
+          include: {
+            choices: {
+              orderBy: {
+                order: "asc",
               },
             },
-          }),
-        };
-      }),
-    );
+          },
+        },
+      },
+    });
+    const sectionGroupMap = new Map();
+    sections.forEach((section) => {
+      Object.assign(section, { typeLabel: SECTION_TYPE_LABEL[section.type] })
+      if (sectionGroupMap.has(section.type)) {
+        sectionGroupMap.get(section.type).items.push(section);
+      } else {
+        sectionGroupMap.set(section.type, {
+          label: SECTION_TYPE_LABEL[section.type],
+          items: [section],
+        });
+      }
+    });
+    return Array.from(sectionGroupMap).map(([_, value]) => value)
   }
 
   getSection(dto: GetSectionDto) {
