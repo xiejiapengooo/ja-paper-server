@@ -51,39 +51,53 @@ export class PaperService {
   }
 
   async getSections(dto: GetSectionsDto) {
-    const sections = await this.prisma.paperSection.findMany({
-      where: { partId: dto.partId },
-      orderBy: {
-        order: "asc",
+    const part = await this.prisma.paperPart.findUnique({
+      where: {
+        id: dto.partId,
       },
-      include: {
-        questions: {
-          orderBy: {
-            order: "asc",
-          },
-          include: {
-            choices: {
-              orderBy: {
-                order: "asc",
+    });
+
+    if (part) {
+      const sections = await this.prisma.paperSection.findMany({
+        where: { partId: dto.partId },
+        orderBy: {
+          order: "asc",
+        },
+        include: {
+          questions: {
+            orderBy: {
+              order: "asc",
+            },
+            include: {
+              choices: {
+                orderBy: {
+                  order: "asc",
+                },
               },
             },
           },
         },
-      },
-    });
-    const sectionGroupMap = new Map();
-    sections.forEach((section) => {
-      Object.assign(section, { typeLabel: SECTION_TYPE_LABEL[section.type] })
-      if (sectionGroupMap.has(section.type)) {
-        sectionGroupMap.get(section.type).items.push(section);
-      } else {
-        sectionGroupMap.set(section.type, {
-          label: SECTION_TYPE_LABEL[section.type],
-          items: [section],
-        });
+      });
+      const sectionGroupMap = new Map();
+      sections.forEach((section) => {
+        Object.assign(section, { typeLabel: SECTION_TYPE_LABEL[section.type] })
+        if (sectionGroupMap.has(section.type)) {
+          sectionGroupMap.get(section.type).items.push(section);
+        } else {
+          sectionGroupMap.set(section.type, {
+            label: SECTION_TYPE_LABEL[section.type],
+            items: [section],
+          });
+        }
+      });
+      return {
+        label: part.title,
+        duration: part.duration,
+        sections: Array.from(sectionGroupMap).map(([_, value]) => value),
       }
-    });
-    return Array.from(sectionGroupMap).map(([_, value]) => value)
+    } else {
+      throw new BusinessException("Paper Part not Found");
+    }
   }
 
   getSection(dto: GetSectionDto) {
