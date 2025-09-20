@@ -57,38 +57,28 @@ export class PaperService {
     });
     return Promise.all(
       sectionTypes.map(async (sectionType) => {
-        const items = await this.prisma.paperSection.findMany({
-          where: { type: sectionType.type, partId: dto.partId },
-          orderBy: {
-            order: "asc",
-          },
-          include: {
-            questions: {
-              orderBy: {
-                order: "asc",
-              },
-              include: {
-                choices: {
-                  orderBy: {
-                    order: "asc",
+        return {
+          label: SECTION_TYPE_LABEL[sectionType.type],
+          items: await this.prisma.paperSection.findMany({
+            where: { type: sectionType.type, partId: dto.partId },
+            orderBy: {
+              order: "asc",
+            },
+            include: {
+              questions: {
+                orderBy: {
+                  order: "asc",
+                },
+                include: {
+                  choices: {
+                    orderBy: {
+                      order: "asc",
+                    },
                   },
                 },
               },
             },
-          },
-        });
-
-        items.forEach(item => {
-          item.questions.forEach(question => {
-            question.choices.forEach(choice => {
-              Object.assign(choice, { isSelected: false });
-            });
-          });
-        });
-
-        return {
-          label: SECTION_TYPE_LABEL[sectionType.type],
-          items,
+          }),
         };
       }),
     );
