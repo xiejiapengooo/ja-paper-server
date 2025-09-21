@@ -84,10 +84,8 @@ model UserQuestion {
   user         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
   questionId   String
   question     PaperQuestion @relation(fields: [questionId], references: [id], onDelete: Cascade)
-  isFavorite   Boolean
-  wrongCount   Int           @default(0)
-  lastAnswerAt DateTime?
-  chosenIds    String[]
+  lastAnswerAt DateTime
+  answer       String        @db.Text
   note         String?       @db.Text
 
   @@unique([userId, questionId])

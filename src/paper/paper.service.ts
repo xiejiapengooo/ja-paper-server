@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { PrismaService } from "../prisma/prisma.service";
-import { GetPaperDto, GetSectionDto, GetSectionsDto } from "./paper.dto";
+import { GetPaperDto, GetSectionDto, GetSectionsDto, PostPaperDto } from "./paper.dto";
 import { BusinessException } from "../exception";
 import { SECTION_TYPE_LABEL } from "../constant";
 
@@ -113,5 +113,10 @@ export class PaperService {
         },
       },
     });
+  }
+
+  postPaper(dto: PostPaperDto, userTokenPayload) {
+
+
   }
 }
