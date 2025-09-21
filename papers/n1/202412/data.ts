@@ -55,7 +55,7 @@ export const data: Data = {
   parts: [
     {
       title: "言語知識（文字・語彙・文法）・読解",
-      duration: 110 * 60 * 60 * 1000,
+      duration: 110 * 60 * 1000,
       sections: [
         {
           type: SectionType.VOCAB_GRAMMAR,
@@ -2099,7 +2099,7 @@ export const data: Data = {
     },
     {
       title: "聴解",
-      duration: 61 * 60 * 60 * 1000,
+      duration: 61 * 60 * 1000,
       listeningAudio: "listening_0.mp3",
       sections: [
         {
