@@ -20,6 +20,7 @@ export class PaperController {
   }
 
   @Post("")
+  @ResponseMessage("Submission successful!")
   async postPaper(@Body() dto: PostPaperDto, @GetTokenPayload() userTokenPayload: UserTokenPayload) {
     return this.paperService.postPaper(dto, userTokenPayload);
   }

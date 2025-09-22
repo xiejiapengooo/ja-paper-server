@@ -42,7 +42,7 @@ import { PaperModule } from './paper/paper.module';
     {
       provide: APP_PIPE,
       useValue: new ValidationPipe({
-        whitelist: true,
+        whitelist: false,
         skipMissingProperties: false,
       }),
     },

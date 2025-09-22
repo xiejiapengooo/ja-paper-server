@@ -3,6 +3,8 @@ import { PrismaService } from "../prisma/prisma.service";
 import { GetPaperDto, GetSectionDto, GetSectionsDto, PostPaperDto } from "./paper.dto";
 import { BusinessException } from "../exception";
 import { SECTION_TYPE_LABEL } from "../constant";
+import { UserTokenPayload } from "../types";
+import dayjs from "dayjs";
 
 @Injectable()
 export class PaperService {
@@ -115,8 +117,28 @@ export class PaperService {
     });
   }
 
-  postPaper(dto: PostPaperDto, userTokenPayload) {
+  async postPaper(dto: PostPaperDto, userTokenPayload: UserTokenPayload) {
+    const upserts = dto.questionAnswerList.map(({ questionId, answer }) => {
+      return this.prisma.userQuestion.upsert({
+        where: {
+          userId_questionId: {
+            userId: userTokenPayload.id,
+            questionId,
+          },
+        },
+        update: {
+          lastAnswerAt: dayjs().toISOString(),
+          answer: Array.isArray(answer) ? Array.from(new Set(answer)).join(",") : answer,
+        },
+        create: {
+          questionId,
+          userId: userTokenPayload.id,
+          lastAnswerAt: dayjs().toISOString(),
+          answer: Array.isArray(answer) ? Array.from(new Set(answer)).join(",") : answer,
+        },
+      })
+    });
 
-
+    return this.prisma.$transaction(upserts);
   }
 }
