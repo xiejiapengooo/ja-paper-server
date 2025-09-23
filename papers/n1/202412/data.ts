@@ -2168,7 +2168,7 @@ export const data: Data = {
             "問題1 では、まず質問を聞いてください。それから話を聞いて、用紙の１から４の中から、最もよいものを一つ選んでください。",
           questions: [
             {
-              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              type: QuestionType.QUESTION_COMPREHENSION,
               answerType: AnswerType.SINGLE_CHOICE,
               listeningAudio: "listening_1_1.mp3",
               listeningContent:
@@ -2202,7 +2202,7 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              type: QuestionType.QUESTION_COMPREHENSION,
               answerType: AnswerType.SINGLE_CHOICE,
               listeningAudio: "listening_1_2.mp3",
               listeningContent:
@@ -2236,7 +2236,7 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              type: QuestionType.QUESTION_COMPREHENSION,
               answerType: AnswerType.SINGLE_CHOICE,
               listeningAudio: "listening_1_3.mp3",
               listeningContent:
@@ -2270,7 +2270,7 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              type: QuestionType.QUESTION_COMPREHENSION,
               answerType: AnswerType.SINGLE_CHOICE,
               listeningAudio: "listening_1_4.mp3",
               listeningContent:
@@ -2304,7 +2304,7 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              type: QuestionType.QUESTION_COMPREHENSION,
               answerType: AnswerType.SINGLE_CHOICE,
               listeningAudio: "listening_1_4.mp3",
               listeningContent:
@@ -2345,7 +2345,7 @@ export const data: Data = {
             "問題2 では、まず質問を聞いてください。そのあと、用紙のせんたくしを読んでください。読む時間があります。それから話を聞いて用紙の１から４の中から、最もよいものを一つ選んでください。",
           questions: [
             {
-              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              type: QuestionType.EMPHASIS_COMPREHENSION,
               answerType: AnswerType.SINGLE_CHOICE,
               listeningAudio: "listening_2_1.mp3",
               listeningContent:
@@ -2379,7 +2379,7 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              type: QuestionType.EMPHASIS_COMPREHENSION,
               answerType: AnswerType.SINGLE_CHOICE,
               listeningAudio: "listening_2_2.mp3",
               listeningContent:
@@ -2413,7 +2413,7 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              type: QuestionType.EMPHASIS_COMPREHENSION,
               answerType: AnswerType.SINGLE_CHOICE,
               listeningAudio: "listening_2_3.mp3",
               listeningContent:
@@ -2447,7 +2447,7 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              type: QuestionType.EMPHASIS_COMPREHENSION,
               answerType: AnswerType.SINGLE_CHOICE,
               listeningAudio: "listening_2_4.mp3",
               listeningContent:
@@ -2481,7 +2481,7 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              type: QuestionType.EMPHASIS_COMPREHENSION,
               answerType: AnswerType.SINGLE_CHOICE,
               listeningAudio: "listening_2_5.mp3",
               listeningContent:
@@ -2515,7 +2515,7 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              type: QuestionType.EMPHASIS_COMPREHENSION,
               answerType: AnswerType.SINGLE_CHOICE,
               listeningAudio: "listening_2_6.mp3",
               listeningContent:
@@ -2556,7 +2556,7 @@ export const data: Data = {
             "問題3 では、用紙に何も印刷されていません。この問題は、全体としてどんな内容かを聞く問題です。話の前に質問はありません。まず話を聞いてください。それから、質問と選択肢を聞いて、１から４の中から、最もよいものを一つ選んでください。",
           questions: [
             {
-              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              type: QuestionType.OUTLINE_COMPREHENSION,
               answerType: AnswerType.SINGLE_CHOICE,
               listeningAudio: "listening_3_1.mp3",
               listeningContent:
@@ -2590,7 +2590,7 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              type: QuestionType.OUTLINE_COMPREHENSION,
               answerType: AnswerType.SINGLE_CHOICE,
               listeningAudio: "listening_3_2.mp3",
               listeningContent:
@@ -2624,7 +2624,7 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              type: QuestionType.OUTLINE_COMPREHENSION,
               answerType: AnswerType.SINGLE_CHOICE,
               listeningAudio: "listening_3_3.mp3",
               listeningContent:
@@ -2658,7 +2658,7 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              type: QuestionType.OUTLINE_COMPREHENSION,
               answerType: AnswerType.SINGLE_CHOICE,
               listeningAudio: "listening_3_4.mp3",
               listeningContent:
@@ -2692,7 +2692,7 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              type: QuestionType.OUTLINE_COMPREHENSION,
               answerType: AnswerType.SINGLE_CHOICE,
               listeningAudio: "listening_3_5.mp3",
               listeningContent:
@@ -2732,7 +2732,7 @@ export const data: Data = {
             "問題4 では、問題用紙に何も印刷されていません。まず文を聞いてください。それから、それに対する返事を聞いて、１から３の中から、最もよいものを一つ選んでください。",
           questions: [
             {
-              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              type: QuestionType.INSTANT_RESPONSE,
               answerType: AnswerType.SINGLE_CHOICE,
               listeningAudio: "listening_4_1.mp3",
               listeningContent:
@@ -2761,7 +2761,7 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              type: QuestionType.INSTANT_RESPONSE,
               answerType: AnswerType.SINGLE_CHOICE,
               listeningAudio: "listening_4_2.mp3",
               listeningContent:
@@ -2790,7 +2790,7 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              type: QuestionType.INSTANT_RESPONSE,
               answerType: AnswerType.SINGLE_CHOICE,
               listeningAudio: "listening_4_3.mp3",
               listeningContent:
@@ -2818,7 +2818,7 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              type: QuestionType.INSTANT_RESPONSE,
               answerType: AnswerType.SINGLE_CHOICE,
               listeningAudio: "listening_4_4.mp3",
               listeningContent:
@@ -2847,7 +2847,7 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              type: QuestionType.INSTANT_RESPONSE,
               answerType: AnswerType.SINGLE_CHOICE,
               listeningAudio: "listening_4_5.mp3",
               listeningContent:
@@ -2876,7 +2876,7 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              type: QuestionType.INSTANT_RESPONSE,
               answerType: AnswerType.SINGLE_CHOICE,
               listeningAudio: "listening_4_6.mp3",
               listeningContent:
@@ -2905,7 +2905,7 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              type: QuestionType.INSTANT_RESPONSE,
               answerType: AnswerType.SINGLE_CHOICE,
               listeningAudio: "listening_4_7.mp3",
               listeningContent:
@@ -2934,7 +2934,7 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              type: QuestionType.INSTANT_RESPONSE,
               answerType: AnswerType.SINGLE_CHOICE,
               listeningAudio: "listening_4_8.mp3",
               listeningContent:
@@ -2963,7 +2963,7 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              type: QuestionType.INSTANT_RESPONSE,
               answerType: AnswerType.SINGLE_CHOICE,
               listeningAudio: "listening_4_9.mp3",
               listeningContent:
@@ -2992,7 +2992,7 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              type: QuestionType.INSTANT_RESPONSE,
               answerType: AnswerType.SINGLE_CHOICE,
               listeningAudio: "listening_4_10.mp3",
               listeningContent:
@@ -3021,7 +3021,7 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              type: QuestionType.INSTANT_RESPONSE,
               answerType: AnswerType.SINGLE_CHOICE,
               listeningAudio: "listening_4_11.mp3",
               listeningContent:
