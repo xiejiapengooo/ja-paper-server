@@ -26,7 +26,7 @@ enum SectionType {
   LISTENING // 聴解
 }
 
-enum QuestionType {
+enum AnswerType {
   SINGLE_CHOICE // 单选题
   MULTI_CHOICE // 多选题
 }
@@ -152,7 +152,7 @@ model PaperQuestion {
   part                              PaperPart    @relation(fields: [partId], references: [id])
   sectionId                         String
   section                           PaperSection @relation(fields: [sectionId], references: [id], onDelete: Cascade)
-  type                              QuestionType
+  answerType                        AnswerType
   order                             Int
   prompt                            String       @db.Text
   analysis                          String?      @db.Text
