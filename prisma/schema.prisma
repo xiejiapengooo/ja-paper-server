@@ -26,6 +26,51 @@ enum SectionType {
   LISTENING // 聴解
 }
 
+enum QuestionType {
+  // 汉字读法
+  CHINESE_PRONUNCIATION
+  // 汉字书写
+  CHINESE_WRITING
+  // 词语构成
+  WORD_COMPOSITION
+  // 上下关系
+  CONTEXT
+  // 近义替换
+  SYNONYM_SUBSTITUTION
+  // 用法
+  USAGE
+  // 句子语法1（语法形式的判断）
+  SENTENCE_GRAMMAR_1
+  // 句子语法2（句子的组织）
+  SENTENCE_GRAMMAR_2
+  // 文章语法
+  ARTICLE_GRAMMAR
+  // 内容理解（短篇）
+  CONTENT_COMPREHENSION_SHORT
+  // 内容理解（中篇）
+  CONTENT_COMPREHENSION_MIDDLE
+  // 内容理解（长篇）
+  CONTENT_COMPREHENSION_LONG
+  // 综合理解
+  SYNTHETICAL_COMPREHENSION_READ
+  // 论点理解（中篇）
+  THESIS_COMPREHENSION
+  // 信息检索
+  INFORMATION_RETRIEVAL
+  // 问题理解
+  QUESTION_COMPREHENSION
+  // 重点理解
+  EMPHASIS_COMPREHENSION
+  // 概要理解
+  OUTLINE_COMPREHENSION
+  // 语言表达
+  LANGUAGE_EXPRESSION
+  // 即时应答
+  INSTANT_RESPONSE
+  // 综合理解
+  SYNTHETICAL_COMPREHENSION_LISTEN
+}
+
 enum AnswerType {
   SINGLE_CHOICE // 单选题
   MULTI_CHOICE // 多选题
@@ -152,6 +197,7 @@ model PaperQuestion {
   part                              PaperPart    @relation(fields: [partId], references: [id])
   sectionId                         String
   section                           PaperSection @relation(fields: [sectionId], references: [id], onDelete: Cascade)
+  type                              QuestionType
   answerType                        AnswerType
   order                             Int
   prompt                            String       @db.Text
