@@ -1,4 +1,5 @@
 import {
+  AnswerType,
   Paper,
   PaperLevel,
   PaperPart,
@@ -10,34 +11,29 @@ import {
 } from "@prisma/client";
 
 export type Data = {
-  id?: Paper["id"];
   level: Paper["level"];
   year: Paper["year"];
   month: Paper["month"];
   title: Paper["title"];
   parts: Array<{
-    id?: PaperPart["id"];
     title: PaperPart["title"];
     duration: PaperPart["duration"];
     listeningAudio?: PaperPart["listeningAudio"];
     sections: Array<{
-      id?: PaperSection["id"];
-      partId?: PaperSection["partId"];
       type: PaperSection["type"];
       title: PaperSection["title"];
       content?: string;
       contentTranslationZhHans?: string;
       imageContent?: string;
       questions: Array<{
-        id?: PaperQuestion["id"];
         type: PaperQuestion["type"];
+        answerType: PaperQuestion["answerType"];
         prompt: PaperQuestion["prompt"];
         analysis: PaperQuestion["analysis"];
         listeningAudio?: PaperQuestion["listeningAudio"];
         listeningContent?: PaperQuestion["listeningContent"];
         listeningContentTranslationZhHans?: PaperQuestion["listeningContentTranslationZhHans"];
         choices: Array<{
-          id?: QuestionChoice["id"];
           label: QuestionChoice["label"];
           text: QuestionChoice["text"];
           isCorrect: QuestionChoice["isCorrect"];
@@ -62,7 +58,8 @@ export const data: Data = {
           title: "問題1 _____の言葉の読み方として最もよいものを、1・2・3・4から一つ選びなさい。",
           questions: [
             {
-              type: QuestionType.SINGLE_CHOICE,
+              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              answerType: AnswerType.SINGLE_CHOICE,
               prompt: "佐藤選手がゴールを決めたとき、観客は<u>絶叫</u>した。",
               analysis: "选手佐藤进球时，观众发出了尖叫声。\n“絶叫”正确读音是 ぜっきょう，表示“发出尖锐而剧烈的叫声”。",
               choices: [
@@ -89,7 +86,8 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SINGLE_CHOICE,
+              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              answerType: AnswerType.SINGLE_CHOICE,
               prompt: "<u>背後</u>から物音が聞こえた。",
               analysis: "从背后传来了声音。\n汉字“背後”表示“后方、背后”，标准读音为 はいご；",
               choices: [
@@ -116,7 +114,8 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SINGLE_CHOICE,
+              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              answerType: AnswerType.SINGLE_CHOICE,
               prompt: "将来の<u>抱負</u>を述べる。",
               analysis:
                 "阐述对将来的抱负。\n“抱負”表示“志向、志愿”，标准读音为 ほうふ；\n其他选项或少读一拍（ほふ）、或浊音不符（ほうぶ、ほぶ）均不正确。",
@@ -144,7 +143,8 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SINGLE_CHOICE,
+              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              answerType: AnswerType.SINGLE_CHOICE,
               prompt: "人を<u>侮って</u>はいけない。",
               analysis:
                 "不可轻视他人。\n“侮る”意思是“轻视、蔑视”，读音应为あなどる；\n“からかう”是“戏弄、嘲笑”；\n“ののしる”是“辱骂、责骂”；\n“裏切る”是“背叛”。",
@@ -172,7 +172,8 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SINGLE_CHOICE,
+              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              answerType: AnswerType.SINGLE_CHOICE,
               prompt: "相手がわかるように、<u>筋道</u>を立てて説明した。",
               analysis: "为了让对方明白，条理分明地进行了说明。\n“筋道”意为“条理、脉络”，正确读音 すじみち；",
               choices: [
@@ -199,7 +200,8 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SINGLE_CHOICE,
+              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              answerType: AnswerType.SINGLE_CHOICE,
               prompt: "その小説の主人公は、<u>奔放</u>な性格をしている。",
               analysis: "那部小说的主人公性格奔放。\n“奔放”表示“不受束缚、率性”，正确读音 ほんぽう。",
               choices: [
@@ -232,7 +234,8 @@ export const data: Data = {
           title: "問題2 （　　　）に入れるのに最もよいものを、1・2・3・4から一つ選びなさい。",
           questions: [
             {
-              type: QuestionType.SINGLE_CHOICE,
+              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              answerType: AnswerType.SINGLE_CHOICE,
               prompt: "その生物は、厳しい環境に(　)できる能力を持っている。",
               analysis:
                 "那种生物具有能够适应严酷环境的能力。\n“厳しい環境に適応できる”表示“能够适应严苛环境”；\n“合致”是“吻合、一致”；\n“転換”是“转换、转变”；\n“推移”是“变化、推移”。",
@@ -260,7 +263,8 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SINGLE_CHOICE,
+              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              answerType: AnswerType.SINGLE_CHOICE,
               prompt: "店の売り上げを五年で二倍にするという目標を(　)、みんなで努力している。",
               analysis:
                 "大家正为实现“五年内将店铺营业额翻倍”这一目标而努力。\n“目標を掲げる”表示“提出/确定目标”；\n“企む”常用于“企图、图谋不轨”；\n“興る”指“兴起、振兴”；\n“築く”指“建设、构筑”。",
@@ -288,7 +292,8 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SINGLE_CHOICE,
+              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              answerType: AnswerType.SINGLE_CHOICE,
               prompt: "新しい市長は前市長の政策を(　)し、駅前の開発を進めると述べた。",
               analysis:
                 "新市长表示将沿用前任市长的政策，推进车站前的开发。\n“踏襲する”表示“遵循、沿用已有做法”；\n“相続”多指“继承财产”；\n“獲得”指“获得”；\n“伝承”指“传承（文化、技艺等）”。",
@@ -316,7 +321,8 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SINGLE_CHOICE,
+              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              answerType: AnswerType.SINGLE_CHOICE,
               prompt: "台風で電車の到着が大幅に遅れたため、駅でしばらく(　)された。",
               analysis:
                 "台风导致电车大幅晚点，所以在车站耽搁了一段时间。\n“足止めされる”表示“（因故）被迫停留、滞留”；\n“息抜き”是“缓解压力、休息”；\n“棚上げ”是“暂时搁置议题”；\n“待ち伏せ”是“埋伏等待”。",
@@ -344,7 +350,8 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SINGLE_CHOICE,
+              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              answerType: AnswerType.SINGLE_CHOICE,
               prompt: "今日は試合で一日中走り続けたので、疲れて(　)になった。",
               analysis:
                 "今天一整天在比赛里不停地跑，所以筋疲力尽了。\n“へとへと”表示“筋疲力尽、精疲力竭”；\n“めちゃめちゃ”是“混乱、不成样子”；\n“どろどろ”“ぐちゃぐちゃ”分别是“泥泞、杂乱”之意。",
@@ -372,7 +379,8 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SINGLE_CHOICE,
+              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              answerType: AnswerType.SINGLE_CHOICE,
               prompt: "工場の誘致について、市長が丁寧に説明し、住民の不安の（　）に努めた。",
               analysis:
                 "关于工厂的引进，市长做了详细说明，努力消除居民的不安。\n“払拭する”表示“拂去、消除（疑虑、忧虑等）”；\n“喪失”是“丧失”；\n“破棄”是“废弃”；\n“排斥”是“排斥、排挤”。",
@@ -400,7 +408,8 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SINGLE_CHOICE,
+              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              answerType: AnswerType.SINGLE_CHOICE,
               prompt: "階段でつまずいて転びそうになったので、(　)隣にいた友人の腕をつかんだ。",
               analysis:
                 "在台阶上绊到，差点摔倒，赶紧抓住了旁边朋友的胳膊。\n“とっさに”表示“在瞬间、当下反射性地”；\n“じきに”是“不久”；\n“いまに”是“马上、不久就”；\n“とっくに”是“早就”。",
@@ -434,7 +443,8 @@ export const data: Data = {
           title: "問題3 _____の言葉に意味が最も近いものを、１・２・３・４から一つ選びなさい。",
           questions: [
             {
-              type: QuestionType.SINGLE_CHOICE,
+              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              answerType: AnswerType.SINGLE_CHOICE,
               prompt: "社長は小林部長の<u>手腕</u>を高く評価しているようだ。",
               analysis:
                 "社长似乎对小林部长的手腕（能力）给予高度评价。\n“手腕”在此意为“能力”；\n“経験”是“经验”；\n“考え”是“想法”；\n“人柄”是“人品、性格”。",
@@ -463,7 +473,8 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SINGLE_CHOICE,
+              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              answerType: AnswerType.SINGLE_CHOICE,
               prompt: "時間を<u>ロス</u>してしまった。",
               analysis:
                 "浪费了时间。\n“ロスする”借自英语“lose”，意为“浪费、白费”；\n“無駄にする”与之对应；\n“間違えて”是“弄错”；\n“かいて”无此用法；\n“延長して”是“延长”。",
@@ -492,7 +503,8 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SINGLE_CHOICE,
+              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              answerType: AnswerType.SINGLE_CHOICE,
               prompt: "確認が<u>おろそか</u>になっていた。",
               analysis:
                 "确认工作被敷衍了事了。\n“おろそか”含义与“いいかげん”相近，都有“不认真、敷衍”的意思；\n“めんどうくさい”是“麻烦”；\n“困難”是“困难”；\n“遅く”是“慢”。",
@@ -521,7 +533,8 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SINGLE_CHOICE,
+              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              answerType: AnswerType.SINGLE_CHOICE,
               prompt: "私たちのチームの<u>目下</u>の目標は、市の大会で優勝することだ。",
               analysis:
                 "我们队当前的目标是在市级比赛中夺冠。\n“目下”（もっか）意为“当前、现在”，对应选项 今；\n“最大”是“最大的”；\n“将来”是“将来”；\n“最低限”是“最低限度”。",
@@ -550,7 +563,8 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SINGLE_CHOICE,
+              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              answerType: AnswerType.SINGLE_CHOICE,
               prompt: "経費を考慮したうえで、古いアパートの改修工事を<u>請け負う</u>ことにした。",
               analysis:
                 "在考虑了费用之后，决定承包对旧公寓的改修工程。\n“請け負う”即“承包、承担”，对应 引き受ける；\n“申し込む”是“申请”；\n“断る”是“拒绝”；\n“諦める”是“放弃”。",
@@ -579,7 +593,8 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SINGLE_CHOICE,
+              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              answerType: AnswerType.SINGLE_CHOICE,
               prompt: "先生に本を<u>進呈</u>しました。",
               analysis:
                 "把书赠送给老师了。\n“進呈する”是“赠呈”，对应敬语“差し上げる”；\n“いただく”是“接受”；\n“貸す”是“借出”，与赠送不同；\n“借りる”是“借入”。",
@@ -614,7 +629,8 @@ export const data: Data = {
           title: "問題4 次の言葉の使い方として最もよいものを、１・２・３・４から一つ選びなさい。",
           questions: [
             {
-              type: QuestionType.SINGLE_CHOICE,
+              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              answerType: AnswerType.SINGLE_CHOICE,
               prompt: "加工",
               analysis:
                 "“加工”主要用于对物质材料进行切削、组合或化学处理等，制作出新产品。\n选项2的“余った木材を加工した商品”正是典型用法。\n1、3、4 均把“加工”用于非物理材料（生活习惯、房屋、规章制度），不自然，应分别改为“改善”“改装”“改定”。",
@@ -643,7 +659,8 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SINGLE_CHOICE,
+              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              answerType: AnswerType.SINGLE_CHOICE,
               prompt: "養う",
               analysis:
                 "“養う”常指供给生活所需以抚养人。\n选项4“養っている”指“抚养孩子”最贴切。\n1 多用“飼う”，“饲养”虫子；\n2 栽种植物多用“育てる”；\n3 “养公司”说法也不自然。",
@@ -671,7 +688,8 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SINGLE_CHOICE,
+              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              answerType: AnswerType.SINGLE_CHOICE,
               prompt: "資質",
               analysis:
                 "“資質”侧重指人或动物的天赋、素质。\n选项4用在“人作为运动员的天赋”最自然。\n1 用在“设备”上不合；\n2 虽可指“动物本性”，但不如 4 常见；\n3 “产品质量”应为“品質”。",
@@ -700,7 +718,8 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SINGLE_CHOICE,
+              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              answerType: AnswerType.SINGLE_CHOICE,
               prompt: "正当",
               analysis:
                 "“正当”可指“合理、合情理”或“应得、合法”。\n选项 3 “正当な評価を受ける”表示“得到应得的评价”，用法最恰当。\n1 应用“正しく”；\n2 应说“正式な名前”；\n4 应说“順調に”或“着々と”。",
@@ -729,7 +748,8 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SINGLE_CHOICE,
+              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              answerType: AnswerType.SINGLE_CHOICE,
               prompt: "ありきたり",
               analysis:
                 "“ありきたり”指“平凡、老套、陈词滥调”。\n选项2用来评价小说情节“老套”，最典型；\n3 虽也自然，但更常见于评价“事物或表达”，首推 2；\n1 、4 用法不当。",
@@ -758,7 +778,8 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SINGLE_CHOICE,
+              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              answerType: AnswerType.SINGLE_CHOICE,
               prompt: "間柄",
               analysis:
                 "“間柄”多用于人与人之间的关系。\n选项1“親しい間柄”描述人际关系最自然。\n2 、3 、4 虽也谈“关系”，但均偏向国家、事物或抽象环境，不如人际用法贴切。",
@@ -793,7 +814,8 @@ export const data: Data = {
           title: "問題5 次の文の（　　　）に入れるのに最もよいものを、１・２・３・４から一つ選びなさい。",
           questions: [
             {
-              type: QuestionType.SINGLE_CHOICE,
+              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              answerType: AnswerType.SINGLE_CHOICE,
               prompt: "宝くじ売り場があるよ、買ってみない?\nどうせ当たらないんだから、買う(　)無駄だったよ。",
               analysis:
                 "反正不会中奖，买了也是浪费。\nこの文は、宝くじを買ったことが無駄だったという意味を表しています。「どうせ当たらないんだから、買うだけ無駄だったよ。」のように、「だけ」を使うことで、「買うことが無駄であった」ということを強調しています。選択肢の中で、「だけ」が最も適切な表現です。",
@@ -822,7 +844,8 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SINGLE_CHOICE,
+              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              answerType: AnswerType.SINGLE_CHOICE,
               prompt: "近年の健康意識の高まり(　)健康食品は急成長している。",
               analysis:
                 "随着近年来健康意识的提高，健康食品行业飞速发展。\n「～を受けて」表示“受…影响”，说明前项是后项现象的背景原因。",
@@ -851,7 +874,8 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SINGLE_CHOICE,
+              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              answerType: AnswerType.SINGLE_CHOICE,
               prompt: "息子はサッカーの練習でよほど疲れていたのか、家に(　)食事もとらず、寝てしまった。",
               analysis:
                 "儿子大概是足球练习太累了，一回家饭也不吃就睡了。\n「～なり」接动词原形，表示动作完成后立刻发生另一动作，强调紧接性。",
@@ -880,7 +904,8 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SINGLE_CHOICE,
+              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              answerType: AnswerType.SINGLE_CHOICE,
               prompt:
                 "ウェブサイトごとに異なるパスワードを設定するのは面倒だが、第三者が不正にアクセスされる(　)、やむを得ない。",
               analysis:
@@ -910,7 +935,8 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SINGLE_CHOICE,
+              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              answerType: AnswerType.SINGLE_CHOICE,
               prompt: "昨日行った美術館は、一日では(　)作品が展示されていた。",
               analysis:
                 "昨天去的美术馆，展出的作品多到一天看不完。\n「～ほどの」表示程度，强调数量多到无法完成某动作。",
@@ -938,7 +964,8 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SINGLE_CHOICE,
+              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              answerType: AnswerType.SINGLE_CHOICE,
               prompt: "引っ越しを控えているので、なるべく余計な出費を(　)、友人に誘われたスキー旅行に行くことにした。",
               analysis:
                 "因为马上要搬家，虽然想尽量控制额外开支，但还是决定参加朋友邀请的滑雪旅行。\n「～たいところだが」表示“虽然想…但…”，体现计划与现实的矛盾。",
@@ -966,7 +993,8 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SINGLE_CHOICE,
+              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              answerType: AnswerType.SINGLE_CHOICE,
               prompt: "驚いたことに、その小学生は、高校レベルの数学の問題をすらすらと(　)。",
               analysis:
                 "正确答案：4.解いてみせた\n令人惊讶的是，那个小学生流畅地解开了高中水平的数学题。\n解析：“解けるとは”的“〜とは…（思わなかった/驚いた）”表示惊讶，“思わなかった”或“驚いた”在该句中被省略。但此处的主语为“那个小学生”而不是“我”，因此选项1不选。\n“解いてみせた”表示“那个小学生成功解出这道题（给别人看）了”，符合语义，选项1正确。",
@@ -994,7 +1022,8 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SINGLE_CHOICE,
+              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              answerType: AnswerType.SINGLE_CHOICE,
               prompt: "専門家の話では、かつてこの地域一帯は海だった(　）。",
               analysis: "专家称，这一带过去曾是一片海洋。\n「～という」用于转述他人观点，客观引述信息。",
               choices: [
@@ -1021,7 +1050,8 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SINGLE_CHOICE,
+              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              answerType: AnswerType.SINGLE_CHOICE,
               prompt:
                 "子どもは生まれてくる家庭環境を選べない。だからこそ、親の経済状況によって、子どもの教育機会が奪われること(　)。",
               analysis:
@@ -1050,7 +1080,8 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SINGLE_CHOICE,
+              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              answerType: AnswerType.SINGLE_CHOICE,
               prompt:
                 "(大学で)\n先生「青木さん、今度の報告誌のモデルを青木さんにお願いできたらと思うんだけど、どうかな」\n青木「やりたいです。でも、私(　)」\n先生「もちろん」",
               analysis:
@@ -1085,7 +1116,8 @@ export const data: Data = {
           title: "問題6 次の文の__★__に入る最もよいものを、１・２・３・４から一つ選びなさい。",
           questions: [
             {
-              type: QuestionType.SINGLE_CHOICE,
+              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              answerType: AnswerType.SINGLE_CHOICE,
               prompt: "昨日はとても寒く、積り___　___　_★_　___はずっと雪が降っていた。",
               analysis:
                 "排序：2 → 3 → 1 → 4\n昨日はとても寒く、積りこそしなかったが午前中ずっと雪が降っていた。\n\nは前面一定是名词，只有“午前中”符合，所以最后一个空是选项4。\n动词简体形后只能放が，表示转折，形成“しなかったが”。\n【动词连用形/たり+こそ+しない】相当于【动词连用形/たり+は+しない】，是动词ない形的强调语气。因此为【積りこそしなかった】。",
@@ -1113,7 +1145,8 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SINGLE_CHOICE,
+              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              answerType: AnswerType.SINGLE_CHOICE,
               prompt: "この映画はあまりにも正直で___　___　_★_　___、コメディー作品だ。",
               analysis:
                 "排序：1 → 3 → 2 → 4\nこの映画はあまりにも正直で真面目すぎるがゆえに周りの人々とのトラブルが絶えない男の日常を描いた、コメディー作品だ。\n\n「正直で真面目すぎる」构成原因，后续「がゆえに」（正因为）连接结果。\n「トラブルが絶えない」是具体情节，最后用「男の日常を描いた」修饰「コメディー作品」",
@@ -1141,7 +1174,8 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SINGLE_CHOICE,
+              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              answerType: AnswerType.SINGLE_CHOICE,
               prompt:
                 "___　___　_★_　___読みやすいように、最近は、ビジネス理論を漫画でわかりやすく解説したものが多い。",
               analysis:
@@ -1170,7 +1204,8 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SINGLE_CHOICE,
+              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              answerType: AnswerType.SINGLE_CHOICE,
               prompt: "渋滞の中を___　___　_★_　___遊園地に入る前から疲れてしまった。",
               analysis:
                 "正确选项：1\n参考排序：2 → 4 → 1 → 3\n渋滞の中を3時間運転して、ようやくついたと思ったら、今度は駐車場が混雑していて、遊園地に入る前から疲れてしまった。\n3時間運転して——说明在堵塞的车流中“开了三个小时的车”；\nようやくついたと思ったら——接着“刚以为终于到达的时候”；\n今度は駐車場が混雑していて——紧接着“这次又遇上停车场堵着的情况”，导致“在进游园地之前就已经累坏了”。",
@@ -1198,7 +1233,8 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SINGLE_CHOICE,
+              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              answerType: AnswerType.SINGLE_CHOICE,
               prompt: "商品やサービスが___　___　_★_　___ない。",
               analysis:
                 "排序：4 → 2 → 3 → 1\n商品やサービスがどんなに良い物でもその存在が知られないことには売れるも売れないもない。\n\n「どんなに良い物でも」强调品质，后续「存在が知られないことには」表条件，最后「売れるも売れないもない」总结结果。\n句意：再好的商品，若无人知晓，根本谈不上是否畅销。",
@@ -1236,7 +1272,8 @@ export const data: Data = {
           title: "問題7 次の文章を読んで、41から44の中に入る最もよいものを、１・２・３・４から一つ選びなさい。",
           questions: [
             {
-              type: QuestionType.SINGLE_CHOICE,
+              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              answerType: AnswerType.SINGLE_CHOICE,
               prompt: "",
               analysis:
                 "这里空处前面说：「编辑们总算能够松口气了」，后文描述自己只能压抑住动摇、偷偷四处张望……也就是说，既然编辑们辛苦了一天，“绝对不会让他们为我担心（去帮我找耳环）”。\n「気を使わせる」＝“让（别人）费心、担心”；\n加上否定强化「～はしない」＝“绝不会（让人担心）”；\n中间的「られ」是可能态，将「使わせる」强化为更强烈的否定。\n因此用「気を使わせられはしない」最恰当，表达“我可不会让他们替我操心”的意思。",
@@ -1264,7 +1301,8 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SINGLE_CHOICE,
+              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              answerType: AnswerType.SINGLE_CHOICE,
               prompt: "",
               analysis:
                 "前一句说“因为是常去的店里定做的，只订一只也不难”，本应无伤大雅；但下文却说“自己都觉得前所未有地沮丧”，后面给出原因“因为这是时隔三四年才第一次丢东西”。句意是“尽管单买并不困难，然而我还是异常沮丧”，所以用转折接续「それにもかかわらず」（“虽说如此/尽管如此”）。",
@@ -1292,7 +1330,8 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SINGLE_CHOICE,
+              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              answerType: AnswerType.SINGLE_CHOICE,
               prompt: "",
               analysis:
                 "句型是“如果……”＋“就不会……”：\n「最初から自分の迂闊さを承知していれば、何を落とそうともがっかりはしない。」\n意即“如果从一开始就意识到自己的粗心，无论丢什么也不会失望”。这里要用假定形「～していれば」表示“如果……的话”。",
@@ -1320,7 +1359,8 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SINGLE_CHOICE,
+              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              answerType: AnswerType.SINGLE_CHOICE,
               prompt: "",
               analysis:
                 "「だって」可以表示“就算是……”的意思。\n「ピアスだって、最近たまたま落とさない日々が続いていただけで……」\n相当于“就算是耳环，只是最近恰好一直没丢而已，明天开始说不定又天天丢”。",
@@ -1359,7 +1399,8 @@ export const data: Data = {
             "問題8 次の（１）から（４）の文章を読んで、後の問いに対する答えとして最もよいものを、１・２・３・４から一つ選びなさい。",
           questions: [
             {
-              type: QuestionType.SINGLE_CHOICE,
+              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              answerType: AnswerType.SINGLE_CHOICE,
               prompt: "筆者によると、「情報通」とはどのような人か。",
               analysis:
                 '题目要求根据作者观点判断"消息灵通人士"的定义。\n正确选项：3. 清楚谁拥有所需信息的人\n1.错误。"广泛领域"是"博学者"的特征，文中明确区分两者，且强调"情報通"是知道信息所在而非自身拥有信息。\n2.错误。文章未提及对自身信息需求的判断，重点在于掌握信息源的人际网络。\n3.正确。对应原文"知道去哪里能获取信息的人"，即能把握信息持有者的分布。\n4.错误。文中仅停留在知晓信息源阶段，未提及主动解决问题的层面。\n关键句定位：“とこにいけば情報があるのかを知っている人”（知道哪里能获取信息的人），以及通过举例“〇〇さんに聞けば”（问〇〇先生）的表述，都指向选项3的“把握信息持有人”这一核心特征。',
@@ -1398,7 +1439,8 @@ export const data: Data = {
             "問題8 次の（１）から（４）の文章を読んで、後の問いに対する答えとして最もよいものを、１・２・３・４から一つ選びなさい。",
           questions: [
             {
-              type: QuestionType.SINGLE_CHOICE,
+              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              answerType: AnswerType.SINGLE_CHOICE,
               prompt: "手の感覚について、実験からどのようなことが分かったか。",
               analysis:
                 '题目要求根据实验现象推断关于手部感觉的结论。\n正确选项：4. 因先前接触的水温不同，对温水温度的感受会产生变化\n\n选项解析：\n1.错误。文中未出现"温度无法感知"的描述，相反始终强调"能感知但感受不同"。\n2.错误。实验结果显示：冷水适应的手（右手）会感觉温水温暖，而热水适应的手（左手）会感觉温水冷，选项描述与实验结果相反。\n3.错误。温水实际温度固定，不存在"比之前温度低"的客观事实，属于混淆主观感受与客观温度的陷阱选项。\n4.正确。对应原文"惯れた右手は温かと感じ...左手は冷たいと感じる"，明确说明前段体验影响后续感知。\n关键句定位：\n「冷たい水に慣れた右手は温かと感じ、熱いお湯に慣れた左手は同じぬるま湯を冷たいと感じる」——通过对比实验证明，同一温度因前段接触温度不同而产生相反感受，这正是选项4所述现象。',
@@ -1437,7 +1479,8 @@ export const data: Data = {
             "問題8 次の（１）から（４）の文章を読んで、後の問いに対する答えとして最もよいものを、１・２・３・４から一つ選びなさい。",
           questions: [
             {
-              type: QuestionType.SINGLE_CHOICE,
+              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              answerType: AnswerType.SINGLE_CHOICE,
               prompt: "自動運転車の登場について、筆者はどのように考えているか。",
               analysis:
                 '题目要求判断作者对自动驾驶汽车发展的态度。\n正确选项：1. 虽然安全和便利性很重要，但不愿失去自主驾驶的乐趣\n\n选项解析：\n1.正确。对应原文"人間が...楽しさは...なくなってしかるべきものなのだろうか"的反问句式，以及"両立する解はあると信じたい"的表述，体现作者对保留驾驶乐趣的坚持与对两者共存的期待。\n2.错误。"実現は難しい"（实现困难）属于过度推测。作者仅表达"相信存在解决方案"，未否定其可行性。\n3.错误。"許容せざるをえない"（不得不接受）与作者立场相反。文中通过反问与"信じたい"明确反对单纯舍弃娱乐性。\n4.错误。"犠牲にしてまで...進めてはいけない"（不应以牺牲为代价推进）属于极端化表述。作者并未否定自动驾驶本身，而是强调需兼顾娱乐性。\n关键句定位：\n核心态度句："なくなってしかるべきものなのだろうか"（反问句式否定单纯舍弃娱乐性）\n立场总结句："両立する解はあると信じたい"（明确表达对两者共存的信念）\n——均指向作者在承认安全重要性的同时，强烈希望保留驾驶乐趣的立场（选项1）。',
@@ -1476,7 +1519,8 @@ export const data: Data = {
             "問題8 次の（１）から（４）の文章を読んで、後の問いに対する答えとして最もよいものを、１・２・３・４から一つ選びなさい。",
           questions: [
             {
-              type: QuestionType.SINGLE_CHOICE,
+              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              answerType: AnswerType.SINGLE_CHOICE,
               prompt: "筆者は、翻訳のどのような点が音楽の演奏と似ていると述べているか。",
               analysis:
                 '题目要求判断作者提出的"翻译与音乐演奏相似点"的核心依据。\n正确选项：2. 即使翻译同一原作，完成的译本也可能呈现多样性\n\n选项解析：\n1.错误。原文强调"再現してみせる"（努力再现），而非"无法再现"。选项曲解为消极结果，与作者对翻译再现性的肯定相悖。\n2.正确。对应原文"同じ楽譜...印象が違う"与"何種類もの異なる翻訳が存在"，明确说明同一原作因诠释者不同产生多样性，与演奏类比的核心相似点完全契合。\n3.错误。"異なる作家の作品でも似た印象"（不同作家的作品可能相似）属无中生有。文中仅讨论同一原作的不同翻译，未涉及跨作品比较。\n4.错误。"さまざまな世界観が生み出される"（创造多种世界观）偷换概念。作者强调翻译家"再現"原作世界观，而非"创造新世界观"，选项与原文逻辑矛盾。\n\n关键句定位：\n类比核心："同じ楽譜をもとにしていても...印象がまるで違う"（同一乐谱不同演奏效果）\n翻译对应："翻訳家の個性や解釈によって...異なる翻訳が存在"（翻译家个性导致译本差异）\n——直接指向选项2的"同一原作译本多样性"这一本质相似点。',
@@ -1515,7 +1559,8 @@ export const data: Data = {
             "問題9 次の（１）から（４）の文章を読んで、後の問いに対する答えとして最もよいものを、１・２・３・４から一つ選びなさい。",
           questions: [
             {
-              type: QuestionType.SINGLE_CHOICE,
+              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              answerType: AnswerType.SINGLE_CHOICE,
               prompt: "ライオンの子育てについて、筆者はどのように述べているか。",
               analysis:
                 '问题：关于狮子的育儿方式，作者如何描述？\n正确选项：4. 幼崽能行走后，由群内雌狮协作抚养\n\n选项解析：\n1.错误。文中明确"生後一ヵ月あまりは...母親だけで育てられる"，排除"生後すぐに群れで交替抚养"的表述。\n2.错误。"年長の雌が育てる"属过度限定。原文强调"群れの雌全員が協力"，未限定特定年龄层。\n3.错误。时间轴错位："歩けるようになるまで"对应的是"母親だけで育てられる"阶段，而选项3将"群れの中で"错误嫁接于此时期。\n4.正确。完全对应"歩けるようになると...共同生活が始まる"及"群れの雌全員が協力"的描述。\n关键句定位：\n时间分界点："歩けるようになると、群れに連れてこられて共同生活が始まる"\n协作方式："群れの全員の保護を受ける"',
@@ -1543,7 +1588,8 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SINGLE_CHOICE,
+              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              answerType: AnswerType.SINGLE_CHOICE,
               prompt: "共同生活の利点について、筆者はどのように述べているか。",
               analysis:
                 '问题：关于共同生活的优点，作者如何阐述？\n正确选项：2. 根据年龄分担角色，实现育儿与捕猎的兼顾\n\n选项解析：\n1.错误。部分正确但片面。壮年狮的经验主要用于"育児"，而"狩り"主要依赖年轻狮的敏捷性，选项未体现分工结构。\n2.正确。对应"若い雌は狩りで有利""壮年期は育児が上手"的年龄特性分化，及"共同で行い...食事をとれる"的协作收益，完整概括分工协作带来的两立性。\n3.错误。与原文"明確な分業とまではいえなくても"直接矛盾。\n4.错误。"どんな役割もできるようになる"属无根据推测，文中仅说明年轻狮承担狩猎，未提及其掌握育儿技能。\n\n关键句定位：\n年龄特性利用："若い雌は敏捷だが...壮年期は経験豊富"\n协作本质："全員が協力することで、問題を解決"',
@@ -1582,7 +1628,8 @@ export const data: Data = {
             "問題9 次の（１）から（４）の文章を読んで、後の問いに対する答えとして最もよいものを、１・２・３・４から一つ選びなさい。",
           questions: [
             {
-              type: QuestionType.SINGLE_CHOICE,
+              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              answerType: AnswerType.SINGLE_CHOICE,
               prompt: "取材をしている人からうまく言葉が出てこないことについて、筆者はどのように考えているか。",
               analysis:
                 '问题：关于采访者言辞不流畅的现象，作者如何看待？\n正确选项：2. 受访者可借机整理思路并深化内容\n\n选项解析：\n1.错误。文中强调受访者"利用间隙思考"，而非"被迫在间隙中发言"。选项1将主被动关系颠倒。\n2.正确。对应原文"相手は...考えをまとめたり、振り返りをしたりできたりする"及"話を深める"的描述，直接说明间隙对受访者的积极作用。\n3.错误。"分かりやすく伝えるための準備"属过度引申。未涉及信息整理传达的具体准备行为。\n4.错误。"自ら会話を進めようとする"与作者观点矛盾。文中明确"緊張感が配慮のように感じられ"，受访者无需主动推进对话。\n\n关键句定位：\n核心逻辑："トントン拍子に進まないことで、多面的に考えることができたりする"（不顺遂的对话促进多维度思考）\n直接结论："話を深めるように...手助けしている"（潜意识协助深化对话）',
@@ -1610,7 +1657,8 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SINGLE_CHOICE,
+              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              answerType: AnswerType.SINGLE_CHOICE,
               prompt: "筆者の考えに合うのはどれか。",
               analysis:
                 '问题：与作者观点相符的选项是？\n正确选项：4. 即使认为是失败或缺点，也可能因看待方式不同转化为优点\n\n选项解析：\n1.错误。文中仅讨论"自我认知"，未延伸至"对他人缺点的宽容"，属过度关联。\n2.错误。作者主张"视角转换"而非"改善缺点"，选项与"欠点...長所だ"的核心观点不符。\n3.错误。"探すのがいい"偏离文意。作者强调"多面的に見る"（多维度看待），而非单纯发掘优点。\n4.正确。完全对应"欠点のように思えることも...長所だということが少なくない"的论述，点明主观认知对事物价值的重塑作用。\n\n关键句定位：\n核心观点句："失敗のように思えることには、それなりに意味がある"（失败自有其意义）\n结论升华："見方を変えると...長所だ"（视角转换揭示优点）',
@@ -1649,7 +1697,8 @@ export const data: Data = {
             "問題9 次の（１）から（４）の文章を読んで、後の問いに対する答えとして最もよいものを、１・２・３・４から一つ選びなさい。",
           questions: [
             {
-              type: QuestionType.SINGLE_CHOICE,
+              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              answerType: AnswerType.SINGLE_CHOICE,
               prompt: "こういった時とは、どのような時か。",
               analysis:
                 "题干问：“こういった時”是指怎样的时机？\n正确答案：2. パッケージの変更を望まないファンが多いのに、変更せざるをえない時\n文中正是在说“尽管大多数粉丝都说‘还是以前的好’，却又不得不进行更新”的时刻。\n\n各选项正误\n1.错误。文中并未说粉丝因更改包装而失去对该商品的喜爱，只是“反对更改”。\n2.正确。如上所述。\n3.错误。原文原因是“竞争对手销量上升”“技术改良”等，而非“为了吸引新粉丝”才一定要改。\n4.错误。调查结果中粉丝的意见很明显都是“反对”，并非“不知道粉丝态度”。",
@@ -1677,7 +1726,8 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SINGLE_CHOICE,
+              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              answerType: AnswerType.SINGLE_CHOICE,
               prompt: "マーケティング調査の結果について、筆者はどのように考えているか。",
               analysis:
                 "题干问：作者如何看待市场调查的结果？\n正确答案：3. 消費者の反応が変わっていくことを考慮して分析するべきだ。\n文末明确指出，“即使最初有些抵触，过一两年就会习惯新设计，所以看市场调查的数据时，要考虑到这样的时间轴”。\n\n各选项正误\n1.错误。作者虽提到“要善用既有资产，让粉丝多少能接受”，但这句并不是针对“调查结果的分析方法”作出的总体评价。\n2.错误。作者并未主张“积极采纳肯定意见”，而是强调要从更长的时间维度来解读数据。\n3.正确。如上所述，必须考虑消费者随着时间变化的反应。\n4.错误。文章提到的是“未来一两年内的变化”，并非“结合过去的结果”来判断偏好变化。",
@@ -1716,7 +1766,8 @@ export const data: Data = {
             "問題9 次の（１）から（４）の文章を読んで、後の問いに対する答えとして最もよいものを、１・２・３・４から一つ選びなさい。",
           questions: [
             {
-              type: QuestionType.SINGLE_CHOICE,
+              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              answerType: AnswerType.SINGLE_CHOICE,
               prompt: "「待つ」ことからはじまっていくとあるが、何を待つのか。",
               analysis:
                 '问题：文中提到"始于等待"，等待的对象是什么？\n正确选项：3. 等待自然进入适合接受恩惠的状态\n\n选项解析：\n1.错误。"自然恢复丰饶"属过度引申。文中强调利用自然资源的"时机"，而非生态恢复过程。\n2.错误。与文意完全相悖。村民是"顺应自然周期"，而非"让自然配合人类需求"。\n3.正确。对应"自然がつくる、それに適したとき"（自然创造的适宜时机），即自然进入可被合理利用的状态。\n4.错误。"感知自然变化"非核心。等待的本质是"利用时机的成熟"，而非单纯察觉变化。\n关键句定位：\n定义性描述："自然の力を借りようとすれば...適したときがくるのを待たなければならない"（必须等待自然创造适宜时机）\n具体例证："田植えのとき、草取りのとき、稲刈りのとき"（插秧、除草、收割的不可错过时机）',
@@ -1744,7 +1795,8 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SINGLE_CHOICE,
+              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              answerType: AnswerType.SINGLE_CHOICE,
               prompt: "筆者によると、村の人たちの人間関係はどのようにつくられたか。",
               analysis:
                 '问题：根据作者观点，村民的人际关系如何构建？\n正确选项：1. 如同与自然的关系，观察对方行动并把握时机介入\n\n选项解析：\n1.正确。完全对应"人々の動きを理解しながら...タイミングがくるのを待って働きかけていく"（理解他人动向，等待时机行动）的描述，体现自然与人际的共通逻辑。\n2.错误。"相手の変化を待つ"（等待对方变化）曲解文意。核心是"主动把握时机"，而非被动等待变化。\n3.错误。"タイミングよく働きかける"（适时介入）表述片面，缺少"观察对方动向"的前提，与"理解しながら"的逻辑不匹配。\n4.错误。"焦らずに待つ"（不急躁等待）偏离重点。文中强调"逃さずに働きかける"（不错失时机行动），而非单纯被动等待。\n\n关键句定位：\n类比逻辑："自然との関係...人間同士の関係...いかされていた"（自然关系智慧运用于人际）\n具体方法："ちょうどよいタイミングがくるのを待って、そのときを逃さずに働きかけていく"（等待最佳时机并精准行动）',
@@ -1783,7 +1835,8 @@ export const data: Data = {
             "問題10 次の文章を読んで、後の問いに対する答えとして最もよいものを、１・２・３・４から一つ選びなさい。",
           questions: [
             {
-              type: QuestionType.SINGLE_CHOICE,
+              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              answerType: AnswerType.SINGLE_CHOICE,
               prompt: "筆者によると、教育の仕事は通常の仕事とどのような点で異なるか。",
               analysis:
                 '问题：作者认为教育工作与普通工作的差异点在于？\n正确选项：2. 即便知识或技术不足，仍可能产生良好结果\n\n选项解析：\n1.错误。文中未提及"人格良さ"（人格优秀）的优先性，核心对比在于经验价值与不成熟效果的辩证关系。\n2.正确。对应"未熟さがプラスに働くケースがよくある"（不成熟常成优势）及"知識...未熟でも濃い縁を結ぶ"（知识不足仍缔结深刻关系）的论述。\n3.错误。"好かれやすい"（更受欢迎）属偷换概念。作者强调"印象深い"（记忆深刻）而非单纯受欢迎。\n4.错误。与原文逻辑相悖。文中承认"経験知は有効"（经验有效），仅强调教育存在"不成熟亦有效"的特殊性，未否定经验提升质量的基本规律。\n\n关键句定位：\n核心对比句："通常の仕事は...質が良くなる"（普通工作质量随经验提升）↔"教育の場合は...プラスに働く"（教育中不成熟反成优势）',
@@ -1811,7 +1864,8 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SINGLE_CHOICE,
+              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              answerType: AnswerType.SINGLE_CHOICE,
               prompt: "筆者によると、初年度の教師の緊張感は学生たちにどのように影響するか。",
               analysis:
                 '问题：新教师紧张感如何影响学生？\n正确选项：3. 产生与教师共同构建课程的参与感\n\n选项解析：\n1.错误。"和らげようとする"（试图缓解）属无中生有。文中仅描述紧张感的传染性，未提及学生主动缓解行为。\n2.错误。"生徒らしい態度"（学生式态度）与文意相反。新教师紧张感恰恰打破固有师生角色分化。\n3.正确。完全对应"参加し作り上げる感覚が...生まれる"（产生参与共建感）的表述。\n4.错误。"心を開く"（敞开心扉）属过度引申。文中强调"場を作り上げる意識"（共建场域意识），未涉及心理开放度。\n\n关键句定位：\n影响机制："緊張感の共有が...意識を生み出す"（紧张共享催生共建意识）',
@@ -1839,7 +1893,8 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SINGLE_CHOICE,
+              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              answerType: AnswerType.SINGLE_CHOICE,
               prompt: "筆者によると、教育を仕事にしている人間にとって大切なことは何か。",
               analysis:
                 '问题：作者认为教育工作者最重要的是？\n正确选项：1. 永不满足于经验，持续自我革新\n\n选项解析：\n1.正确。对应"経験知を重ねる良さを残したまま、新鮮さを失わない"（在保留经验优势的同时不失新鲜）及"先生も...変化してくれる"（教师共同蜕变）的要求，本质是拒绝经验固化。\n2.错误。"新しい知識を身につける"（获取新知识）偏离重点。核心在于"意识革新"而非单纯知识更新。\n3.错误。虽提及"情熱を持って接する"（热情投入），但选项强调"补足不足"，而文中核心矛盾是"经验与新鲜感的平衡"，非能力短板问题。\n4.错误。"未熟さを隠さず"（不掩饰不成熟）曲解文意。作者主张"自觉不成熟并转化为动力"，而非刻意暴露弱点。\n\n关键句定位：\n终极要求："新鮮さを失わない"（不失新鲜）+"一緒に変化してくれる"（共同变化）→指向持续自我革新',
@@ -1878,7 +1933,8 @@ export const data: Data = {
             "問題11 次のAとBの意見文を読んで、後の問いに対する答えとして最もよいものを、１・２・３・４から一つ選びなさい。",
           questions: [
             {
-              type: QuestionType.SINGLE_CHOICE,
+              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              answerType: AnswerType.SINGLE_CHOICE,
               prompt: "部下や後輩が指示待ちになっている理由として、AとBが共通して述べていることは何か。",
               analysis:
                 '问题：A与B共同指出的下属"等待指示"这一情况的成因是？\n正确选项：4. 认为执行上司指示即本职工作\n\n选项解析：\n1.错误。A提及"知识不足"但仅作次要原因，B未涉及此点，非共同要素。\n2.错误。"缺乏自信"未被两文共同讨论。A强调认知偏差，B探讨责任归属逻辑。\n3.错误。两文均未提及"上司详细指导"为成因，属无关选项。\n4.正确。A的"上司指示従うことが役目"与B的"言われた通りにするのが仕事"完全对应，为共同核心归因。\n\n关键句定位：\nA核心："上司からの指示に従うことが...役目だと考え"\nB核心："言われた通りにするのが部下の仕事だと思いこんで"',
@@ -1906,7 +1962,8 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SINGLE_CHOICE,
+              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              answerType: AnswerType.SINGLE_CHOICE,
               prompt: "指示待ちになっている部下や後輩の対応のしかたについて、AとBはどのように述べているか。",
               analysis:
                 '问题：A与B对应对"等待指示"下属的方法如何论述？\n正确选项：3. A强调理解工作目的与全貌，B建议先自主思考方案\n\n选项解析：\n1.错误。A未要求"提案"，仅通过全貌认知促发自主性，与B的"提案型相談"不构成共同建议。\n2.错误。"一緒に考える"（共同思考）非A观点，A侧重个体认知构建。\n3.正确。A的"仕事の全体像を理解"与B的"自分なりの案を考えさせる"分别对应两文核心对策。\n4.错误。B未提"やり方が分かっている仕事"，而是要求未知情境下的自主思考，选项表述偏离。\n\n关键句定位：\nA对策："仕事の全体像がイメージできれば...自主的に行動"\nB对策："自分なりの案を考えてみて...提案型の相談"',
@@ -1944,7 +2001,8 @@ export const data: Data = {
           title: "問題12 次の文章を読んで、後の問いに対する答えとして最もよいものを、1～4から一つ選びなさい。",
           questions: [
             {
-              type: QuestionType.SINGLE_CHOICE,
+              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              answerType: AnswerType.SINGLE_CHOICE,
               prompt: "筆者によると、人々は脳科学に何を期待しているか。",
               analysis:
                 '问题：人们为何对脑科学抱有期待？\n正确选项：2. 期待它能指导自己如何获得幸福人生\n\n选项解析：\n1.错误。文中未提及"解释脑机制"是大众关注焦点，核心吸引力在于"人生指南"。\n2.正确。对应"脳科学...幸せな人生のノウハウを提供"（提供幸福人生方法）的表述，直接点明期待本质。\n3.错误。偷换概念。脑科学"涉及"情感等，但大众期待是"应用指导"而非单纯"教授处理方法"。\n4.错误。"客観的に示す"（客观展示）与作者"一人称世界"的论述矛盾，且未提及"定义幸福"。\n\n关键句定位：\n核心动机："脳科学によって...よりよい人生を歩めそうだと感じる"',
@@ -1972,7 +2030,8 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SINGLE_CHOICE,
+              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              answerType: AnswerType.SINGLE_CHOICE,
               prompt: "脳科学について、筆者の考えに合うのはどれか。",
               analysis:
                 '问题：符合作者观点的脑科学论述是？\n正确选项：3. 即使发现普遍法则，也无法应用于个体人生具体事项\n\n选项解析：\n1.错误。与文意相悖。作者强调"普遍法则对个体无效"，否定其应用前提。\n2.错误。逻辑颠倒。文中指出"个体解析≠普遍法则"，选项混淆因果关系。\n3.正确。完全对应"普遍的法则は...個別性や一回性に対して無力"的论述。\n4.错误。"必须通过解析个体才能到达普遍法则"属无中生有，作者未提此路径。\n\n关键句定位：\n核心限制："科学の普遍法則は人生の個別性...全く無力"',
@@ -2000,7 +2059,8 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SINGLE_CHOICE,
+              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              answerType: AnswerType.SINGLE_CHOICE,
               prompt: "筆者が言いたいことは何か。",
               analysis:
                 '问题：作者的核心观点是？\n正确选项：4. 科学仅处理事实，不涉及个人与社会的价值观\n\n选项解析：\n1.错误。作者明确"科学事実与価値無関係"，选项反向曲解为"科学影响价值观"。\n2.错误。部分正确但偏离核心。作者强调"科学无法处理价值观"，未主张"需结合两者选择未来"。\n3.错误。"役に立たない"（无用）过度极端。作者承认科学是"实现未来的工具"，仅否定其价值观决策能力。\n4.正确。精准概括"科学は事実を扱う...価値観の問題を扱えない"的核心论点。\n\n关键句定位：\n结论句："科学は...価値観の問題を扱うことはできません"',
@@ -2036,7 +2096,8 @@ export const data: Data = {
             "問題13 右のページは、ある大学の研究活動助成の案内である。\n下の問いに対する答えとして最もよいものを、1・2・3・4から一つ選びなさい。",
           questions: [
             {
-              type: QuestionType.SINGLE_CHOICE,
+              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              answerType: AnswerType.SINGLE_CHOICE,
               prompt:
                 "サイさんは、9月4日から7日までボランティア活動を行ったので、9月中に助成金を申請しようと考えている。交通費と宿泊費を計算してメモにまとめたが、申請が認められた場合、サイさんに支給される助成金はいくらになるか。\n--------------\nサイさんのメモ\n交通費:12,000円　宿泊費:7,000円を3泊分\n--------------",
               analysis:
@@ -2065,7 +2126,8 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SINGLE_CHOICE,
+              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              answerType: AnswerType.SINGLE_CHOICE,
               prompt:
                 "ジムさんは、1月10日に日帰りでボランテイア活動を行う予定である。助成金を申請したいと考えているが、活動終了後に必ず提出しなければならないものは何て、いつまでに提出しなければならないか。",
               analysis:
@@ -2108,7 +2170,8 @@ export const data: Data = {
             "問題1 では、まず質問を聞いてください。それから話を聞いて、用紙の１から４の中から、最もよいものを一つ選んでください。",
           questions: [
             {
-              type: QuestionType.SINGLE_CHOICE,
+              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              answerType: AnswerType.SINGLE_CHOICE,
               listeningAudio: "listening_1_1.mp3",
               listeningContent:
                 '<p data-start-time="00:00:04,850" data-end-time="00:00:15,175">大学の演劇サークルで、女の学生と部長の男の学生と話しています。女の学生は、この後何をしなければなりませんか？</p><p data-start-time="00:00:18,475" data-end-time="00:00:27,575">女：鈴木さん、来週の新入生勧誘のためのサークル体験会、ポスターを見た人から早速参加の申し込みが来てますね。</p><p data-start-time="00:00:27,575" data-end-time="00:00:39,075">男：うん、準備進めないとね。当日来てくれた人には、演劇を一部実際に体験してもらうよね。その時に使うシーン、台本から候補を選ぶのお願いしてたけど、どう？</p><p data-start-time="00:00:39,300" data-end-time="00:00:44,650">女：はい、体験者が多くても使えそうなシーンを3つ、ピックアップしました。</p><p data-start-time="00:00:44,875" data-end-time="00:00:55,575">男：じゃあ、その中から僕が選んで、セリフを印刷しておくよ。あと、当日は受付とか誘導とか、みんなにも手伝ってもらうから、誰が何を担当するか割り振ってほしいんだ。</p><p data-start-time="00:00:55,700" data-end-time="00:01:01,050">女：わかりました。えっと、当日配る入部案内のチラシの準備は？</p><p data-start-time="00:01:01,200" data-end-time="00:01:06,525">男：ああ、それは2年生に印刷してもらおうと思ってるんだ。僕から頼んでおくよ。</p><p data-start-time="00:01:06,800" data-end-time="00:01:07,925">女：わかりました。</p><p data-start-time="00:01:11,275" data-end-time="00:01:15,400">女の学生は、この後何をしなければなりませんか？</p>',
@@ -2141,7 +2204,8 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SINGLE_CHOICE,
+              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              answerType: AnswerType.SINGLE_CHOICE,
               listeningAudio: "listening_1_2.mp3",
               listeningContent:
                 '<p data-starttime="00:00:05,950" data-endtime="00:00:17,225">食品の会社で、男の課長と女の人が、開発中の焼きそばについて話しています。女の人は、この後どのように焼きそばを改良しますか？</p><p data-starttime="00:00:20,750" data-endtime="00:00:26,825">男：植田さん、植田さんが開発担当の冷凍焼きそばですが、試食会のアンケート結果を見ました。</p><p data-starttime="00:00:26,925" data-endtime="00:00:27,525">女：はい。</p><p data-starttime="00:00:27,800" data-endtime="00:00:33,075">男：植田さんがセールスポイントにしたいと言っていた「具がたっぷり入っている」という点は好評でしたね。</p><p data-starttime="00:00:33,250" data-endtime="00:00:35,125">女：はい、ありがとうございます。</p><p data-starttime="00:00:35,350" data-endtime="00:00:51,175">男：味については濃いとか、しょっぱいとかいうコメントが思ったよりも多かったですね。塩分量をもう少し抑えて作ってください。それから麵は適量とやや少ないと答えた人に分かれていました。でも原価から考えると麵の量を増やすのは難しいですね。</p><p data-starttime="00:00:51,475" data-endtime="00:00:57,400">女：そうなんですよね。麵を太くして食べ応えが出るようにするのも一案かと思うのですが。</p><p data-starttime="00:00:57,525" data-endtime="00:01:07,850">男：でも麵の太さについて否定的な評価はなかったし、具とのバランスもあるからとりあえず現状維持で。では次の試食会までに改良をお願いします。</p><p data-starttime="00:01:08,200" data-endtime="00:01:09,400">女：わかりました。</p><p data-starttime="00:01:14,150" data-endtime="00:01:18,850">女の人は、この後どのように焼きそばを改良しますか？</p>',
@@ -2174,7 +2238,8 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SINGLE_CHOICE,
+              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              answerType: AnswerType.SINGLE_CHOICE,
               listeningAudio: "listening_1_3.mp3",
               listeningContent:
                 '<p data-starttime="00:00:05,975" data-endtime="00:00:14,975">森の自然教室で、ガイドが話しています。冬の森の散策ツアーに参加する人は、この後まず何をしますか？</p><p data-starttime="00:00:17,825" data-endtime="00:00:21,675">今日は冬の森の散策ツアーにご参加、ありがとうございます。</p><p data-starttime="00:00:21,825" data-endtime="00:00:27,425">後ほど外に出て雪の上を歩くためのスノーシューという道具を靴につけて散策します。</p><p data-starttime="00:00:27,750" data-endtime="00:00:37,825">通常ですと、先にこの森に住む動物を紹介したビデオをご覧いただくのですが、この後天気が崩れるようなので順番を入れ替え、先に散策をします。</p><p data-starttime="00:00:38,100" data-endtime="00:00:42,600">これから記念写真を撮るので、この建物の入り口に集まってください。</p><p data-starttime="00:00:42,875" data-endtime="00:00:45,350">その後スノーシューを履きましょう。</p><p data-starttime="00:00:45,550" data-endtime="00:00:49,500">先ほど受付でお渡しした地図は散策の時に使います。</p><p data-starttime="00:00:53,100" data-endtime="00:00:58,650">冬の森の散策ツアーに参加する人は、この後まず何をしますか？</p>',
@@ -2207,7 +2272,8 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SINGLE_CHOICE,
+              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              answerType: AnswerType.SINGLE_CHOICE,
               listeningAudio: "listening_1_4.mp3",
               listeningContent:
                 '<p data-starttime="00:00:07,250" data-endtime="00:00:18,625">電話で、カフェの店長と建築会社の男の人が、店のリフォームについて話しています。男の人は今回のリフォーム案の何を直しますか？</p><p data-starttime="00:00:21,050" data-endtime="00:00:28,100">女：もしもし、カフェチェリーの本田です。メールで送ってもらった店のリフォームの修正案、拝見しました。</p><p data-starttime="00:00:28,275" data-endtime="00:00:35,700">男：お世話になっております。前回のご要望をもとに床の素材を木に変えたんですが、イメージ画像はいかがでしょうか。</p><p data-starttime="00:00:35,825" data-endtime="00:00:43,950">女：ええ、温かみが出ましたね。ただ、店内が前より暗く見えるんですが、壁と照明は前回と同じですよね。</p><p data-starttime="00:00:44,225" data-endtime="00:00:52,100">男：壁はレンガ色のままですし、照明も同じです。床を同じ素材でもう少し明るいものに変えることもできますが…</p><p data-starttime="00:00:52,275" data-endtime="00:01:01,400">女：床はこれでいいと思うので…壁の色のトーンを変えた案を作ってもらえますか。それを見て、場合によっては照明器具の変更を検討しようかな。</p><p data-starttime="00:01:01,650" data-endtime="00:01:10,675">男：承知しました。じゃあ、トーンを上げて修正したものをお送りします。あの、カウンターのデザインも変更していますが、いかがでしょうか。</p><p data-starttime="00:01:10,775" data-endtime="00:01:14,075">女：あ、気に入りました。これでお願いします。</p><p data-starttime="00:01:14,700" data-endtime="00:01:15,950">男：かしこまりました。</p><p data-starttime="00:01:19,225" data-endtime="00:01:23,600">男の人は今回のリフォーム案の何を直しますか？</p>',
@@ -2240,7 +2306,8 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SINGLE_CHOICE,
+              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              answerType: AnswerType.SINGLE_CHOICE,
               listeningAudio: "listening_1_4.mp3",
               listeningContent:
                 '<p data-starttime="00:00:06,675" data-endtime="00:00:16,175">介護用品を作る会社で、課長と男の人と話しています。男の人は、今日何をしなければなりませんか？</p><p data-starttime="00:00:17,900" data-endtime="00:00:22,425">女：田中さん、来月の介護用品の展示会のことで話したいんですが。</p><p data-starttime="00:00:22,575" data-endtime="00:00:24,000">男：はい、課長。</p><p data-starttime="00:00:24,275" data-endtime="00:00:31,750">女：田中さんの担当は、会場で使う備品のレンタルの予約、顧客への案内状の送付、それからカタログの用意ですね。</p><p data-starttime="00:00:31,900" data-endtime="00:00:38,775">男：はい、取引先への案内状の文面案とレンタル会社に送る予定の注文書は昨日課長にお送りしたかと。</p><p data-starttime="00:00:39,025" data-endtime="00:00:54,475">女：ええ、案内状はあれでいいので、今週中に取引先に送ってください。備品のレンタルですが、会場でしきりに使うパネルとか机とか去年と同じ数になっていますよね。今年は商談のスペースが3つ増えるので、その分を増やしてください。</p><p data-starttime="00:00:54,625" data-endtime="00:00:56,200">男：あっ、すみません。</p><p data-starttime="00:00:56,625" data-endtime="00:01:02,900">女：レンタル会社への注文前に、私が会計課に承認をもらうので、今日中に修正お願いします。</p><p data-starttime="00:01:03,075" data-endtime="00:01:04,075">男：わかりました。</p><p data-starttime="00:01:04,475" data-endtime="00:01:09,825">女：それからカタログは最新のものが納品されますから、当日はそれを持っていってください。</p><p data-starttime="00:01:13,825" data-endtime="00:01:17,875">男の人は、今日何をしなければなりませんか？</p>',
@@ -2280,7 +2347,8 @@ export const data: Data = {
             "問題2 では、まず質問を聞いてください。そのあと、用紙のせんたくしを読んでください。読む時間があります。それから話を聞いて用紙の１から４の中から、最もよいものを一つ選んでください。",
           questions: [
             {
-              type: QuestionType.SINGLE_CHOICE,
+              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              answerType: AnswerType.SINGLE_CHOICE,
               listeningAudio: "listening_2_1.mp3",
               listeningContent:
                 '<p data-starttime="00:00:05,450" data-endtime="00:00:16,225">ラジオで、アナウンサーと花火の会社で働く男の人が話しています。男の人が花火の職人になりたいと思ったきっかけは何ですか？</p><p data-starttime="00:00:35,475" data-endtime="00:00:45,675">女：今日は花火の製作と打ち上げの仕事をされている森田さんにお話を伺います。森田さん、花火のお仕事は「代々家業を受け継がれて」という方が多いそうですね。</p><p data-starttime="00:00:45,800" data-endtime="00:00:48,975">男：そうですね、僕の場合は違うんですけど。</p><p data-starttime="00:00:49,275" data-endtime="00:00:50,525">女：そうなんですか。</p><p data-starttime="00:00:50,875" data-endtime="00:01:07,825">男：大学の時、初めて花火大会の会場で間近で花火を見たんですが、花火響くような音、その圧倒的な力強さに心を奪われたんです。こんな花火を作って打ち上げてみたいと思って、家が花火の会社をしている友人に頼み込んで、この道に入りました。</p><p data-starttime="00:01:07,975" data-endtime="00:01:11,375">女：そうですか、この仕事をされてみていかがですか。</p><p data-starttime="00:01:11,600" data-endtime="00:01:24,300">男：玉を半分にしたものに花火材料を並べていくんですが、少しでもズレがあると空では大きく歪んでしまうんです。正確に詰めるのが難しいのでうまくいった時の達成感は何にも変え難いものです。</p><p data-starttime="00:01:27,550" data-endtime="00:01:32,575">男の人が花火の職人になりたいと思ったきっかけは何ですか？</p>',
@@ -2313,7 +2381,8 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SINGLE_CHOICE,
+              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              answerType: AnswerType.SINGLE_CHOICE,
               listeningAudio: "listening_2_2.mp3",
               listeningContent:
                 '<p data-starttime="00:00:06,175" data-endtime="00:00:11,275">宇宙科学館のコンテストで司会者と女の人が話しています。</p><p data-starttime="00:00:11,400" data-endtime="00:00:17,750">女の人は宇宙食の開発で最も大変だったことは何だと言っていますか？</p><p data-starttime="00:00:37,625" data-endtime="00:00:43,775">男：宇宙食開発コンテスト優勝チームのリーダー、中山さんです。おめでとうございます。</p><p data-starttime="00:00:44,025" data-endtime="00:00:45,625">女：ありがとうございます。</p><p data-starttime="00:00:45,825" data-endtime="00:00:52,775">男：中山さんのチームは魚の缶詰を開発されました。ここまで開発するのは大変だったんじゃないですか？</p><p data-starttime="00:00:53,025" data-endtime="00:01:01,450">女：そうですね、宇宙で美味しく食べられるものにするのは大変でした。魚の栄養もできるだけ損ねないようにしました。</p><p data-starttime="00:01:01,500" data-endtime="00:01:05,325">男：先ほど一口いただいたんですが、味がずいぶん濃いですね。</p><p data-starttime="00:01:05,600" data-endtime="00:01:13,950">女：ええ、宇宙では味覚が鈍るそうなので、かなり濃い味にしました。タレも飛び散らないようにとろみをつけました。</p><p data-starttime="00:01:14,150" data-endtime="00:01:18,050">男：そうなんですか。硬さもちょうどよくて食べやすいですね。</p><p data-starttime="00:01:18,250" data-endtime="00:01:32,825">女：そこが最大の難関でした。宇宙ではスプーンしか使わないそうなので、柔らかくしたんですが、食感も楽しめるように工夫しました。最後まで試行錯誤してようやく今の柔らかさにたどり着いたんです。</p><p data-starttime="00:01:35,525" data-endtime="00:01:41,950">女の人は宇宙食の開発で最も大変だったことは何だと言っていますか？</p>',
@@ -2346,7 +2415,8 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SINGLE_CHOICE,
+              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              answerType: AnswerType.SINGLE_CHOICE,
               listeningAudio: "listening_2_3.mp3",
               listeningContent:
                 '<p data-starttime="00:00:05,800" data-endtime="00:00:09,575">会社のリーダー研修で講師が話しています。</p><p data-starttime="00:00:09,850" data-endtime="00:00:15,625">講師は部下と接するときに何を忘れないようにしていたと言っていますか？</p><p data-starttime="00:00:34,275" data-endtime="00:00:39,100">チームで仕事を成功させるコツは、リーダーが部下と良好な関係を築くことです。</p><p data-starttime="00:00:39,300" data-endtime="00:00:44,675">そのためには部下への感謝の気持ちを忘れてはいけないと聞いたことがあるかもしれません。</p><p data-starttime="00:00:44,875" data-endtime="00:00:54,350">部下には笑顔で接するべきだとも言われますね。とはいえ、私自身も部下の言い分ばかりを聞てはいられず、厳しい指摘をせざるを得ないこともありました。</p><p data-starttime="00:00:54,500" data-endtime="00:01:03,275">ただそんな時でも話の最後は「これを糧に次は頑張ろう」などと、部下の意識がプラスに転じることを言うように心がけていました。</p><p data-starttime="00:01:03,400" data-endtime="00:01:10,800">部下との関係を築く方法は、一つではありません。今日の研修を通して自分なりの方法を見出してください。</p><p data-starttime="00:01:13,475" data-endtime="00:01:19,175">講師は部下と接するときに何を忘れないようにしていたと言っていますか？</p>',
@@ -2379,7 +2449,8 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SINGLE_CHOICE,
+              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              answerType: AnswerType.SINGLE_CHOICE,
               listeningAudio: "listening_2_4.mp3",
               listeningContent:
                 '<p data-starttime="00:00:06,425" data-endtime="00:00:11,575">テレビでアナウンサーの男の人と花屋の店長が話しています。</p><p data-starttime="00:00:11,900" data-endtime="00:00:18,175">店長は花を届けるサービスのどんな点が最も客に喜ばれていると言っていますか？</p><p data-starttime="00:00:36,500" data-endtime="00:00:41,550">男：こちらのお店ではお客様に定期的に花を届けるサービスが好評だそうですね。</p><p data-starttime="00:00:41,650" data-endtime="00:00:53,150">女：はい、私どもの花の定期便では、お客様が希望された色の系統で花束を作ってお届けしています。花は長く咲き続けるよう丁寧に処理をしているんです。</p><p data-starttime="00:00:53,600" data-endtime="00:00:57,750">男：そうですか。あの、どのくらいの頻度で届くんですか？</p><p data-starttime="00:00:58,000" data-endtime="00:01:02,800">女：每月、毎週、もしくは2週間に一度からお選びいただけます。</p><p data-starttime="00:01:03,175" data-endtime="00:01:07,000">男：それはいいですね。花束の大きさも選べるんでしょうか？</p><p data-starttime="00:01:07,200" data-endtime="00:01:19,300">女：大きさは決まっていて、小さなテーブルでも飾りやすいボリュームにしています。毎回自分の好みの色を選択できるので、その点がお客様に何より高い評価をいただいていると感じています。</p><p data-starttime="00:01:19,650" data-endtime="00:01:20,950">男：そうなんですね。</p><p data-starttime="00:01:24,325" data-endtime="00:01:30,600">店長は花を届けるサービスのどんな点が最も客に喜ばれていると言っていますか？</p>',
@@ -2412,7 +2483,8 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SINGLE_CHOICE,
+              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              answerType: AnswerType.SINGLE_CHOICE,
               listeningAudio: "listening_2_5.mp3",
               listeningContent:
                 '<p data-starttime="00:00:09,375" data-endtime="00:00:19,375">高校サッカーの大会でアナウンサーが監督にインタビューしています。監督はどうして今日の試合に勝てたと言っていますか？</p><p data-starttime="00:00:38,100" data-endtime="00:00:42,825">女：監督、おめでとうございます！今日の試合いかがでしたでしょうか？</p><p data-starttime="00:00:43,175" data-endtime="00:00:53,850">男：選手がよくやってくれました。去年の優勝候補が相手だったので覚悟はしていたんですが、前半先制されてなかなか普段の練習通りにはプレーできませんでした。</p><p data-starttime="00:00:54,400" data-endtime="00:01:00,975">でも劣勢の中、攻撃の手を緩めず最後まで粘り強く戦ったことが勝利につながったと思います。</p><p data-starttime="00:01:01,125" data-endtime="00:01:07,475">このような試合を戦い抜くことで、選手の技術面も精神面も成長してくれることを願っています。</p><p data-starttime="00:01:07,725" data-endtime="00:01:12,700">作戦面では選手交代のタイミングなど、改善すべき点はあると思っています。</p><p data-starttime="00:01:15,575" data-endtime="00:01:19,800">監督はどうして今日の試合に勝てたと言っていますか？</p>',
@@ -2445,7 +2517,8 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SINGLE_CHOICE,
+              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              answerType: AnswerType.SINGLE_CHOICE,
               listeningAudio: "listening_2_6.mp3",
               listeningContent:
                 '<p data-starttime="00:00:05,600" data-endtime="00:00:11,850">市役所で女の上司と男の職員が市民向けのセミナーについて話しています。</p><p data-starttime="00:00:11,850" data-endtime="00:00:18,425">二人は次のセミナーの企画として会議でどんな提案をすることにしましたか？</p><p data-starttime="00:00:37,100" data-endtime="00:00:47,525">女：伊藤さん、起業したい人向けのセミナーですが、今年の企画を来週の会議にかけたいんです。去年の参加者アンケートを踏まえて案を考えておいてくれましたか？</p><p data-starttime="00:00:47,700" data-endtime="00:01:02,475">男：はい、去年は有名企業家を講師に招きましたが、アンケートでは具体的なノウハウをもっと知りたかったってコメントが結構ありました。金融機関の人に資本金や融資などの資金調達について講演してもらうのはどうですか？</p><p data-starttime="00:01:02,525" data-endtime="00:01:03,675">女：そうですね。</p><p data-starttime="00:01:03,850" data-endtime="00:01:15,800">男：他には弁護士の先生に会社設立のための法手続きの話を頼むのもいいかと。あっ、あと、企業経験者を呼んで業種別のグループで話す機会を設けてほしいなんていう意見もありました。</p><p data-starttime="00:01:15,925" data-endtime="00:01:21,000">女：うーん、座談会は会場の見直しが必要ですから、別の機会にしましょう。</p><p data-starttime="00:01:21,075" data-endtime="00:01:21,775">男：はい。</p><p data-starttime="00:01:21,950" data-endtime="00:01:30,200">女：両方の分野の人に講演をお願いしたいところですが、予算がね。アンケートではどちらに対するコメントが多かったですか？</p><p data-starttime="00:01:30,600" data-endtime="00:01:38,950">男：そうですね、会社を立ち上げる際の法手続きに自信がないというコメントもありましたが、資金調達に関するものの方が目につきました。</p><p data-starttime="00:01:39,250" data-endtime="00:01:43,800">女：では、その方面の専門家を呼ぶことを次の企画として図りましょう。</p><p data-starttime="00:01:47,350" data-endtime="00:01:53,275">二人は次のセミナーの企画として会議でどんな提案をすることにしましたか？</p>',
@@ -2485,7 +2558,8 @@ export const data: Data = {
             "問題3 では、用紙に何も印刷されていません。この問題は、全体としてどんな内容かを聞く問題です。話の前に質問はありません。まず話を聞いてください。それから、質問と選択肢を聞いて、１から４の中から、最もよいものを一つ選んでください。",
           questions: [
             {
-              type: QuestionType.SINGLE_CHOICE,
+              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              answerType: AnswerType.SINGLE_CHOICE,
               listeningAudio: "listening_3_1.mp3",
               listeningContent:
                 '<p data-starttime="00:00:04,925" data-endtime="00:00:10,850">親子向けのクラシックコンサートの会場で、オーケストラの指揮者が話しています。</p><p data-starttime="00:00:13,950" data-endtime="00:00:16,325">緑オーケストラ指揮者の山田です。</p><p data-starttime="00:00:16,600" data-endtime="00:00:26,500">オーケストラには色々な楽器がありますが、指揮者は指揮棒1本だけです。リズムを取るぐらいで簡単そうに見えるかもしれませんが、そんなことはありません。</p><p data-starttime="00:00:26,725" data-endtime="00:00:38,125">というのは、曲に対して持つイメージって人によってバラバラなんですよね。同じ曲の楽譜を見ても、山場がどこにあるとか、この部分は何を表しているのかなどの解釈が違います。</p><p data-starttime="00:00:38,475" data-endtime="00:00:51,500">指揮者は自分なりの解釈をオーケストラの団員に伝えて、演奏をまとめ上げるんです。それだけでなく、団員との信頼関係を築き、演奏者が持つ表現力を最大限に引き出すことも求められるんです。</p><p data-starttime="00:00:53,625" data-endtime="00:00:56,525">指揮者は何について話していますか？</p><p data-starttime="00:00:57,950" data-endtime="00:01:01,600">1.楽器による演奏法の違い</p><p data-starttime="00:01:03,325" data-endtime="00:01:06,775">2.演奏会を楽しみ方</p><p data-starttime="00:01:08,200" data-endtime="00:01:12,575">3.団員の能力を信じることの大切さ</p><p data-starttime="00:01:13,525" data-endtime="00:01:16,425">4.指揮者の役割</p>',
@@ -2518,7 +2592,8 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SINGLE_CHOICE,
+              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              answerType: AnswerType.SINGLE_CHOICE,
               listeningAudio: "listening_3_2.mp3",
               listeningContent:
                 '<p data-starttime="00:00:05,925" data-endtime="00:00:12,250">テレビでアナウンサーの男の人は、商店街の代表の人にインタビューしています。</p><p data-starttime="00:00:13,025" data-endtime="00:00:20,050">男：地方の商店街が衰退していく傾向がある中で、この桜通り商店街はたくさんのお客様で賑わっていますね。</p><p data-starttime="00:00:20,250" data-endtime="00:00:35,600">女：ありがとうございます。一時はお客様が減って、商店街全体が寂しい時期もありました。それで、3年ほど前から、若い店主たちを中心に、お客様に喜んでもらえるような商店街全体のイベントを企画しているんです。</p><p data-starttime="00:00:35,750" data-endtime="00:00:39,325">男：そうなんですか。どんなイベントをやっていらっしゃるんですか。</p><p data-starttime="00:00:39,700" data-endtime="00:00:48,525">女：例えば、学生デーを設けて、その日は全店舗で学生割引を行ったり、七タなど季節ごとにイベントを開催したりしています。</p><p data-starttime="00:00:48,725" data-endtime="00:00:49,775">男：そうですか。</p><p data-starttime="00:00:50,100" data-endtime="00:01:04,425">女：ほかにも、飲食店で写真を撮りたくなるような盛り付けを工夫したメニューを開発し、それをインターネットで発信したりしています。おかげさまで、近隣の方だけでなく、ネットの記事を見た遠方の方も来てくださっています。</p><p data-starttime="00:01:06,650" data-endtime="00:01:10,725">商店街の代表の人は何について話していますか？</p><p data-starttime="00:01:11,925" data-endtime="00:01:15,775">1.商店街の店の入れ替わり</p><p data-starttime="00:01:16,950" data-endtime="00:01:21,050">2.商店の活性化の取り組み</p><p data-starttime="00:01:21,600" data-endtime="00:01:25,950">3.商店街で新たに取り組むべき課題</p><p data-starttime="00:01:26,550" data-endtime="00:01:30,900">4.商店街で一番人気があるイベント</p>',
@@ -2551,7 +2626,8 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SINGLE_CHOICE,
+              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              answerType: AnswerType.SINGLE_CHOICE,
               listeningAudio: "listening_3_3.mp3",
               listeningContent:
                 '<p data-starttime="00:00:06,825" data-endtime="00:00:11,600">テレビの動物番組で、専門家がゴリラについて話しています。</p><p data-starttime="00:00:13,075" data-endtime="00:00:21,825">私はゴリラの生態を研究しています。私の研究は、ジャングルで野生のゴリラの群れを追いかけ、観察することから始まります。</p><p data-starttime="00:00:22,075" data-endtime="00:00:39,525">ただ、警戒しているゴリラに近づいて殴られたりすると危険ですから、少しずつ距離を縮めるんです。ゴリラは他の動物を見ると相手を知ろうと近づきますが、相手が怖がって下を向いたり目を逸らしたりすると、相手を敵だと認識して威嚇してきます。</p><p data-starttime="00:00:39,825" data-endtime="00:00:53,675">なので、我々もひるまずに目を合わせます。そして、ゴリラの行為を真似して、ゴロッと横になったり食べたりしているうちに、ゴリラは我々には敵意がないと認識してくれ、近づくことを許すようになります。</p><p data-starttime="00:00:56,775" data-endtime="00:01:00,025">専門家は何について話していますか？</p><p data-starttime="00:01:00,725" data-endtime="00:01:04,750">1.ゴリラが敵を攻撃する方法</p><p data-starttime="00:01:05,475" data-endtime="00:01:08,775">2.ゴリラの記憶力の良さ</p><p data-starttime="00:01:09,325" data-endtime="00:01:13,775">3.ゴリラとの信頼関係を築く方法</p><p data-starttime="00:01:14,275" data-endtime="00:01:18,150">4.ゴリラの研究を始めた理由</p>',
@@ -2584,7 +2660,8 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SINGLE_CHOICE,
+              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              answerType: AnswerType.SINGLE_CHOICE,
               listeningAudio: "listening_3_4.mp3",
               listeningContent:
                 '<p data-starttime="00:00:06,875" data-endtime="00:00:10,525">ラジオで、ある島の医師が話しています。</p><p data-starttime="00:00:11,550" data-endtime="00:00:24,950">私は、都会の大学病院に10年勤務し、3年前に小さな島の診療所に赴任しました。ここでは、様々な病気や怪我に対応する必要があり、医師としての総合的な技量が高められると感じています。</p><p data-starttime="00:00:25,325" data-endtime="00:00:30,150">島の患者さんとの距離が近く、診療所以外にも患者さんによく会います。</p><p data-starttime="00:00:30,500" data-endtime="00:00:38,150">薬や治療の効果について直接聞けたり、患者さんと一緒に病気に向き合っているという実感があって手応えが感じられます。</p><p data-starttime="00:00:38,450" data-endtime="00:00:46,800">また生活習慣について島の人たちに積極的にアドバイスするなど、地域の予防医療に貢献できることにも魅力を感じています。</p><p data-starttime="00:00:48,450" data-endtime="00:00:51,825">この島の医師は何について話していますか？</p><p data-starttime="00:00:52,500" data-endtime="00:00:56,050">1.この島の医師になったきっかけ</p><p data-starttime="00:00:56,900" data-endtime="00:01:00,375">2.この島の医師としてのやりがい</p><p data-starttime="00:01:00,725" data-endtime="00:01:04,625">3.この島の医療の困難な点</p><p data-starttime="00:01:05,250" data-endtime="00:01:09,650">4.この島の生活習慣と病気の関係</p>',
@@ -2617,7 +2694,8 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SINGLE_CHOICE,
+              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              answerType: AnswerType.SINGLE_CHOICE,
               listeningAudio: "listening_3_5.mp3",
               listeningContent:
                 '<p data-starttime="00:00:06,600" data-endtime="00:00:10,875">市民講座で発酵食品について講師が話しています。</p><p data-starttime="00:00:12,225" data-endtime="00:00:16,500">皆さん、ヨーグルトやチーズなどの発酵食品は好きですか？</p><p data-starttime="00:00:17,000" data-endtime="00:00:30,000">発酵食品は色々な実験を通して健康効果が実証されていますが、加熱すると有益な菌の働きが損なわれるので、できるだけそのまま食べることをお勧めします。</p><p data-starttime="00:00:30,800" data-endtime="00:00:35,250">毎日継続して摂取すると、より効果が期待できます。</p><p data-starttime="00:00:36,025" data-endtime="00:00:48,550">それから、食べ物の組み合わせにも注意を払いたいですね。バナナやごぼうのように食物繊維が含まれているものと一緒に摂ると、菌の活動が活発になるんです。</p><p data-starttime="00:00:52,225" data-endtime="00:00:55,175">講師は何について話していますか？</p><p data-starttime="00:00:56,275" data-endtime="00:01:00,075">1.発酵食品に含まれる成分</p><p data-starttime="00:01:00,700" data-endtime="00:01:04,325">2.発酵食品を使った料理</p><p data-starttime="00:01:04,850" data-endtime="00:01:08,950">3.発酵食品が好まれる理由</p><p data-starttime="00:01:09,575" data-endtime="00:01:13,825">4.発酵食品の効果的な食べ方</p>',
@@ -2656,7 +2734,8 @@ export const data: Data = {
             "問題4 では、問題用紙に何も印刷されていません。まず文を聞いてください。それから、それに対する返事を聞いて、１から３の中から、最もよいものを一つ選んでください。",
           questions: [
             {
-              type: QuestionType.SINGLE_CHOICE,
+              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              answerType: AnswerType.SINGLE_CHOICE,
               listeningAudio: "listening_4_1.mp3",
               listeningContent:
                 '<p data-starttime="00:00:04,675" data-endtime="00:00:08,725">先輩、テニスの全国大会、きっと優勝してみせます。</p><p data-starttime="00:00:11,075" data-endtime="00:00:13,900">1.全力を出してくるよ。</p><p data-starttime="00:00:15,125" data-endtime="00:00:18,200">2.あきらめるのは早いんじゃない？</p><p data-starttime="00:00:19,575" data-endtime="00:00:22,850">3.うん、期待してるからね。</p>',
@@ -2684,7 +2763,8 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SINGLE_CHOICE,
+              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              answerType: AnswerType.SINGLE_CHOICE,
               listeningAudio: "listening_4_2.mp3",
               listeningContent:
                 '<p data-starttime="00:00:05,725" data-endtime="00:00:11,125">ねえ、歌手のもりなお、明日のコンサートを最後に引退するって、知ってた？</p><p data-starttime="00:00:12,200" data-endtime="00:00:16,725">1.えっ、明日で引退するの？どうして？</p><p data-starttime="00:00:17,525" data-endtime="00:00:21,375">2.えっ、コンサートだけは続けるんだ。</p><p data-starttime="00:00:21,825" data-endtime="00:00:26,175">3.えっ、明日のコンサート中止になったの？</p>',
@@ -2712,7 +2792,8 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SINGLE_CHOICE,
+              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              answerType: AnswerType.SINGLE_CHOICE,
               listeningAudio: "listening_4_3.mp3",
               listeningContent:
                 '<p data-starttime="00:00:05,400" data-endtime="00:00:09,000">ゼミでやった実験、データを整理するのに手こずったね。</p><p data-starttime="00:00:10,425" data-endtime="00:00:13,575">1.確かにスムーズにいったよね。</p><p data-starttime="00:00:14,375" data-endtime="00:00:18,250">2.あ、もっと大変だと思っていたんだね。</p><p data-starttime="00:00:19,500" data-endtime="00:00:23,400">3.本当、途中で嫌になっちゃったよ。</p>',
@@ -2739,7 +2820,8 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SINGLE_CHOICE,
+              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              answerType: AnswerType.SINGLE_CHOICE,
               listeningAudio: "listening_4_4.mp3",
               listeningContent:
                 '<p data-starttime="00:00:04,975" data-endtime="00:00:08,650">美容師さんに言われるままにパーマかけちゃったけど、どうかな？</p><p data-starttime="00:00:09,325" data-endtime="00:00:13,650">1.え一？美容師さんにアドバイスもらわなかったんだ。</p><p data-starttime="00:00:14,400" data-endtime="00:00:18,025">2.美容師さんの言うとおりにして正解だよ。</p><p data-starttime="00:00:18,925" data-endtime="00:00:23,200">3.美容師さんのすすめるスタイルにすればよかったかもね。</p>',
@@ -2767,7 +2849,8 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SINGLE_CHOICE,
+              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              answerType: AnswerType.SINGLE_CHOICE,
               listeningAudio: "listening_4_5.mp3",
               listeningContent:
                 '<p data-starttime="00:00:05,325" data-endtime="00:00:09,725">研究会の発表の事前練習、明日なら見てあげられなくもないよ。</p><p data-starttime="00:00:11,025" data-endtime="00:00:14,625">1.どうしても明日は難しいですか？</p><p data-starttime="00:00:15,425" data-endtime="00:00:19,825">2.すみません、では明日お願いします。</p><p data-starttime="00:00:20,450" data-endtime="00:00:24,200">3.じゃあ、今日の方がいいんですね。</p>',
@@ -2795,7 +2878,8 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SINGLE_CHOICE,
+              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              answerType: AnswerType.SINGLE_CHOICE,
               listeningAudio: "listening_4_6.mp3",
               listeningContent:
                 '<p data-starttime="00:00:05,900" data-endtime="00:00:11,375">ねえ、私たち午後から出張だけど、新幹線、今運転を見合わせるって。</p><p data-starttime="00:00:12,325" data-endtime="00:00:16,375">1.えっ、いつ頃通転を再開するんだろう。</p><p data-starttime="00:00:17,300" data-endtime="00:00:21,800">2.あっ、新幹線動いたんだ。良かった。</p><p data-starttime="00:00:22,600" data-endtime="00:00:26,725">3.じゃあ、予定を変更しなくてよさそうだね。</p>',
@@ -2823,7 +2907,8 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SINGLE_CHOICE,
+              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              answerType: AnswerType.SINGLE_CHOICE,
               listeningAudio: "listening_4_7.mp3",
               listeningContent:
                 '<p data-starttime="00:00:05,400" data-endtime="00:00:11,350">あの、このカウンターで3,000円以上のレシートと引き換えにお皿がもらえるって聞いたんですが。</p><p data-starttime="00:00:12,325" data-endtime="00:00:16,875">1.あっ、商品のお取り替えをご希望ですね。</p><p data-starttime="00:00:18,025" data-endtime="00:00:21,925">2.3,000円のご予算でお求めでしょうか。</p><p data-starttime="00:00:22,600" data-endtime="00:00:27,075">3.あっ、はい。レシートをお預かりします。</p>',
@@ -2851,7 +2936,8 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SINGLE_CHOICE,
+              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              answerType: AnswerType.SINGLE_CHOICE,
               listeningAudio: "listening_4_8.mp3",
               listeningContent:
                 '<p data-starttime="00:00:05,825" data-endtime="00:00:12,025">ゼミの食事会、いつもの店に電話したんだけど、キャンセルが出ない限り、席確保できないって。</p><p data-starttime="00:00:13,025" data-endtime="00:00:16,675">1.ああ、キャンセルできないんだね。</p><p data-starttime="00:00:17,750" data-endtime="00:00:21,800">2.じゃあ何とか予約取れそうだね。</p><p data-starttime="00:00:22,575" data-endtime="00:00:26,575">3.じゃあ、他の店探すしかないね</p>',
@@ -2879,7 +2965,8 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SINGLE_CHOICE,
+              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              answerType: AnswerType.SINGLE_CHOICE,
               listeningAudio: "listening_4_9.mp3",
               listeningContent:
                 '<p data-starttime="00:00:05,300" data-endtime="00:00:11,500">山本課長って先月この支店に異動してきたと思ったら、海外に転勤だって。</p><p data-starttime="00:00:12,650" data-endtime="00:00:16,475">1.この間来たばかりなのにまた異動？</p><p data-starttime="00:00:17,025" data-endtime="00:00:21,725">2.えっ、この支店に来るはずが海外転勤になったの？</p><p data-starttime="00:00:22,475" data-endtime="00:00:26,675">3.課長、長いことこの支店にいたもんね。</p>',
@@ -2907,7 +2994,8 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SINGLE_CHOICE,
+              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              answerType: AnswerType.SINGLE_CHOICE,
               listeningAudio: "listening_4_10.mp3",
               listeningContent:
                 '<p data-starttime="00:00:06,075" data-endtime="00:00:09,925">卒業論文の提出まであと10日で、切羽詰まってきたよ。</p><p data-starttime="00:00:10,975" data-endtime="00:00:14,125">1.ヘえー、余裕あるんだね。</p><p data-starttime="00:00:15,425" data-endtime="00:00:18,650">2.あと少しだから頑張って。</p><p data-starttime="00:00:19,325" data-endtime="00:00:22,950">3.すごい、もう書き終わったんだ。</p>',
@@ -2935,7 +3023,8 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SINGLE_CHOICE,
+              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              answerType: AnswerType.SINGLE_CHOICE,
               listeningAudio: "listening_4_11.mp3",
               listeningContent:
                 '<p data-starttime="00:00:05,475" data-endtime="00:00:09,900">みどり社との共同研究、中止を余儀なくされたって課長が言ってたよ。</p><p data-starttime="00:00:10,775" data-endtime="00:00:14,925">1.今になって中止にはできないもんね。</p><p data-starttime="00:00:15,925" data-endtime="00:00:19,550">2.えっ、いったい何があったの？</p><p data-starttime="00:00:20,425" data-endtime="00:00:24,350">3.あー、続けられることになったんだね。</p>',
@@ -2970,7 +3059,8 @@ export const data: Data = {
             "問題5 では長めの話を聞きます。この問題には練習はありません。問題用紙に、メモをとってもかまいません。 \n１番\n問題用紙に何も印刷されていません。まず話を聞いてください。それから、質問と選択肢を聞いて、１から４の中から、最もよいものを一つ選んでください。\n２番\nまず話を聞いてください。それから、二つの質問を聞いて、それぞれ問題用紙の１から４の中から、最もよいものを一つ選んでください。",
           questions: [
             {
-              type: QuestionType.SINGLE_CHOICE,
+              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              answerType: AnswerType.SINGLE_CHOICE,
               listeningAudio: "listening_5_1.mp3",
               listeningContent:
                 '<p data-starttime="00:00:02,225" data-endtime="00:00:05,600">書店で店長と店員二人が話しています。</p><p data-starttime="00:00:06,825" data-endtime="00:00:15,475">店長：最近お客さんが減って、売り上げが落ちてるんだよね。駅の近くに新しい書店もできたし。何か売上を回復するいい案ないかな？</p><p data-starttime="00:00:15,525" data-endtime="00:00:25,775">店員A：今全国の売り上げランキングで上位に入ってる本を入口近くに置いてますけど、もっとお客様の目に留まりやすいようにレジの近いところに置くのはどうですか？</p><p data-starttime="00:00:25,975" data-endtime="00:00:37,025">店員B：うちは近くにデザイン関係の会社が多いからか、以前からデザイン関連の本がよく売れてますよね。それに店員の推薦文を書いたカードをつけてもっと目立たせたらどうですか？</p><p data-starttime="00:00:37,275" data-endtime="00:00:40,175">店長：前にやったことあるけど、手間がかかるんだよね。</p><p data-starttime="00:00:40,375" data-endtime="00:00:51,375">店員A：それか、雑誌をより充実させるのはどうでしょうか。最近は種類も増えているので。雑誌が揃っていれば、それを目当てに来てくれる新しいお客さんも増えるかもしれません。</p><p data-starttime="00:00:51,800" data-endtime="00:00:52,525">店長：そうだね。</p><p data-starttime="00:00:52,725" data-endtime="00:01:07,125">店員B：私は以前からのお客様を引き続きターゲットにした方がいいと思うんです。写真集とか雑誌とか種類に関わらず、デザインに関連する本を1ヵ所にまとめたコーナーを作るのはどうですか？それがうちの強みになると思うんです。</p><p data-starttime="00:01:07,275" data-endtime="00:01:10,825">店員A：新しいコーナーですか？場所はどうするんですか？</p><p data-starttime="00:01:10,975" data-endtime="00:01:23,075">店長：うーん…じゃ、ソファーが置いてある閲覧スペースに棚を増やして、そこに集めようか。1ヵ所にまとめてある方がアピールになるね。推薦文のカードをつけるのは様子を見てからにしよう。</p><p data-starttime="00:01:25,925" data-endtime="00:01:31,375">書店の売り上げを回復するために、まずどうすることにしましたか？</p><p data-starttime="00:01:31,725" data-endtime="00:01:35,375">1.売れている本をレジの近くに置く。</p><p data-starttime="00:01:38,225" data-endtime="00:01:43,150">2.デザイン関連の本に推薦文のカードをつける。</p><p data-starttime="00:01:46,175" data-endtime="00:01:49,725">3.雑誌のコーナーを広くする</p><p data-starttime="00:01:52,775" data-endtime="00:01:56,875">4.デザイン関連の本のコーナーを作る。</p>',
@@ -3003,7 +3093,8 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SINGLE_CHOICE,
+              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              answerType: AnswerType.SINGLE_CHOICE,
               listeningAudio: "listening_5_2.mp3",
               listeningContent:
                 '<p data-starttime="00:00:03,000" data-endtime="00:00:05,925">テレビを見ながら夫婦が話しています。</p><p data-starttime="00:00:07,600" data-endtime="00:00:12,000">テレビ：最近、一般の人が製品の工場を見学できるところがあります。</p><p data-starttime="00:00:12,175" data-endtime="00:00:15,025">今日はその中から四つご紹介します。</p><p data-starttime="00:00:15,125" data-endtime="00:00:27,475">まず、ヒガシヤの工場。こちらではカップスープの製造工程を見学したあと、カップに好きな具と粉末のスープを組み合わせて入れて、オリジナルのカップスープを作って持って帰れます。</p><p data-starttime="00:00:27,725" data-endtime="00:00:45,225">次はニシマル牛乳工場です。こちらでは製造管理のため味覚の専門家が、製品の風味を自分の舌で確認するシステムを取り入れています。見学の際、味覚の専門家から実際の牛乳の検査方法などについて聞くことができます。</p><p data-starttime="00:00:45,450" data-endtime="00:00:58,475">ミナミはサッカーボールの工場です。ボール用の皮が次第に立体的になっていく様子に目を見張ります。小さなボールに色付けする作業を体験できて、できたものはお土産に持って帰れます。</p><p data-starttime="00:00:58,850" data-endtime="00:01:12,050">最後はおもちゃメーカーのキタヤ。この工場では車や電車のおもちゃを作る過程が見学できます。ここでしか入手できないオリジナル商品が購入可能なのも人気の理由なんだそうですよ。</p><p data-starttime="00:01:14,350" data-endtime="00:01:18,250">女：ヘー、面白そう。今度子供を連れて行ってみない？</p><p data-starttime="00:01:18,400" data-endtime="00:01:30,400">男：うん、いいね。僕は機械化されてる工場でも最終的には人間の舌で確認しているっていうの興味深かったけど。でも、まぁ子供も一緒だから実際に作れるところの方がいいな。</p><p data-starttime="00:01:30,625" data-endtime="00:01:32,050">女：あ、ボールね。</p><p data-starttime="00:01:32,100" data-endtime="00:01:43,400">男：あ、そっちじゃなくて。いつも飲んでるのとちょっと違う味にできるなんて面白そう。行くならそこがいいな。君はどこがいいと思う？涼太が好きな乗り物？</p><p data-starttime="00:01:43,650" data-endtime="00:01:53,850">女：うーん、そこはオリジナル商品をねだられて買う羽目になりそう。お土産をもらえるところならその心配がないからいいよね。うちに帰ってから遊べるし。</p><p data-starttime="00:01:54,125" data-endtime="00:01:57,400">男：うん、じゃあ涼太にも聞いてから決めよう。</p><p data-starttime="00:02:04,500" data-endtime="00:02:09,925">質問1：男の人はどの工場に行きたいと言っていますか？</p><p data-starttime="00:02:19,850" data-endtime="00:02:25,000">質問2：女の人はどの工場に行きたいと言っていますか？</p>',
@@ -3036,7 +3127,8 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SINGLE_CHOICE,
+              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              answerType: AnswerType.SINGLE_CHOICE,
               listeningAudio: "listening_5_2.mp3",
               listeningContent:
                 '<p data-starttime="00:00:03,000" data-endtime="00:00:05,925">テレビを見ながら夫婦が話しています。</p><p data-starttime="00:00:07,600" data-endtime="00:00:12,000">テレビ：最近、一般の人が製品の工場を見学できるところがあります。</p><p data-starttime="00:00:12,175" data-endtime="00:00:15,025">今日はその中から四つご紹介します。</p><p data-starttime="00:00:15,125" data-endtime="00:00:27,475">まず、ヒガシヤの工場。こちらではカップスープの製造工程を見学したあと、カップに好きな具と粉末のスープを組み合わせて入れて、オリジナルのカップスープを作って持って帰れます。</p><p data-starttime="00:00:27,725" data-endtime="00:00:45,225">次はニシマル牛乳工場です。こちらでは製造管理のため味覚の専門家が、製品の風味を自分の舌で確認するシステムを取り入れています。見学の際、味覚の専門家から実際の牛乳の検査方法などについて聞くことができます。</p><p data-starttime="00:00:45,450" data-endtime="00:00:58,475">ミナミはサッカーボールの工場です。ボール用の皮が次第に立体的になっていく様子に目を見張ります。小さなボールに色付けする作業を体験できて、できたものはお土産に持って帰れます。</p><p data-starttime="00:00:58,850" data-endtime="00:01:12,050">最後はおもちゃメーカーのキタヤ。この工場では車や電車のおもちゃを作る過程が見学できます。ここでしか入手できないオリジナル商品が購入可能なのも人気の理由なんだそうですよ。</p><p data-starttime="00:01:14,350" data-endtime="00:01:18,250">女：ヘー、面白そう。今度子供を連れて行ってみない？</p><p data-starttime="00:01:18,400" data-endtime="00:01:30,400">男：うん、いいね。僕は機械化されてる工場でも最終的には人間の舌で確認しているっていうの興味深かったけど。でも、まぁ子供も一緒だから実際に作れるところの方がいいな。</p><p data-starttime="00:01:30,625" data-endtime="00:01:32,050">女：あ、ボールね。</p><p data-starttime="00:01:32,100" data-endtime="00:01:43,400">男：あ、そっちじゃなくて。いつも飲んでるのとちょっと違う味にできるなんて面白そう。行くならそこがいいな。君はどこがいいと思う？涼太が好きな乗り物？</p><p data-starttime="00:01:43,650" data-endtime="00:01:53,850">女：うーん、そこはオリジナル商品をねだられて買う羽目になりそう。お土産をもらえるところならその心配がないからいいよね。うちに帰ってから遊べるし。</p><p data-starttime="00:01:54,125" data-endtime="00:01:57,400">男：うん、じゃあ涼太にも聞いてから決めよう。</p><p data-starttime="00:02:04,500" data-endtime="00:02:09,925">質問1：男の人はどの工場に行きたいと言っていますか？</p><p data-starttime="00:02:19,850" data-endtime="00:02:25,000">質問2：女の人はどの工場に行きたいと言っていますか？</p>',
