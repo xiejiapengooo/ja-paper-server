@@ -58,7 +58,7 @@ export const data: Data = {
           title: "問題1 _____の言葉の読み方として最もよいものを、1・2・3・4から一つ選びなさい。",
           questions: [
             {
-              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              type: QuestionType.CHINESE_PRONUNCIATION,
               answerType: AnswerType.SINGLE_CHOICE,
               prompt: "佐藤選手がゴールを決めたとき、観客は<u>絶叫</u>した。",
               analysis: "选手佐藤进球时，观众发出了尖叫声。\n“絶叫”正确读音是 ぜっきょう，表示“发出尖锐而剧烈的叫声”。",
@@ -86,7 +86,7 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              type: QuestionType.CHINESE_PRONUNCIATION,
               answerType: AnswerType.SINGLE_CHOICE,
               prompt: "<u>背後</u>から物音が聞こえた。",
               analysis: "从背后传来了声音。\n汉字“背後”表示“后方、背后”，标准读音为 はいご；",
@@ -114,7 +114,7 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              type: QuestionType.CHINESE_PRONUNCIATION,
               answerType: AnswerType.SINGLE_CHOICE,
               prompt: "将来の<u>抱負</u>を述べる。",
               analysis:
@@ -143,7 +143,7 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              type: QuestionType.CHINESE_PRONUNCIATION,
               answerType: AnswerType.SINGLE_CHOICE,
               prompt: "人を<u>侮って</u>はいけない。",
               analysis:
@@ -172,7 +172,7 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              type: QuestionType.CHINESE_PRONUNCIATION,
               answerType: AnswerType.SINGLE_CHOICE,
               prompt: "相手がわかるように、<u>筋道</u>を立てて説明した。",
               analysis: "为了让对方明白，条理分明地进行了说明。\n“筋道”意为“条理、脉络”，正确读音 すじみち；",
@@ -200,7 +200,7 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              type: QuestionType.CHINESE_PRONUNCIATION,
               answerType: AnswerType.SINGLE_CHOICE,
               prompt: "その小説の主人公は、<u>奔放</u>な性格をしている。",
               analysis: "那部小说的主人公性格奔放。\n“奔放”表示“不受束缚、率性”，正确读音 ほんぽう。",
@@ -234,7 +234,7 @@ export const data: Data = {
           title: "問題2 （　　　）に入れるのに最もよいものを、1・2・3・4から一つ選びなさい。",
           questions: [
             {
-              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              type: QuestionType.WORD_COMPOSITION,
               answerType: AnswerType.SINGLE_CHOICE,
               prompt: "その生物は、厳しい環境に(　)できる能力を持っている。",
               analysis:
@@ -263,7 +263,7 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              type: QuestionType.WORD_COMPOSITION,
               answerType: AnswerType.SINGLE_CHOICE,
               prompt: "店の売り上げを五年で二倍にするという目標を(　)、みんなで努力している。",
               analysis:
@@ -292,7 +292,7 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              type: QuestionType.WORD_COMPOSITION,
               answerType: AnswerType.SINGLE_CHOICE,
               prompt: "新しい市長は前市長の政策を(　)し、駅前の開発を進めると述べた。",
               analysis:
@@ -321,7 +321,7 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              type: QuestionType.WORD_COMPOSITION,
               answerType: AnswerType.SINGLE_CHOICE,
               prompt: "台風で電車の到着が大幅に遅れたため、駅でしばらく(　)された。",
               analysis:
@@ -350,7 +350,7 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              type: QuestionType.WORD_COMPOSITION,
               answerType: AnswerType.SINGLE_CHOICE,
               prompt: "今日は試合で一日中走り続けたので、疲れて(　)になった。",
               analysis:
@@ -379,7 +379,7 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              type: QuestionType.WORD_COMPOSITION,
               answerType: AnswerType.SINGLE_CHOICE,
               prompt: "工場の誘致について、市長が丁寧に説明し、住民の不安の（　）に努めた。",
               analysis:
@@ -408,7 +408,7 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              type: QuestionType.WORD_COMPOSITION,
               answerType: AnswerType.SINGLE_CHOICE,
               prompt: "階段でつまずいて転びそうになったので、(　)隣にいた友人の腕をつかんだ。",
               analysis:
@@ -443,12 +443,11 @@ export const data: Data = {
           title: "問題3 _____の言葉に意味が最も近いものを、１・２・３・４から一つ選びなさい。",
           questions: [
             {
-              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              type: QuestionType.SYNONYM_SUBSTITUTION,
               answerType: AnswerType.SINGLE_CHOICE,
               prompt: "社長は小林部長の<u>手腕</u>を高く評価しているようだ。",
               analysis:
                 "社长似乎对小林部长的手腕（能力）给予高度评价。\n“手腕”在此意为“能力”；\n“経験”是“经验”；\n“考え”是“想法”；\n“人柄”是“人品、性格”。",
-
               choices: [
                 {
                   label: "1.",
@@ -473,7 +472,7 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              type: QuestionType.SYNONYM_SUBSTITUTION,
               answerType: AnswerType.SINGLE_CHOICE,
               prompt: "時間を<u>ロス</u>してしまった。",
               analysis:
@@ -503,7 +502,7 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              type: QuestionType.SYNONYM_SUBSTITUTION,
               answerType: AnswerType.SINGLE_CHOICE,
               prompt: "確認が<u>おろそか</u>になっていた。",
               analysis:
@@ -533,7 +532,7 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              type: QuestionType.SYNONYM_SUBSTITUTION,
               answerType: AnswerType.SINGLE_CHOICE,
               prompt: "私たちのチームの<u>目下</u>の目標は、市の大会で優勝することだ。",
               analysis:
@@ -563,7 +562,7 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              type: QuestionType.SYNONYM_SUBSTITUTION,
               answerType: AnswerType.SINGLE_CHOICE,
               prompt: "経費を考慮したうえで、古いアパートの改修工事を<u>請け負う</u>ことにした。",
               analysis:
@@ -593,7 +592,7 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              type: QuestionType.SYNONYM_SUBSTITUTION,
               answerType: AnswerType.SINGLE_CHOICE,
               prompt: "先生に本を<u>進呈</u>しました。",
               analysis:
@@ -629,7 +628,7 @@ export const data: Data = {
           title: "問題4 次の言葉の使い方として最もよいものを、１・２・３・４から一つ選びなさい。",
           questions: [
             {
-              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              type: QuestionType.USAGE,
               answerType: AnswerType.SINGLE_CHOICE,
               prompt: "加工",
               analysis:
@@ -659,7 +658,7 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              type: QuestionType.USAGE,
               answerType: AnswerType.SINGLE_CHOICE,
               prompt: "養う",
               analysis:
@@ -688,7 +687,7 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              type: QuestionType.USAGE,
               answerType: AnswerType.SINGLE_CHOICE,
               prompt: "資質",
               analysis:
@@ -718,7 +717,7 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              type: QuestionType.USAGE,
               answerType: AnswerType.SINGLE_CHOICE,
               prompt: "正当",
               analysis:
@@ -748,7 +747,7 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              type: QuestionType.USAGE,
               answerType: AnswerType.SINGLE_CHOICE,
               prompt: "ありきたり",
               analysis:
@@ -778,7 +777,7 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              type: QuestionType.USAGE,
               answerType: AnswerType.SINGLE_CHOICE,
               prompt: "間柄",
               analysis:
@@ -814,12 +813,11 @@ export const data: Data = {
           title: "問題5 次の文の（　　　）に入れるのに最もよいものを、１・２・３・４から一つ選びなさい。",
           questions: [
             {
-              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              type: QuestionType.SENTENCE_GRAMMAR_1,
               answerType: AnswerType.SINGLE_CHOICE,
               prompt: "宝くじ売り場があるよ、買ってみない?\nどうせ当たらないんだから、買う(　)無駄だったよ。",
               analysis:
                 "反正不会中奖，买了也是浪费。\nこの文は、宝くじを買ったことが無駄だったという意味を表しています。「どうせ当たらないんだから、買うだけ無駄だったよ。」のように、「だけ」を使うことで、「買うことが無駄であった」ということを強調しています。選択肢の中で、「だけ」が最も適切な表現です。",
-
               choices: [
                 {
                   label: "1.",
@@ -844,7 +842,7 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              type: QuestionType.SENTENCE_GRAMMAR_1,
               answerType: AnswerType.SINGLE_CHOICE,
               prompt: "近年の健康意識の高まり(　)健康食品は急成長している。",
               analysis:
@@ -874,7 +872,7 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              type: QuestionType.SENTENCE_GRAMMAR_1,
               answerType: AnswerType.SINGLE_CHOICE,
               prompt: "息子はサッカーの練習でよほど疲れていたのか、家に(　)食事もとらず、寝てしまった。",
               analysis:
@@ -904,7 +902,7 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              type: QuestionType.SENTENCE_GRAMMAR_1,
               answerType: AnswerType.SINGLE_CHOICE,
               prompt:
                 "ウェブサイトごとに異なるパスワードを設定するのは面倒だが、第三者が不正にアクセスされる(　)、やむを得ない。",
@@ -935,7 +933,7 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              type: QuestionType.SENTENCE_GRAMMAR_1,
               answerType: AnswerType.SINGLE_CHOICE,
               prompt: "昨日行った美術館は、一日では(　)作品が展示されていた。",
               analysis:
@@ -964,7 +962,7 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              type: QuestionType.SENTENCE_GRAMMAR_1,
               answerType: AnswerType.SINGLE_CHOICE,
               prompt: "引っ越しを控えているので、なるべく余計な出費を(　)、友人に誘われたスキー旅行に行くことにした。",
               analysis:
@@ -993,7 +991,7 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              type: QuestionType.SENTENCE_GRAMMAR_1,
               answerType: AnswerType.SINGLE_CHOICE,
               prompt: "驚いたことに、その小学生は、高校レベルの数学の問題をすらすらと(　)。",
               analysis:
@@ -1022,7 +1020,7 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              type: QuestionType.SENTENCE_GRAMMAR_1,
               answerType: AnswerType.SINGLE_CHOICE,
               prompt: "専門家の話では、かつてこの地域一帯は海だった(　）。",
               analysis: "专家称，这一带过去曾是一片海洋。\n「～という」用于转述他人观点，客观引述信息。",
@@ -1050,7 +1048,7 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              type: QuestionType.SENTENCE_GRAMMAR_1,
               answerType: AnswerType.SINGLE_CHOICE,
               prompt:
                 "子どもは生まれてくる家庭環境を選べない。だからこそ、親の経済状況によって、子どもの教育機会が奪われること(　)。",
@@ -1080,7 +1078,7 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              type: QuestionType.SENTENCE_GRAMMAR_1,
               answerType: AnswerType.SINGLE_CHOICE,
               prompt:
                 "(大学で)\n先生「青木さん、今度の報告誌のモデルを青木さんにお願いできたらと思うんだけど、どうかな」\n青木「やりたいです。でも、私(　)」\n先生「もちろん」",
@@ -1116,7 +1114,7 @@ export const data: Data = {
           title: "問題6 次の文の__★__に入る最もよいものを、１・２・３・４から一つ選びなさい。",
           questions: [
             {
-              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              type: QuestionType.SENTENCE_GRAMMAR_2,
               answerType: AnswerType.SINGLE_CHOICE,
               prompt: "昨日はとても寒く、積り___　___　_★_　___はずっと雪が降っていた。",
               analysis:
@@ -1145,7 +1143,7 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              type: QuestionType.SENTENCE_GRAMMAR_2,
               answerType: AnswerType.SINGLE_CHOICE,
               prompt: "この映画はあまりにも正直で___　___　_★_　___、コメディー作品だ。",
               analysis:
@@ -1174,7 +1172,7 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              type: QuestionType.SENTENCE_GRAMMAR_2,
               answerType: AnswerType.SINGLE_CHOICE,
               prompt:
                 "___　___　_★_　___読みやすいように、最近は、ビジネス理論を漫画でわかりやすく解説したものが多い。",
@@ -1204,7 +1202,7 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              type: QuestionType.SENTENCE_GRAMMAR_2,
               answerType: AnswerType.SINGLE_CHOICE,
               prompt: "渋滞の中を___　___　_★_　___遊園地に入る前から疲れてしまった。",
               analysis:
@@ -1233,7 +1231,7 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              type: QuestionType.SENTENCE_GRAMMAR_2,
               answerType: AnswerType.SINGLE_CHOICE,
               prompt: "商品やサービスが___　___　_★_　___ない。",
               analysis:
@@ -1272,7 +1270,7 @@ export const data: Data = {
           title: "問題7 次の文章を読んで、41から44の中に入る最もよいものを、１・２・３・４から一つ選びなさい。",
           questions: [
             {
-              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              type: QuestionType.ARTICLE_GRAMMAR,
               answerType: AnswerType.SINGLE_CHOICE,
               prompt: "",
               analysis:
@@ -1301,7 +1299,7 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              type: QuestionType.ARTICLE_GRAMMAR,
               answerType: AnswerType.SINGLE_CHOICE,
               prompt: "",
               analysis:
@@ -1330,7 +1328,7 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              type: QuestionType.ARTICLE_GRAMMAR,
               answerType: AnswerType.SINGLE_CHOICE,
               prompt: "",
               analysis:
@@ -1359,7 +1357,7 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              type: QuestionType.ARTICLE_GRAMMAR,
               answerType: AnswerType.SINGLE_CHOICE,
               prompt: "",
               analysis:
@@ -1399,7 +1397,7 @@ export const data: Data = {
             "問題8 次の（１）から（４）の文章を読んで、後の問いに対する答えとして最もよいものを、１・２・３・４から一つ選びなさい。",
           questions: [
             {
-              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              type: QuestionType.CONTENT_COMPREHENSION_SHORT,
               answerType: AnswerType.SINGLE_CHOICE,
               prompt: "筆者によると、「情報通」とはどのような人か。",
               analysis:
@@ -1439,7 +1437,7 @@ export const data: Data = {
             "問題8 次の（１）から（４）の文章を読んで、後の問いに対する答えとして最もよいものを、１・２・３・４から一つ選びなさい。",
           questions: [
             {
-              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              type: QuestionType.CONTENT_COMPREHENSION_SHORT,
               answerType: AnswerType.SINGLE_CHOICE,
               prompt: "手の感覚について、実験からどのようなことが分かったか。",
               analysis:
@@ -1479,7 +1477,7 @@ export const data: Data = {
             "問題8 次の（１）から（４）の文章を読んで、後の問いに対する答えとして最もよいものを、１・２・３・４から一つ選びなさい。",
           questions: [
             {
-              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              type: QuestionType.CONTENT_COMPREHENSION_SHORT,
               answerType: AnswerType.SINGLE_CHOICE,
               prompt: "自動運転車の登場について、筆者はどのように考えているか。",
               analysis:
@@ -1519,7 +1517,7 @@ export const data: Data = {
             "問題8 次の（１）から（４）の文章を読んで、後の問いに対する答えとして最もよいものを、１・２・３・４から一つ選びなさい。",
           questions: [
             {
-              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              type: QuestionType.CONTENT_COMPREHENSION_SHORT,
               answerType: AnswerType.SINGLE_CHOICE,
               prompt: "筆者は、翻訳のどのような点が音楽の演奏と似ていると述べているか。",
               analysis:
@@ -1559,7 +1557,7 @@ export const data: Data = {
             "問題9 次の（１）から（４）の文章を読んで、後の問いに対する答えとして最もよいものを、１・２・３・４から一つ選びなさい。",
           questions: [
             {
-              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              type: QuestionType.CONTENT_COMPREHENSION_MIDDLE,
               answerType: AnswerType.SINGLE_CHOICE,
               prompt: "ライオンの子育てについて、筆者はどのように述べているか。",
               analysis:
@@ -1588,7 +1586,7 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              type: QuestionType.CONTENT_COMPREHENSION_MIDDLE,
               answerType: AnswerType.SINGLE_CHOICE,
               prompt: "共同生活の利点について、筆者はどのように述べているか。",
               analysis:
@@ -1628,7 +1626,7 @@ export const data: Data = {
             "問題9 次の（１）から（４）の文章を読んで、後の問いに対する答えとして最もよいものを、１・２・３・４から一つ選びなさい。",
           questions: [
             {
-              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              type: QuestionType.CONTENT_COMPREHENSION_MIDDLE,
               answerType: AnswerType.SINGLE_CHOICE,
               prompt: "取材をしている人からうまく言葉が出てこないことについて、筆者はどのように考えているか。",
               analysis:
@@ -1657,7 +1655,7 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              type: QuestionType.CONTENT_COMPREHENSION_MIDDLE,
               answerType: AnswerType.SINGLE_CHOICE,
               prompt: "筆者の考えに合うのはどれか。",
               analysis:
@@ -1697,7 +1695,7 @@ export const data: Data = {
             "問題9 次の（１）から（４）の文章を読んで、後の問いに対する答えとして最もよいものを、１・２・３・４から一つ選びなさい。",
           questions: [
             {
-              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              type: QuestionType.CONTENT_COMPREHENSION_MIDDLE,
               answerType: AnswerType.SINGLE_CHOICE,
               prompt: "こういった時とは、どのような時か。",
               analysis:
@@ -1726,7 +1724,7 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              type: QuestionType.CONTENT_COMPREHENSION_MIDDLE,
               answerType: AnswerType.SINGLE_CHOICE,
               prompt: "マーケティング調査の結果について、筆者はどのように考えているか。",
               analysis:
@@ -1766,7 +1764,7 @@ export const data: Data = {
             "問題9 次の（１）から（４）の文章を読んで、後の問いに対する答えとして最もよいものを、１・２・３・４から一つ選びなさい。",
           questions: [
             {
-              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              type: QuestionType.CONTENT_COMPREHENSION_MIDDLE,
               answerType: AnswerType.SINGLE_CHOICE,
               prompt: "「待つ」ことからはじまっていくとあるが、何を待つのか。",
               analysis:
@@ -1795,7 +1793,7 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              type: QuestionType.CONTENT_COMPREHENSION_MIDDLE,
               answerType: AnswerType.SINGLE_CHOICE,
               prompt: "筆者によると、村の人たちの人間関係はどのようにつくられたか。",
               analysis:
@@ -1835,7 +1833,7 @@ export const data: Data = {
             "問題10 次の文章を読んで、後の問いに対する答えとして最もよいものを、１・２・３・４から一つ選びなさい。",
           questions: [
             {
-              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              type: QuestionType.CONTENT_COMPREHENSION_LONG,
               answerType: AnswerType.SINGLE_CHOICE,
               prompt: "筆者によると、教育の仕事は通常の仕事とどのような点で異なるか。",
               analysis:
@@ -1864,7 +1862,7 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              type: QuestionType.CONTENT_COMPREHENSION_LONG,
               answerType: AnswerType.SINGLE_CHOICE,
               prompt: "筆者によると、初年度の教師の緊張感は学生たちにどのように影響するか。",
               analysis:
@@ -1893,7 +1891,7 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              type: QuestionType.CONTENT_COMPREHENSION_LONG,
               answerType: AnswerType.SINGLE_CHOICE,
               prompt: "筆者によると、教育を仕事にしている人間にとって大切なことは何か。",
               analysis:
@@ -1933,7 +1931,7 @@ export const data: Data = {
             "問題11 次のAとBの意見文を読んで、後の問いに対する答えとして最もよいものを、１・２・３・４から一つ選びなさい。",
           questions: [
             {
-              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              type: QuestionType.SYNTHETICAL_COMPREHENSION_READ,
               answerType: AnswerType.SINGLE_CHOICE,
               prompt: "部下や後輩が指示待ちになっている理由として、AとBが共通して述べていることは何か。",
               analysis:
@@ -1962,7 +1960,7 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              type: QuestionType.SYNTHETICAL_COMPREHENSION_READ,
               answerType: AnswerType.SINGLE_CHOICE,
               prompt: "指示待ちになっている部下や後輩の対応のしかたについて、AとBはどのように述べているか。",
               analysis:
@@ -2001,7 +1999,7 @@ export const data: Data = {
           title: "問題12 次の文章を読んで、後の問いに対する答えとして最もよいものを、1～4から一つ選びなさい。",
           questions: [
             {
-              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              type: QuestionType.THESIS_COMPREHENSION,
               answerType: AnswerType.SINGLE_CHOICE,
               prompt: "筆者によると、人々は脳科学に何を期待しているか。",
               analysis:
@@ -2030,7 +2028,7 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              type: QuestionType.THESIS_COMPREHENSION,
               answerType: AnswerType.SINGLE_CHOICE,
               prompt: "脳科学について、筆者の考えに合うのはどれか。",
               analysis:
@@ -2059,7 +2057,7 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              type: QuestionType.THESIS_COMPREHENSION,
               answerType: AnswerType.SINGLE_CHOICE,
               prompt: "筆者が言いたいことは何か。",
               analysis:
@@ -2096,7 +2094,7 @@ export const data: Data = {
             "問題13 右のページは、ある大学の研究活動助成の案内である。\n下の問いに対する答えとして最もよいものを、1・2・3・4から一つ選びなさい。",
           questions: [
             {
-              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              type: QuestionType.INFORMATION_RETRIEVAL,
               answerType: AnswerType.SINGLE_CHOICE,
               prompt:
                 "サイさんは、9月4日から7日までボランティア活動を行ったので、9月中に助成金を申請しようと考えている。交通費と宿泊費を計算してメモにまとめたが、申請が認められた場合、サイさんに支給される助成金はいくらになるか。\n--------------\nサイさんのメモ\n交通費:12,000円　宿泊費:7,000円を3泊分\n--------------",
@@ -2126,7 +2124,7 @@ export const data: Data = {
               ],
             },
             {
-              type: QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN,
+              type: QuestionType.INFORMATION_RETRIEVAL,
               answerType: AnswerType.SINGLE_CHOICE,
               prompt:
                 "ジムさんは、1月10日に日帰りでボランテイア活動を行う予定である。助成金を申請したいと考えているが、活動終了後に必ず提出しなければならないものは何て、いつまでに提出しなければならないか。",
