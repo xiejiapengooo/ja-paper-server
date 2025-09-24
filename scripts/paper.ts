@@ -10,58 +10,36 @@ main()
   .catch(console.log);
 
 async function main() {
-  logger.log("Starting upsert...");
+  logger.log("Starting create...");
 
-  const paper = await prisma.paper.upsert({
-    where: {
-      id: data.id || "",
-    },
-    create: {
-      level: data.level,
-      year: data.year,
-      month: data.month,
-      title: data.title,
-    },
-    update: {
-      level: data.level,
-      year: data.year,
-      month: data.month,
-      title: data.title,
-    },
+  const paper = await prisma.paper.create({
+   data: {
+     level: data.level,
+     year: data.year,
+     month: data.month,
+     title: data.title,
+   }
   });
-  logger.log(`Paper ${paper.id} upserted.`);
+  logger.log(`Paper ${paper.id} created.`);
 
   for (let partItemIndex = 0; partItemIndex < data.parts.length; partItemIndex++) {
     const partItem = data.parts[partItemIndex];
-    const part = await prisma.paperPart.upsert({
-      where: {
-        id: partItem.id || "",
-      },
-      create: {
+    const part = await prisma.paperPart.create({
+      data: {
         order: partItemIndex + 1,
         paperId: paper.id,
         title: partItem.title,
         duration: partItem.duration,
         listeningAudio: partItem.listeningAudio,
-      },
-      update: {
-        order: partItemIndex + 1,
-        paperId: paper.id,
-        title: partItem.title,
-        duration: partItem.duration,
-        listeningAudio: partItem.listeningAudio,
-      },
+      }
     });
-    logger.log(`Paper part ${part.id} upserted.`);
+    logger.log(`Paper part ${part.id} created.`);
 
     let questionOrder = 1;
     for (let sectionItemIndex = 0; sectionItemIndex < partItem.sections.length; sectionItemIndex++) {
       const sectionItem = partItem.sections[sectionItemIndex];
-      const section = await prisma.paperSection.upsert({
-        where: {
-          id: sectionItem.id || "",
-        },
-        create: {
+      const section = await prisma.paperSection.create({
+        data: {
           partId: part.id,
           paperId: paper.id,
           type: sectionItem.type,
@@ -70,68 +48,34 @@ async function main() {
           content: sectionItem.content || "",
           contentTranslationZhHans: sectionItem.contentTranslationZhHans || "",
           imageContent: sectionItem.imageContent || "",
-        },
-        update: {
-          partId: part.id,
-          paperId: paper.id,
-          type: sectionItem.type,
-          title: sectionItem.title,
-          order: sectionItemIndex + 1,
-          content: sectionItem.content || "",
-          contentTranslationZhHans: sectionItem.contentTranslationZhHans || "",
-          imageContent: sectionItem.imageContent || "",
-        },
+        }
       });
-      logger.log(`Paper section ${section.id} upserted.`);
+      logger.log(`Paper section ${section.id} created.`);
 
       for (let questionItemIndex = 0; questionItemIndex < sectionItem.questions.length; questionItemIndex++) {
         const questionItem = sectionItem.questions[questionItemIndex];
-        const question = await prisma.paperQuestion.upsert({
-          where: {
-            id: questionItem.id || "",
-          },
-          create: {
+        const question = await prisma.paperQuestion.create({
+          data: {
             paperId: paper.id,
             partId: part.id,
             sectionId: section.id,
             type: questionItem.type,
+            answerType: questionItem.answerType,
             order: questionOrder,
             prompt: questionItem.prompt,
             analysis: questionItem.analysis || "",
             listeningAudio: questionItem.listeningAudio || "",
             listeningContent: questionItem.listeningContent || "",
             listeningContentTranslationZhHans: questionItem.listeningContentTranslationZhHans || "",
-          },
-          update: {
-            paperId: paper.id,
-            partId: part.id,
-            sectionId: section.id,
-            type: questionItem.type,
-            order: questionOrder,
-            prompt: questionItem.prompt,
-            analysis: questionItem.analysis || "",
-            listeningAudio: questionItem.listeningAudio || "",
-            listeningContent: questionItem.listeningContent || "",
-            listeningContentTranslationZhHans: questionItem.listeningContentTranslationZhHans || "",
-          },
+          }
         });
         questionOrder++;
-        logger.log(`Paper question ${question.id} upserted.`);
+        logger.log(`Paper question ${question.id} created.`);
 
         for (let choiceItemIndex = 0; choiceItemIndex < questionItem.choices.length; choiceItemIndex++) {
           const choiceItem = questionItem.choices[choiceItemIndex];
-          const choice = await prisma.questionChoice.upsert({
-            where: {
-              id: choiceItem.id || "",
-            },
-            create: {
-              label: choiceItem.label,
-              text: choiceItem.text,
-              isCorrect: choiceItem.isCorrect,
-              questionId: question.id,
-              order: choiceItemIndex + 1,
-            },
-            update: {
+          const choice = await prisma.questionChoice.create({
+            data: {
               label: choiceItem.label,
               text: choiceItem.text,
               isCorrect: choiceItem.isCorrect,
@@ -139,13 +83,13 @@ async function main() {
               order: choiceItemIndex + 1,
             },
           });
-          logger.log(`Question choice ${choice.id} upserted.`);
+          logger.log(`Question choice ${choice.id} created.`);
         }
       }
     }
   }
 
-  logger.log("Upsert Done!");
+  logger.log("create Done!");
 
   await prisma.$disconnect();
 }
