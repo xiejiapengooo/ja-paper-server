@@ -31,9 +31,3 @@ export class GetSectionsDto {
   @IsNotEmpty()
   partId: string;
 }
-
-export class GetSectionDto {
-  @IsString()
-  @IsNotEmpty()
-  id: string;
-}
