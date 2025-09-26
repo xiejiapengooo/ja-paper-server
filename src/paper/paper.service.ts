@@ -137,6 +137,7 @@ export class PaperService {
       const question = questionMap.get(questionId);
       if (!question) throw new BusinessException("Submission Fail");
 
+      const lastAnswerAt = dayjs().toISOString();
       const correctAnswer = question.choices.toSorted().join(",");
       const userAnswer = Array.isArray(answer) ? Array.from(new Set(answer)).toSorted().join(",") : answer;
       const isCorrect = userAnswer === correctAnswer;
@@ -149,14 +150,14 @@ export class PaperService {
           },
         },
         update: {
-          lastAnswerAt: dayjs().toISOString(),
+          lastAnswerAt,
           answer: userAnswer,
           isCorrect,
         },
         create: {
           questionId,
           userId: userTokenPayload.id,
-          lastAnswerAt: dayjs().toISOString(),
+          lastAnswerAt,
           answer: userAnswer,
           isCorrect,
         },
