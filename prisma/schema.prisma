@@ -132,6 +132,7 @@ model UserQuestion {
   lastAnswerAt DateTime
   answer       String        @db.Text
   note         String?       @db.Text
+  isCorrect    Boolean
 
   @@unique([userId, questionId])
 }
