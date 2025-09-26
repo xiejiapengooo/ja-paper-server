@@ -82,7 +82,7 @@ export class PaperService {
       });
       const sectionGroupMap = new Map();
       sections.forEach((section) => {
-        Object.assign(section, { typeLabel: SECTION_TYPE_LABEL[section.type] })
+        Object.assign(section, { typeLabel: SECTION_TYPE_LABEL[section.type] });
         if (sectionGroupMap.has(section.type)) {
           sectionGroupMap.get(section.type).items.push(section);
         } else {
@@ -96,7 +96,7 @@ export class PaperService {
         label: part.title,
         duration: part.duration,
         sections: Array.from(sectionGroupMap).map(([_, value]) => value),
-      }
+      };
     } else {
       throw new BusinessException("Paper Part not Found");
     }
@@ -118,7 +118,29 @@ export class PaperService {
   }
 
   async postPaper(dto: PostPaperDto, userTokenPayload: UserTokenPayload) {
+    const questions = await this.prisma.paperQuestion.findMany({
+      where: {
+        id: {
+          in: dto.questionAnswerList.map(({ questionId }) => questionId),
+        },
+      },
+      include: {
+        choices: {
+          where: {
+            isCorrect: true,
+          },
+        },
+      },
+    });
+    const questionMap = new Map(questions.map((question) => [question.id, question]));
     const upserts = dto.questionAnswerList.map(({ questionId, answer }) => {
+      const question = questionMap.get(questionId);
+      if (!question) throw new BusinessException("Submission Fail");
+
+      const correctAnswer = question.choices.toSorted().join(",");
+      const userAnswer = Array.isArray(answer) ? Array.from(new Set(answer)).toSorted().join(",") : answer;
+      const isCorrect = userAnswer === correctAnswer;
+
       return this.prisma.userQuestion.upsert({
         where: {
           userId_questionId: {
@@ -128,15 +150,17 @@ export class PaperService {
         },
         update: {
           lastAnswerAt: dayjs().toISOString(),
-          answer: Array.isArray(answer) ? Array.from(new Set(answer)).join(",") : answer,
+          answer: userAnswer,
+          isCorrect,
         },
         create: {
           questionId,
           userId: userTokenPayload.id,
           lastAnswerAt: dayjs().toISOString(),
-          answer: Array.isArray(answer) ? Array.from(new Set(answer)).join(",") : answer,
+          answer: userAnswer,
+          isCorrect,
         },
-      })
+      });
     });
 
     return this.prisma.$transaction(upserts);
