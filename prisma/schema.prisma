@@ -95,16 +95,16 @@ enum PaperFileType {
 }
 
 model User {
-  id           String         @id @default(cuid())
-  createdAt    DateTime       @default(now())
-  updatedAt    DateTime       @updatedAt
-  deletedAt    DateTime?
-  email        String         @unique
-  name         String?
-  role         UserRole
-  status       UserStatus
-  password     String
-  UserQuestion UserQuestion[]
+  id        String         @id @default(cuid())
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
+  deletedAt DateTime?
+  email     String         @unique
+  name      String?
+  role      UserRole
+  status    UserStatus
+  password  String
+  questions UserQuestion[]
 }
 
 model Certificate {

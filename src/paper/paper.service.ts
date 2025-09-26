@@ -2,9 +2,10 @@ import { Injectable } from "@nestjs/common";
 import { PrismaService } from "../prisma/prisma.service";
 import { GetPaperDto, GetSectionsDto, PostPaperDto } from "./paper.dto";
 import { BusinessException } from "../exception";
-import { SECTION_TYPE_LABEL } from "../constant";
+import { PAPER_QUESTION_TYPE_WEIGHT, SECTION_TYPE_LABEL } from "../constant";
 import { UserTokenPayload } from "../types";
 import dayjs from "dayjs";
+import { Paper, PaperLevel, PaperQuestion, UserQuestion } from "@prisma/client";
 
 @Injectable()
 export class PaperService {
@@ -26,7 +27,57 @@ export class PaperService {
   }
 
   async getScores(userTokenPayload: UserTokenPayload) {
-    console.log(userTokenPayload);
+    const userQuestions = await this.prisma.userQuestion.findMany({
+      where: {
+        userId: userTokenPayload.id,
+      },
+      include: {
+        question: {
+          select: {
+            type: true,
+            paperId: true,
+          }
+        }
+      }
+    });
+    const groupMap = new Map<Paper["id"], { isCorrect: UserQuestion["isCorrect"], questionType: PaperQuestion["type"], questionId: PaperQuestion["id"] }[]>();
+    userQuestions.forEach((userQuestion) => {
+      const paperId = userQuestion.question.paperId;
+      if (groupMap.has(paperId)) {
+        groupMap.get(paperId)?.push({
+          isCorrect: userQuestion.isCorrect,
+          questionType: userQuestion.question.type,
+          questionId: userQuestion.questionId,
+        });
+      } else {
+        groupMap.set(paperId, [{
+          isCorrect: userQuestion.isCorrect,
+          questionType: userQuestion.question.type,
+          questionId: userQuestion.questionId,
+        }]);
+      }
+    });
+
+    const paperIds = Array.from(groupMap.keys());
+    const papers = await this.prisma.paper.findMany({
+      where: {
+        id: {
+          in: paperIds,
+        }
+      }
+    })
+
+    const paperMap = new Map<Paper["id"], Paper>(papers.map((paper) => [paper.id, paper]));
+    for (const [paperId, list] of groupMap) {
+      const level = paperMap.get(paperId)?.level as PaperLevel;
+      let weightSum = 0;
+      list.forEach((item) => {
+        console.log(PAPER_QUESTION_TYPE_WEIGHT[level][item.questionType], item.questionType);
+        weightSum += PAPER_QUESTION_TYPE_WEIGHT[level][item.questionType];
+      })
+      console.log(weightSum);
+    }
+    return papers
   }
 
   async getPaper(dto: GetPaperDto) {
