@@ -25,6 +25,10 @@ export class PaperService {
     );
   }
 
+  async getScores(userTokenPayload: UserTokenPayload) {
+    console.log(userTokenPayload);
+  }
+
   async getPaper(dto: GetPaperDto) {
     const year = Number(dto.yearMonth.slice(0, 4));
     const month = Number(dto.yearMonth.slice(4, 6));

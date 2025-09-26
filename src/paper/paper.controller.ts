@@ -14,6 +14,11 @@ export class PaperController {
     return this.paperService.getList();
   }
 
+  @Get("scores")
+  async getScores(@GetTokenPayload() userTokenPayload: UserTokenPayload) {
+    return this.paperService.getScores(userTokenPayload);
+  }
+
   @Get("")
   async getPaper(@Query() dto: GetPaperDto) {
     return this.paperService.getPaper(dto);
