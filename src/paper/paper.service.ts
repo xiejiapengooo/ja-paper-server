@@ -2,10 +2,10 @@ import { Injectable } from "@nestjs/common";
 import { PrismaService } from "../prisma/prisma.service";
 import { GetPaperDto, GetSectionsDto, PostPaperDto } from "./paper.dto";
 import { BusinessException } from "../exception";
-import { PAPER_QUESTION_TYPE_WEIGHT, SECTION_TYPE_LABEL } from "../constant";
+import { PAPER_QUESTION_TYPE_WEIGHT, PAPER_SECTION_SCORE, SECTION_TYPE_LABEL } from "../constant";
 import { UserTokenPayload } from "../types";
 import dayjs from "dayjs";
-import { Paper, PaperLevel, PaperQuestion, UserQuestion } from "@prisma/client";
+import { Paper, PaperLevel, PaperQuestion, PaperSection, UserQuestion } from "@prisma/client";
 
 @Injectable()
 export class PaperService {
@@ -33,26 +33,31 @@ export class PaperService {
       },
       include: {
         question: {
-          select: {
-            type: true,
-            paperId: true,
-          }
+          include: {
+            section: {
+              select: {
+                type: true,
+              }
+            }
+          },
         }
       }
     });
-    const groupMap = new Map<Paper["id"], { isCorrect: UserQuestion["isCorrect"], questionType: PaperQuestion["type"], questionId: PaperQuestion["id"] }[]>();
+    const groupMap = new Map<Paper["id"], { isCorrect: UserQuestion["isCorrect"], questionType: PaperQuestion["type"], sectionType: PaperSection["type"], questionId: PaperQuestion["id"] }[]>();
     userQuestions.forEach((userQuestion) => {
       const paperId = userQuestion.question.paperId;
       if (groupMap.has(paperId)) {
         groupMap.get(paperId)?.push({
           isCorrect: userQuestion.isCorrect,
           questionType: userQuestion.question.type,
+          sectionType: userQuestion.question.section.type,
           questionId: userQuestion.questionId,
         });
       } else {
         groupMap.set(paperId, [{
           isCorrect: userQuestion.isCorrect,
           questionType: userQuestion.question.type,
+          sectionType: userQuestion.question.section.type,
           questionId: userQuestion.questionId,
         }]);
       }
@@ -68,16 +73,47 @@ export class PaperService {
     })
 
     const paperMap = new Map<Paper["id"], Paper>(papers.map((paper) => [paper.id, paper]));
+    let paperScoreMap: Record<Paper["id"], {
+      score: number;
+      pass: Boolean
+    }> = {}
+
     for (const [paperId, list] of groupMap) {
       const level = paperMap.get(paperId)?.level as PaperLevel;
-      let weightSum = 0;
+      const weightMap = new Map<PaperSection["type"], { weight: number, totalWeight: number, score: number, pass: Boolean }>();
       list.forEach((item) => {
-        console.log(PAPER_QUESTION_TYPE_WEIGHT[level][item.questionType], item.questionType);
-        weightSum += PAPER_QUESTION_TYPE_WEIGHT[level][item.questionType];
-      })
-      console.log(weightSum);
+        if (weightMap.has(item.sectionType)) {
+          const weightMapItem = weightMap.get(item.sectionType);
+          if (weightMapItem) {
+            if (item.isCorrect) {
+              weightMapItem.weight += PAPER_QUESTION_TYPE_WEIGHT[level][item.questionType];
+            }
+            weightMapItem.totalWeight += PAPER_QUESTION_TYPE_WEIGHT[level][item.questionType];
+          }
+        } else {
+          weightMap.set(item.sectionType, {
+            weight: item.isCorrect ? PAPER_QUESTION_TYPE_WEIGHT[level][item.questionType] : 0,
+            totalWeight: PAPER_QUESTION_TYPE_WEIGHT[level][item.questionType],
+            score: 0,
+            pass: false
+          })
+        }
+      });
+
+      let score = 0, pass = false
+      for (const [sectionType, weightMapItem] of weightMap) {
+        weightMapItem.score = Math.round((weightMapItem.weight / weightMapItem.totalWeight) * PAPER_SECTION_SCORE[level][sectionType].full_score)
+        weightMapItem.pass = weightMapItem.score >= PAPER_SECTION_SCORE[level][sectionType].pass_score;
+        score += weightMapItem.score;
+      }
+      pass = score >= PAPER_SECTION_SCORE[level].ALL.pass_score;
+
+      paperScoreMap[paperId] = {
+        score,
+        pass: false
+      }
     }
-    return papers
+    return paperScoreMap
   }
 
   async getPaper(dto: GetPaperDto) {
