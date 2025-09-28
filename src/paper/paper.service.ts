@@ -205,6 +205,15 @@ export class PaperService {
     });
 
     if (part) {
+      const parts = await this.prisma.paperPart.findMany({
+        where: {
+          paperId: part.paperId
+        },
+        orderBy: {
+          order: "asc"
+        }
+      });
+
       const sections = await this.prisma.paperSection.findMany({
         where: { partId: dto.partId },
         orderBy: {
@@ -237,8 +246,11 @@ export class PaperService {
           });
         }
       });
+
+      const currentPartIndex = parts.findIndex(item => item.id === part.id);
+
       return {
-        label: part.title,
+        nextPartId: parts[currentPartIndex + 1]?.id || "",
         duration: part.duration,
         sections: Array.from(sectionGroupMap).map(([_, value]) => value),
       };
