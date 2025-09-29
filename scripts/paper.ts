@@ -1,6 +1,6 @@
 import { Paper, PrismaClient } from "@prisma/client";
 import { ConsoleLogger } from "@nestjs/common";
-import { data, type Data } from "../papers/n1/202412/data";
+import { data, type Data } from "../papers/N1/202412/data";
 
 const prisma = new PrismaClient();
 const logger = new ConsoleLogger();
@@ -13,12 +13,12 @@ async function main() {
   logger.log("Starting create...");
 
   const paper = await prisma.paper.create({
-   data: {
-     level: data.level,
-     year: data.year,
-     month: data.month,
-     title: data.title,
-   }
+    data: {
+      level: data.level,
+      year: data.year,
+      month: data.month,
+      title: data.title,
+    },
   });
   logger.log(`Paper ${paper.id} created.`);
 
@@ -31,7 +31,7 @@ async function main() {
         title: partItem.title,
         duration: partItem.duration,
         listeningAudio: partItem.listeningAudio,
-      }
+      },
     });
     logger.log(`Paper part ${part.id} created.`);
 
@@ -48,7 +48,7 @@ async function main() {
           content: sectionItem.content || "",
           contentTranslationZhHans: sectionItem.contentTranslationZhHans || "",
           imageContent: sectionItem.imageContent || "",
-        }
+        },
       });
       logger.log(`Paper section ${section.id} created.`);
 
@@ -67,7 +67,7 @@ async function main() {
             listeningAudio: questionItem.listeningAudio || "",
             listeningContent: questionItem.listeningContent || "",
             listeningContentTranslationZhHans: questionItem.listeningContentTranslationZhHans || "",
-          }
+          },
         });
         questionOrder++;
         logger.log(`Paper question ${question.id} created.`);
