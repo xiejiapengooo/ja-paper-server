@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "public"."Paper" ALTER COLUMN "year" SET DATA TYPE TEXT,
+ALTER COLUMN "month" SET DATA TYPE TEXT;

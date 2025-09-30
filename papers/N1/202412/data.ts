@@ -46,8 +46,8 @@ export type Data = {
 export const data: Data = {
   title: "2024-12",
   level: PaperLevel.N1,
-  month: 12,
-  year: 2024,
+  month: "12",
+  year: "2024",
   parts: [
     {
       title: "言語知識（文字・語彙・文法）・読解",

@@ -135,12 +135,12 @@ export class AuthService {
     });
 
     if (!session) {
-      await this.prisma.certificate.deleteMany({
-        where: {
-          type: CertificateType.REFRESH_TOKEN,
-          relatedId: payload.id,
-        },
-      });
+      // await this.prisma.certificate.deleteMany({
+      //   where: {
+      //     type: CertificateType.REFRESH_TOKEN,
+      //     relatedId: payload.id,
+      //   },
+      // });
       throw new UnauthorizedException("Invalid credentials.");
     }
 
@@ -158,16 +158,16 @@ export class AuthService {
       refreshTokenExpiredAt,
     } = this.signNewToken(newPayload);
 
-    await this.prisma.certificate.update({
-      where: { id: session.id },
-      data: {
-        content: newRefreshToken,
-        usedAt: dayjs().toISOString(),
-        expiredAt: refreshTokenExpiredAt,
-      },
-    });
+    // await this.prisma.certificate.update({
+    //   where: { id: session.id },
+    //   data: {
+    //     content: newRefreshToken,
+    //     usedAt: dayjs().toISOString(),
+    //     expiredAt: refreshTokenExpiredAt,
+    //   },
+    // });
 
-    return { accessToken: newAccessToken, refreshToken: newRefreshToken };
+    return { accessToken: newAccessToken, refreshToken: refreshToken };
   }
 
   async logout(refreshToken: string) {

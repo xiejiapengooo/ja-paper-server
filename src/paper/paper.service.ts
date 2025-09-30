@@ -37,13 +37,21 @@ export class PaperService {
             section: {
               select: {
                 type: true,
-              }
-            }
+              },
+            },
           },
-        }
-      }
+        },
+      },
     });
-    const groupMap = new Map<Paper["id"], { isCorrect: UserQuestion["isCorrect"], questionType: PaperQuestion["type"], sectionType: PaperSection["type"], questionId: PaperQuestion["id"] }[]>();
+    const groupMap = new Map<
+      Paper["id"],
+      {
+        isCorrect: UserQuestion["isCorrect"];
+        questionType: PaperQuestion["type"];
+        sectionType: PaperSection["type"];
+        questionId: PaperQuestion["id"];
+      }[]
+    >();
     userQuestions.forEach((userQuestion) => {
       const paperId = userQuestion.question.paperId;
       if (groupMap.has(paperId)) {
@@ -54,12 +62,14 @@ export class PaperService {
           questionId: userQuestion.questionId,
         });
       } else {
-        groupMap.set(paperId, [{
-          isCorrect: userQuestion.isCorrect,
-          questionType: userQuestion.question.type,
-          sectionType: userQuestion.question.section.type,
-          questionId: userQuestion.questionId,
-        }]);
+        groupMap.set(paperId, [
+          {
+            isCorrect: userQuestion.isCorrect,
+            questionType: userQuestion.question.type,
+            sectionType: userQuestion.question.section.type,
+            questionId: userQuestion.questionId,
+          },
+        ]);
       }
     });
 
@@ -68,19 +78,25 @@ export class PaperService {
       where: {
         id: {
           in: paperIds,
-        }
-      }
-    })
+        },
+      },
+    });
 
     const paperMap = new Map<Paper["id"], Paper>(papers.map((paper) => [paper.id, paper]));
-    let paperScoreMap: Record<Paper["id"], {
-      score: number;
-      pass: Boolean
-    }> = {}
+    let paperScoreMap: Record<
+      Paper["id"],
+      {
+        score: number;
+        pass: Boolean;
+      }
+    > = {};
 
     for (const [paperId, list] of groupMap) {
       const level = paperMap.get(paperId)?.level as PaperLevel;
-      const weightMap = new Map<PaperSection["type"], { weight: number, totalWeight: number, score: number, pass: Boolean }>();
+      const weightMap = new Map<
+        PaperSection["type"],
+        { weight: number; totalWeight: number; score: number; pass: Boolean }
+      >();
       list.forEach((item) => {
         if (weightMap.has(item.sectionType)) {
           const weightMapItem = weightMap.get(item.sectionType);
@@ -95,14 +111,17 @@ export class PaperService {
             weight: item.isCorrect ? PAPER_QUESTION_TYPE_WEIGHT[level][item.questionType] : 0,
             totalWeight: PAPER_QUESTION_TYPE_WEIGHT[level][item.questionType],
             score: 0,
-            pass: false
-          })
+            pass: false,
+          });
         }
       });
 
-      let score = 0, pass = false
+      let score = 0,
+        pass = false;
       for (const [sectionType, weightMapItem] of weightMap) {
-        weightMapItem.score = Math.round((weightMapItem.weight / weightMapItem.totalWeight) * PAPER_SECTION_SCORE[level][sectionType].full_score)
+        weightMapItem.score = Math.round(
+          (weightMapItem.weight / weightMapItem.totalWeight) * PAPER_SECTION_SCORE[level][sectionType].full_score,
+        );
         weightMapItem.pass = weightMapItem.score >= PAPER_SECTION_SCORE[level][sectionType].pass_score;
         score += weightMapItem.score;
       }
@@ -110,15 +129,15 @@ export class PaperService {
 
       paperScoreMap[paperId] = {
         score,
-        pass: false
-      }
+        pass: false,
+      };
     }
-    return paperScoreMap
+    return paperScoreMap;
   }
 
   async getPaper(dto: GetPaperDto) {
-    const year = Number(dto.yearMonth.slice(0, 4));
-    const month = Number(dto.yearMonth.slice(4, 6));
+    const year = dto.yearMonth.slice(0, 4);
+    const month = dto.yearMonth.slice(4, 6);
     const paper = await this.prisma.paper.findFirst({
       where: {
         level: dto.level,
@@ -168,7 +187,10 @@ export class PaperService {
       if (!question) throw new BusinessException("Submission Fail");
 
       const lastAnswerAt = dayjs().toISOString();
-      const correctAnswer = question.choices.map(choice => choice.id).toSorted().join(",");
+      const correctAnswer = question.choices
+        .map((choice) => choice.id)
+        .toSorted()
+        .join(",");
       const userAnswer = Array.isArray(answer) ? Array.from(new Set(answer)).toSorted().join(",") : answer;
       const isCorrect = userAnswer === correctAnswer;
 
@@ -207,11 +229,11 @@ export class PaperService {
     if (part) {
       const parts = await this.prisma.paperPart.findMany({
         where: {
-          paperId: part.paperId
+          paperId: part.paperId,
         },
         orderBy: {
-          order: "asc"
-        }
+          order: "asc",
+        },
       });
 
       const sections = await this.prisma.paperSection.findMany({
@@ -247,7 +269,7 @@ export class PaperService {
         }
       });
 
-      const currentPartIndex = parts.findIndex(item => item.id === part.id);
+      const currentPartIndex = parts.findIndex((item) => item.id === part.id);
 
       return {
         nextPartId: parts[currentPartIndex + 1]?.id || "",
