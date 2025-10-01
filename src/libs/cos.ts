@@ -195,6 +195,10 @@ export class CosUtils {
     });
   }
 
+  static getUrl(list: string[]) {
+    return list.map((item) => `${process.env.COS_DOMAIN}/${item}`);
+  }
+
   static getObject(cosKey: string) {
     return new Promise((resolve, reject) => {
       const SecretId = process.env.COS_SECRET_ID;
