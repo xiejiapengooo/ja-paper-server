@@ -276,7 +276,6 @@ export class PaperService {
       const currentPartIndex = parts.findIndex((item) => item.id === part.id);
 
       return {
-        partTitle: part.title,
         listeningAudio: part.listeningAudio ? CosUtils.getUrl([`${COS_PAPER_PREFIX}/${part.paper.level}/${part.paper.year}${part.paper.month}/${part.listeningAudio}`])[0] : "",
         nextPartId: parts[currentPartIndex + 1]?.id || "",
         duration: part.duration,
