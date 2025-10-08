@@ -26,7 +26,7 @@ export class PostPaperDto {
   questionAnswerList: QuestionAnswerListItem[]
 }
 
-export class GetSectionsDto {
+export class GetPartDto {
   @IsString()
   @IsNotEmpty()
   partId: string;

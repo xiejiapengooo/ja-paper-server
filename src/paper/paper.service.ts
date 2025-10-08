@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { PrismaService } from "../prisma/prisma.service";
-import { GetPaperDto, GetSectionsDto, PostPaperDto } from "./paper.dto";
+import { GetPaperDto, GetPartDto, PostPaperDto } from "./paper.dto";
 import { BusinessException } from "../exception";
 import { COS_PAPER_PREFIX, PAPER_QUESTION_TYPE_WEIGHT, PAPER_SECTION_SCORE, SECTION_TYPE_LABEL } from "../constant";
 import { UserTokenPayload } from "../types";
@@ -220,7 +220,7 @@ export class PaperService {
     return this.prisma.$transaction(upserts);
   }
 
-  async getSections(dto: GetSectionsDto) {
+  async getPart(dto: GetPartDto) {
     const part = await this.prisma.paperPart.findUnique({
       where: {
         id: dto.partId,
@@ -276,10 +276,9 @@ export class PaperService {
       const currentPartIndex = parts.findIndex((item) => item.id === part.id);
 
       return {
-        listeningAudio: part.listeningAudio ? CosUtils.getUrl([`${COS_PAPER_PREFIX}/${part.paper.level}/${part.paper.year}${part.paper.month}/${part.listeningAudio}`])[0] : "",
+        ...parts[currentPartIndex],
         nextPartId: parts[currentPartIndex + 1]?.id || "",
-        duration: part.duration,
-        sections: Array.from(sectionGroupMap).map(([_, value]) => value),
+        sectionGroups: Array.from(sectionGroupMap).map(([_, value]) => value),
       };
     } else {
       throw new BusinessException("Paper Part not Found");

@@ -1,6 +1,6 @@
-import { Body, Controller, Get, Param, Post, Query, Res } from "@nestjs/common";
+import { Body, Controller, Get, Param, Post, Query } from "@nestjs/common";
 import { PaperService } from "./paper.service";
-import { GetPaperDto, GetSectionsDto, PostPaperDto } from "./paper.dto";
+import { GetPaperDto, GetPartDto, PostPaperDto } from "./paper.dto";
 import { GetTokenPayload, Public, ResponseMessage } from "../decorator";
 import type { UserTokenPayload } from "../types";
 
@@ -30,8 +30,8 @@ export class PaperController {
     return this.paperService.postPaper(dto, userTokenPayload);
   }
 
-  @Get("sections")
-  async getSections(@Query() dto: GetSectionsDto) {
-    return this.paperService.getSections(dto);
+  @Get("part/:partId")
+  async getPart(@Param() dto: GetPartDto) {
+    return this.paperService.getPart(dto);
   }
 }
