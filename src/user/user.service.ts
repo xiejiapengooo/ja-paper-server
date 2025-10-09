@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { PrismaService } from "../prisma/prisma.service";
-import { UserUpdateDto } from "./user.dto";
+import { PatchMeDto } from "./user.dto";
 import { UserTokenPayload } from "../types";
 import { BusinessException } from "../exception";
 import { CertificateType } from "@prisma/client";
@@ -10,7 +10,7 @@ import dayjs from "dayjs";
 export class UserService {
   constructor(private prisma: PrismaService) {}
 
-  async userMe(userTokenPayload: UserTokenPayload) {
+  async getMe(userTokenPayload: UserTokenPayload) {
     const user = await this.prisma.user.findUnique({
       where: {
         id: userTokenPayload.id,
@@ -29,7 +29,7 @@ export class UserService {
     };
   }
 
-  async putMe(dto: UserUpdateDto, userTokenPayload: UserTokenPayload) {
+  async patchMe(dto: PatchMeDto, userTokenPayload: UserTokenPayload) {
     try {
       await this.prisma.user.update({
         where: {

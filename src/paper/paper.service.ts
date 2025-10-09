@@ -167,12 +167,13 @@ export class PaperService {
     }
   }
 
-  async postPaper(dto: PostPaperDto, userTokenPayload: UserTokenPayload) {
+  async postPaper(paperId: string, dto: PostPaperDto, userTokenPayload: UserTokenPayload) {
     const questions = await this.prisma.paperQuestion.findMany({
       where: {
-        id: {
-          in: dto.questionAnswerList.map(({ questionId }) => questionId),
-        },
+        // id: {
+        //   in: dto.questionAnswerList.map(({ questionId }) => questionId),
+        // },
+        paperId,
       },
       include: {
         choices: {
@@ -182,6 +183,8 @@ export class PaperService {
         },
       },
     });
+    console.log(questions);
+    return;
     const questionMap = new Map(questions.map((question) => [question.id, question]));
     const upserts = dto.questionAnswerList.map(({ questionId, answer }) => {
       const question = questionMap.get(questionId);
@@ -226,8 +229,8 @@ export class PaperService {
         id: dto.partId,
       },
       include: {
-        paper: true
-      }
+        paper: true,
+      },
     });
 
     if (part) {
@@ -277,7 +280,13 @@ export class PaperService {
 
       return {
         ...parts[currentPartIndex],
+        listeningAudio: parts[currentPartIndex].listeningAudio
+          ? CosUtils.getUrl([
+              `${COS_PAPER_PREFIX(part.paper.level, part.paper.year + part.paper.month)}/${parts[currentPartIndex].listeningAudio}`,
+            ])[0]
+          : "",
         nextPartId: parts[currentPartIndex + 1]?.id || "",
+        nextPartTitle: parts[currentPartIndex + 1]?.title || "",
         sectionGroups: Array.from(sectionGroupMap).map(([_, value]) => value),
       };
     } else {

@@ -1,7 +1,7 @@
-import { Body, Controller, Delete, Get, Post, Put, Res } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Patch, Res } from "@nestjs/common";
 import { UserService } from "./user.service";
 import { GetTokenPayload, ResponseMessage } from "../decorator";
-import { UserUpdateDto } from "./user.dto";
+import { PatchMeDto } from "./user.dto";
 import type { UserTokenPayload } from "../types";
 import { CookieService } from "../cookie/cookie.service";
 import type { Response } from "express";
@@ -14,14 +14,14 @@ export class UserController {
   ) {}
 
   @Get("me")
-  async userMe(@GetTokenPayload() userTokenPayload: UserTokenPayload) {
-    return this.userService.userMe(userTokenPayload);
+  async getMe(@GetTokenPayload() userTokenPayload: UserTokenPayload) {
+    return this.userService.getMe(userTokenPayload);
   }
 
-  @Put("me")
+  @Patch("me")
   @ResponseMessage("Account information updated successfully.")
-  putMe(@Body() dto: UserUpdateDto, @GetTokenPayload() userTokenPayload: UserTokenPayload) {
-    return this.userService.putMe(dto, userTokenPayload);
+  patchMe(@Body() dto: PatchMeDto, @GetTokenPayload() userTokenPayload: UserTokenPayload) {
+    return this.userService.patchMe(dto, userTokenPayload);
   }
 
   @Delete("me")

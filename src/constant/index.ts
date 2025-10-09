@@ -1,6 +1,6 @@
 import { SectionType, QuestionType } from "@prisma/client";
 
-export const COS_PAPER_PREFIX = "papers";
+export const COS_PAPER_PREFIX = (level: string, yearmonth: string) => `papers/${level}/${yearmonth}`;
 
 export const SECTION_TYPE_LABEL = {
   [SectionType.VOCAB_GRAMMAR]: "言語知識（文字・語彙・文法）",
@@ -29,25 +29,25 @@ export const PAPER_QUESTION_TYPE_WEIGHT = {
     [QuestionType.INSTANT_RESPONSE]: 1,
     [QuestionType.SYNTHETICAL_COMPREHENSION_LISTEN]: 3,
   },
-}
+};
 
 export const PAPER_SECTION_SCORE = {
   N1: {
     [SectionType.VOCAB_GRAMMAR]: {
       full_score: 60,
-      pass_score: 19
+      pass_score: 19,
     },
     [SectionType.READING]: {
       full_score: 60,
-      pass_score: 19
+      pass_score: 19,
     },
     [SectionType.LISTENING]: {
       full_score: 60,
-      pass_score: 19
+      pass_score: 19,
     },
     ALL: {
       full_score: 180,
-      pass_score: 100
-    }
-  }
-}
+      pass_score: 100,
+    },
+  },
+};
