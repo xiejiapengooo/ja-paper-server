@@ -21,7 +21,7 @@ export class PaperController {
   @Post(":paperId")
   @ResponseMessage("Submission successful!")
   async postPaper(
-    @Param() paperId: string,
+    @Param("paperId") paperId: string,
     @Body() dto: PostPaperDto,
     @GetTokenPayload() userTokenPayload: UserTokenPayload,
   ) {

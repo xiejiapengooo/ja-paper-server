@@ -170,9 +170,6 @@ export class PaperService {
   async postPaper(paperId: string, dto: PostPaperDto, userTokenPayload: UserTokenPayload) {
     const questions = await this.prisma.paperQuestion.findMany({
       where: {
-        // id: {
-        //   in: dto.questionAnswerList.map(({ questionId }) => questionId),
-        // },
         paperId,
       },
       include: {
@@ -183,26 +180,23 @@ export class PaperService {
         },
       },
     });
-    console.log(questions);
-    return;
-    const questionMap = new Map(questions.map((question) => [question.id, question]));
-    const upserts = dto.questionAnswerList.map(({ questionId, answer }) => {
-      const question = questionMap.get(questionId);
-      if (!question) throw new BusinessException("Submission Fail");
+    const questionAnswerMap = new Map(dto.questionAnswerList.map(({ questionId, answer }) => [questionId, answer]));
+    const upserts = questions.map((question) => {
+      const questionAnswer = questionAnswerMap.get(question.id) || "";
 
       const lastAnswerAt = dayjs().toISOString();
       const correctAnswer = question.choices
         .map((choice) => choice.id)
         .toSorted()
         .join(",");
-      const userAnswer = Array.isArray(answer) ? Array.from(new Set(answer)).toSorted().join(",") : answer;
+      const userAnswer = Array.isArray(questionAnswer) ? Array.from(new Set(questionAnswer)).toSorted().join(",") : questionAnswer;
       const isCorrect = userAnswer === correctAnswer;
 
       return this.prisma.userQuestion.upsert({
         where: {
           userId_questionId: {
             userId: userTokenPayload.id,
-            questionId,
+            questionId: question.id,
           },
         },
         update: {
@@ -211,7 +205,7 @@ export class PaperService {
           isCorrect,
         },
         create: {
-          questionId,
+          questionId: question.id,
           userId: userTokenPayload.id,
           lastAnswerAt,
           answer: userAnswer,
