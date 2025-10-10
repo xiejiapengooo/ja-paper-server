@@ -25,18 +25,3 @@ export class PostPaperDto {
   @Type(() => QuestionAnswerListItem)
   questionAnswerList: QuestionAnswerListItem[];
 }
-
-export class GetPartDto {
-  @IsString()
-  @IsNotEmpty()
-  partId: string;
-}
-
-export class GetScoreDto {
-  @IsEnum(PaperLevel)
-  level: PaperLevel;
-
-  @IsString()
-  @IsNotEmpty()
-  yearMonth: string;
-}

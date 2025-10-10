@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { PrismaService } from "../prisma/prisma.service";
-import { GetPaperDto, GetPartDto, GetScoreDto, PostPaperDto } from "./paper.dto";
+import { GetPaperDto, PostPaperDto } from "./paper.dto";
 import { BusinessException } from "../exception";
 import { COS_PAPER_PREFIX, PAPER_QUESTION_TYPE_WEIGHT, PAPER_SECTION_SCORE, SECTION_TYPE_LABEL } from "../constant";
 import { UserTokenPayload } from "../types";
@@ -187,51 +187,7 @@ export class PaperService {
     return paperScoreMap;
   }
 
-  async getScore(dto: GetScoreDto, userTokenPayload: UserTokenPayload) {
-    const paper = await this.getPaper({
-      level: dto.level,
-      yearMonth: dto.yearMonth,
-    });
-
-    const userQuestions = await this.prisma.userQuestion.findMany({
-      where: {
-        userId: userTokenPayload.id,
-      },
-    });
-    const userQuestionMap = new Map<PaperQuestion["id"], UserQuestion>(
-      userQuestions.map((userQuestion) => [userQuestion.questionId, userQuestion]),
-    );
-
-    const questions = await this.prisma.paperQuestion.findMany({
-      where: {
-        paperId: paper.id,
-      },
-      include: {
-        section: {
-          select: {
-            type: true,
-          },
-        },
-      },
-    });
-    let list: Parameters<PaperService["calcScore"]>[0]["questions"] = [];
-    for (const question of questions) {
-      const userQuestion = userQuestionMap.get(question.id);
-      list.push({
-        isCorrect: userQuestion?.isCorrect || false,
-        questionType: question.type,
-        sectionType: question.section.type,
-        partId: question.partId,
-      });
-    }
-
-    return this.calcScore({
-      level: paper.level,
-      questions: list,
-    });
-  }
-
-  async getPaper(dto: GetPaperDto) {
+  async getPaper(dto: GetPaperDto, userTokenPayload: UserTokenPayload) {
     const year = dto.yearMonth.slice(0, 4);
     const month = dto.yearMonth.slice(4, 6);
     const paper = await this.prisma.paper.findFirst({
@@ -250,6 +206,20 @@ export class PaperService {
               orderBy: {
                 order: "asc",
               },
+              include: {
+                questions: {
+                  orderBy: {
+                    order: "asc",
+                  },
+                  include: {
+                    choices: {
+                      orderBy: {
+                        order: "asc",
+                      },
+                    },
+                  },
+                },
+              },
             },
           },
         },
@@ -258,7 +228,54 @@ export class PaperService {
     if (!paper) {
       throw new BusinessException("Paper not Found");
     } else {
-      return paper;
+      const paperPartMap = new Map<PaperPart["id"], PaperPart>();
+      const paperSectionMap = new Map<PaperSection["id"], PaperSection>();
+      const paperQuestionMap = new Map<PaperQuestion["id"], PaperQuestion>();
+      paper.parts.forEach((part) => {
+        paperPartMap.set(part.id, part);
+        part.sections.forEach((section) => {
+          paperSectionMap.set(section.id, section);
+          section.questions.forEach((question) => {
+            paperQuestionMap.set(question.id, question);
+          });
+        });
+      });
+
+      const userQuestions = await this.prisma.userQuestion.findMany({
+        where: {
+          userId: userTokenPayload.id,
+          questionId: {
+            in: Array.from(paperQuestionMap.values()).map((question) => question.id),
+          },
+        },
+      });
+
+      let paperScore: ReturnType<PaperService["calcScore"]> | null = null;
+      if (userQuestions.length) {
+        const userQuestionMap = new Map<PaperQuestion["id"], UserQuestion>(
+          userQuestions.map((userQuestion) => [userQuestion.questionId, userQuestion]),
+        );
+
+        let list: Parameters<PaperService["calcScore"]>[0]["questions"] = [];
+        for (const [questionId, question] of paperQuestionMap) {
+          const userQuestion = userQuestionMap.get(questionId);
+          list.push({
+            isCorrect: userQuestion?.isCorrect || false,
+            questionType: question.type,
+            sectionType: paperSectionMap.get(question.sectionId)?.type as PaperSection["type"],
+            partId: question.partId,
+          });
+        }
+
+        paperScore = this.calcScore({
+          level: paper.level,
+          questions: list,
+        });
+      }
+
+      return Object.assign(paper, {
+        result: paperScore,
+      });
     }
   }
 
@@ -312,76 +329,5 @@ export class PaperService {
     });
 
     return this.prisma.$transaction(upserts);
-  }
-
-  async getPart(dto: GetPartDto) {
-    const part = await this.prisma.paperPart.findUnique({
-      where: {
-        id: dto.partId,
-      },
-      include: {
-        paper: true,
-      },
-    });
-
-    if (part) {
-      const parts = await this.prisma.paperPart.findMany({
-        where: {
-          paperId: part.paperId,
-        },
-        orderBy: {
-          order: "asc",
-        },
-      });
-
-      const sections = await this.prisma.paperSection.findMany({
-        where: { partId: dto.partId },
-        orderBy: {
-          order: "asc",
-        },
-        include: {
-          questions: {
-            orderBy: {
-              order: "asc",
-            },
-            include: {
-              choices: {
-                orderBy: {
-                  order: "asc",
-                },
-              },
-            },
-          },
-        },
-      });
-      const sectionGroupMap = new Map();
-      sections.forEach((section) => {
-        Object.assign(section, { typeLabel: SECTION_TYPE_LABEL[section.type] });
-        if (sectionGroupMap.has(section.type)) {
-          sectionGroupMap.get(section.type).items.push(section);
-        } else {
-          sectionGroupMap.set(section.type, {
-            label: SECTION_TYPE_LABEL[section.type],
-            items: [section],
-          });
-        }
-      });
-
-      const currentPartIndex = parts.findIndex((item) => item.id === part.id);
-
-      return {
-        ...parts[currentPartIndex],
-        listeningAudio: parts[currentPartIndex].listeningAudio
-          ? CosUtils.getUrl([
-              `${COS_PAPER_PREFIX(part.paper.level, part.paper.year + part.paper.month)}/${parts[currentPartIndex].listeningAudio}`,
-            ])[0]
-          : "",
-        nextPartId: parts[currentPartIndex + 1]?.id || "",
-        nextPartTitle: parts[currentPartIndex + 1]?.title || "",
-        sectionGroups: Array.from(sectionGroupMap).map(([_, value]) => value),
-      };
-    } else {
-      throw new BusinessException("Paper Part not Found");
-    }
   }
 }
