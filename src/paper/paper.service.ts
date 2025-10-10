@@ -93,98 +93,98 @@ export class PaperService {
     };
   }
 
-  async getList() {
-    const groups = await this.prisma.paper.groupBy({
-      by: ["level"],
-    });
+  async getList(userTokenPayload?: UserTokenPayload) {
+    const papers = await this.prisma.paper.findMany();
+    const paperMap = new Map<
+      Paper["id"],
+      Paper & {
+        result: ReturnType<PaperService["calcScore"]> | null;
+      }
+    >(papers.map((paper) => [paper.id, Object.assign(paper, { result: null })]));
 
-    return Promise.all(
-      groups.map(async (group) => {
-        const papers = await this.prisma.paper.findMany({
-          where: { level: group.level },
-        });
-        return { level: group.level, items: papers };
-      }),
-    );
-  }
-
-  async getScores(userTokenPayload: UserTokenPayload) {
-    const userQuestions = await this.prisma.userQuestion.findMany({
-      where: {
-        userId: userTokenPayload.id,
-      },
-      include: {
-        question: {
-          select: {
-            paperId: true,
+    if (userTokenPayload) {
+      const userQuestions = await this.prisma.userQuestion.findMany({
+        where: {
+          userId: userTokenPayload.id,
+        },
+        include: {
+          question: {
+            select: {
+              paperId: true,
+            },
           },
         },
-      },
-    });
-    const userQuestionMap = new Map<PaperQuestion["id"], UserQuestion>(
-      userQuestions.map((userQuestion) => [userQuestion.questionId, userQuestion]),
-    );
+      });
+      const userQuestionMap = new Map<PaperQuestion["id"], UserQuestion>(
+        userQuestions.map((userQuestion) => [userQuestion.questionId, userQuestion]),
+      );
 
-    const userPaperIds = userQuestions.map((userQuestion) => userQuestion.question.paperId);
-    const questions = await this.prisma.paperQuestion.findMany({
-      where: {
-        paperId: {
-          in: userPaperIds,
+      const userPaperIds = Array.from(new Set(userQuestions.map((userQuestion) => userQuestion.question.paperId)));
+      const questions = await this.prisma.paperQuestion.findMany({
+        where: {
+          paperId: {
+            in: userPaperIds,
+          },
         },
-      },
-    });
+      });
 
-    const paperSections = await this.prisma.paperSection.findMany({
-      where: {
-        paperId: {
-          in: userPaperIds,
+      const paperSections = await this.prisma.paperSection.findMany({
+        where: {
+          paperId: {
+            in: userPaperIds,
+          },
         },
-      },
-    });
-    const paperSectionMap = new Map<PaperSection["id"], PaperSection>(
-      paperSections.map((paperSection) => [paperSection.id, paperSection]),
-    );
+      });
+      const paperSectionMap = new Map<PaperSection["id"], PaperSection>(
+        paperSections.map((paperSection) => [paperSection.id, paperSection]),
+      );
 
-    const papers = await this.prisma.paper.findMany({
-      where: {
-        id: {
-          in: userPaperIds,
-        },
-      },
-    });
-    const paperMap = new Map<Paper["id"], Paper>(papers.map((paper) => [paper.id, paper]));
-
-    const paperQuestionMap = new Map<Paper["id"], Parameters<PaperService["calcScore"]>[0]["questions"]>();
-    for (const question of questions) {
-      const userQuestion = userQuestionMap.get(question.id);
-      if (paperQuestionMap.has(question.paperId)) {
-        paperQuestionMap.get(question.paperId)?.push({
-          isCorrect: userQuestion?.isCorrect || false,
-          questionType: question.type,
-          sectionType: paperSectionMap.get(question.sectionId)?.type as PaperSection["type"],
-          partId: question.partId,
-        });
-      } else {
-        paperQuestionMap.set(question.paperId, [
-          {
+      const paperQuestionMap = new Map<Paper["id"], Parameters<PaperService["calcScore"]>[0]["questions"]>();
+      for (const question of questions) {
+        const userQuestion = userQuestionMap.get(question.id);
+        if (paperQuestionMap.has(question.paperId)) {
+          paperQuestionMap.get(question.paperId)?.push({
             isCorrect: userQuestion?.isCorrect || false,
             questionType: question.type,
             sectionType: paperSectionMap.get(question.sectionId)?.type as PaperSection["type"],
             partId: question.partId,
-          },
-        ]);
+          });
+        } else {
+          paperQuestionMap.set(question.paperId, [
+            {
+              isCorrect: userQuestion?.isCorrect || false,
+              questionType: question.type,
+              sectionType: paperSectionMap.get(question.sectionId)?.type as PaperSection["type"],
+              partId: question.partId,
+            },
+          ]);
+        }
+      }
+
+      for (const [paperId, questions] of paperQuestionMap) {
+        const paper = paperMap.get(paperId);
+        if (paper) {
+          paper.result = this.calcScore({
+            level: paper.level,
+            questions,
+          });
+        }
       }
     }
 
-    const paperScoreMap: Record<Paper["id"], ReturnType<PaperService["calcScore"]>> = {};
-    for (const [paperId, questions] of paperQuestionMap) {
-      paperScoreMap[paperId] = this.calcScore({
-        level: paperMap.get(paperId)?.level as PaperLevel,
-        questions,
-      });
+    const paperLevelMap = new Map<Paper["level"], NonNullable<ReturnType<typeof paperMap.get>>[]>();
+    for (const paper of paperMap.values()) {
+      if (paperLevelMap.has(paper.level)) {
+        paperLevelMap.get(paper.level)?.push(paper);
+      } else {
+        paperLevelMap.set(paper.level, [paper]);
+      }
     }
 
-    return paperScoreMap;
+    return Array.from(paperLevelMap.keys()).map((level) => ({
+      label: level,
+      items: paperLevelMap.get(level) || [],
+    }));
   }
 
   async getPaper(dto: GetPaperDto, userTokenPayload: UserTokenPayload) {

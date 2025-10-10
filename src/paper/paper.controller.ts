@@ -10,13 +10,8 @@ export class PaperController {
 
   @Public()
   @Get("list")
-  async getList() {
-    return this.paperService.getList();
-  }
-
-  @Get("scores")
-  async getScores(@GetTokenPayload() userTokenPayload: UserTokenPayload) {
-    return this.paperService.getScores(userTokenPayload);
+  async getList(@GetTokenPayload() userTokenPayload?: UserTokenPayload) {
+    return this.paperService.getList(userTokenPayload);
   }
 
   @Get(":level/:yearMonth")
