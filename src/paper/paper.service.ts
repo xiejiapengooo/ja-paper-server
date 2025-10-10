@@ -182,7 +182,7 @@ export class PaperService {
     }
 
     return Array.from(paperLevelMap.keys()).map((level) => ({
-      label: level,
+      level,
       items: paperLevelMap.get(level) || [],
     }));
   }
