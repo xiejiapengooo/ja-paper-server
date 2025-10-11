@@ -229,12 +229,15 @@ export class PaperService {
       throw new BusinessException("Paper not Found");
     } else {
       const paperPartMap = new Map<PaperPart["id"], PaperPart>();
-      const paperSectionMap = new Map<PaperSection["id"], PaperSection>();
+      const paperSectionMap = new Map<PaperSection["id"], PaperSection & { typeLabel: string }>();
       const paperQuestionMap = new Map<PaperQuestion["id"], PaperQuestion>();
       paper.parts.forEach((part) => {
         paperPartMap.set(part.id, part);
         part.sections.forEach((section) => {
-          paperSectionMap.set(section.id, section);
+          paperSectionMap.set(section.id, {
+            ...section,
+            typeLabel: SECTION_TYPE_LABEL[section.type],
+          });
           section.questions.forEach((question) => {
             paperQuestionMap.set(question.id, question);
           });
