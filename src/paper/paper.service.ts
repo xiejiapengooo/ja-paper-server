@@ -2,11 +2,12 @@ import { Injectable } from "@nestjs/common";
 import { PrismaService } from "../prisma/prisma.service";
 import { GetPaperDto, PostPaperDto } from "./paper.dto";
 import { BusinessException } from "../exception";
-import { COS_PAPER_PREFIX, PAPER_QUESTION_TYPE_WEIGHT, PAPER_SECTION_SCORE, SECTION_TYPE_LABEL } from "../constant";
+import { PAPER_QUESTION_TYPE_WEIGHT, PAPER_SECTION_SCORE, SECTION_TYPE_LABEL } from "../constant";
 import { UserTokenPayload } from "../types";
 import dayjs from "dayjs";
 import { Paper, PaperLevel, PaperPart, PaperQuestion, PaperSection, UserQuestion } from "@prisma/client";
 import { CosUtils } from "../libs/cos";
+import { getPaperCosPath } from "../libs/utils";
 
 @Injectable()
 export class PaperService {
@@ -232,9 +233,19 @@ export class PaperService {
       const paperSectionMap = new Map<PaperSection["id"], PaperSection>();
       const paperQuestionMap = new Map<PaperQuestion["id"], PaperQuestion>();
       paper.parts.forEach((part) => {
+        part.listeningAudio = part.listeningAudio
+          ? CosUtils.getUrl([`${getPaperCosPath(paper.level, paper.year + paper.month)}/${part.listeningAudio}`])[0]
+          : "";
         paperPartMap.set(part.id, part);
         part.sections.forEach((section) => {
-          Object.assign(section, { typeLabel: SECTION_TYPE_LABEL[section.type] });
+          Object.assign(section, {
+            typeLabel: SECTION_TYPE_LABEL[section.type],
+            imageContent: section.imageContent
+              ? CosUtils.getUrl([
+                  `${getPaperCosPath(paper.level, paper.year + paper.month)}/${section.imageContent}`,
+                ])[0]
+              : "",
+          });
           paperSectionMap.set(section.id, section);
           section.questions.forEach((question) => {
             paperQuestionMap.set(question.id, question);
