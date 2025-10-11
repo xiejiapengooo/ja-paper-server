@@ -271,6 +271,9 @@ export class PaperService {
         let list: Parameters<PaperService["calcScore"]>[0]["questions"] = [];
         for (const [questionId, question] of paperQuestionMap) {
           const userQuestion = userQuestionMap.get(questionId);
+          Object.assign(question, {
+            userAnswer: userQuestion?.answer || (question.answerType === "MULTI_CHOICE" ? [] : "")
+          });
           list.push({
             isCorrect: userQuestion?.isCorrect || false,
             questionType: question.type,
