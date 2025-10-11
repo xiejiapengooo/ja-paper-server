@@ -271,11 +271,13 @@ export class PaperService {
         let list: Parameters<PaperService["calcScore"]>[0]["questions"] = [];
         for (const [questionId, question] of paperQuestionMap) {
           const userQuestion = userQuestionMap.get(questionId);
+          const isCorrect = userQuestion?.isCorrect || false
           Object.assign(question, {
-            userAnswer: userQuestion?.answer || (question.answerType === "MULTI_CHOICE" ? [] : "")
+            userAnswer: userQuestion?.answer || (question.answerType === "MULTI_CHOICE" ? [] : ""),
+            isCorrect
           });
           list.push({
-            isCorrect: userQuestion?.isCorrect || false,
+            isCorrect,
             questionType: question.type,
             sectionType: paperSectionMap.get(question.sectionId)?.type as PaperSection["type"],
             partId: question.partId,
