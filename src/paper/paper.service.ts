@@ -248,6 +248,11 @@ export class PaperService {
           });
           paperSectionMap.set(section.id, section);
           section.questions.forEach((question) => {
+            Object.assign(question, {
+              listeningAudio: question.listeningAudio ? CosUtils.getUrl([
+                `${getPaperCosPath(paper.level, paper.year + paper.month)}/${question.listeningAudio}`,
+              ])[0] : ""
+            });
             paperQuestionMap.set(question.id, question);
           });
         });
