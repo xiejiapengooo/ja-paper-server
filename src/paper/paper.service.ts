@@ -249,9 +249,11 @@ export class PaperService {
           paperSectionMap.set(section.id, section);
           section.questions.forEach((question) => {
             Object.assign(question, {
-              listeningAudio: question.listeningAudio ? CosUtils.getUrl([
-                `${getPaperCosPath(paper.level, paper.year + paper.month)}/${question.listeningAudio}`,
-              ])[0] : ""
+              listeningAudio: question.listeningAudio
+                ? CosUtils.getUrl([
+                    `${getPaperCosPath(paper.level, paper.year + paper.month)}/${question.listeningAudio}`,
+                  ])[0]
+                : "",
             });
             paperQuestionMap.set(question.id, question);
           });
@@ -276,10 +278,10 @@ export class PaperService {
         let list: Parameters<PaperService["calcScore"]>[0]["questions"] = [];
         for (const [questionId, question] of paperQuestionMap) {
           const userQuestion = userQuestionMap.get(questionId);
-          const isCorrect = userQuestion?.isCorrect || false
+          const isCorrect = userQuestion?.isCorrect || false;
           Object.assign(question, {
             userAnswer: userQuestion?.answer || (question.answerType === "MULTI_CHOICE" ? [] : ""),
-            isCorrect
+            isCorrect,
           });
           list.push({
             isCorrect,
@@ -351,5 +353,27 @@ export class PaperService {
     });
 
     return this.prisma.$transaction(upserts);
+  }
+
+  async getQuestionsMine(userTokenPayload: UserTokenPayload) {
+    return this.prisma.userQuestion.findMany({
+      where: {
+        userId: userTokenPayload.id,
+      },
+      orderBy: {
+        lastAnswerAt: "desc",
+      },
+      include: {
+        question: {
+          include: {
+            choices: {
+              orderBy: {
+                order: "asc",
+              },
+            },
+          },
+        },
+      },
+    });
   }
 }

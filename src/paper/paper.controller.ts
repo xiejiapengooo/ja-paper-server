@@ -19,6 +19,11 @@ export class PaperController {
     return this.paperService.getPaper(dto, userTokenPayload);
   }
 
+  @Get("questions/mine")
+  async getQuestionsMine(@GetTokenPayload() userTokenPayload: UserTokenPayload) {
+    return this.paperService.getQuestionsMine(userTokenPayload);
+  }
+
   @Post(":paperId")
   @ResponseMessage("Submission successful!")
   async postPaper(
