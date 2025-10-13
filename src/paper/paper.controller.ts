@@ -14,14 +14,14 @@ export class PaperController {
     return this.paperService.getList(userTokenPayload);
   }
 
-  @Get(":level/:yearMonth")
-  async getPaper(@Param() dto: GetPaperDto, @GetTokenPayload() userTokenPayload: UserTokenPayload) {
-    return this.paperService.getPaper(dto, userTokenPayload);
-  }
-
   @Get("questions/mine")
   async getQuestionsMine(@GetTokenPayload() userTokenPayload: UserTokenPayload) {
     return this.paperService.getQuestionsMine(userTokenPayload);
+  }
+
+  @Get(":level/:yearMonth")
+  async getPaper(@Param() dto: GetPaperDto, @GetTokenPayload() userTokenPayload: UserTokenPayload) {
+    return this.paperService.getPaper(dto, userTokenPayload);
   }
 
   @Post(":paperId")

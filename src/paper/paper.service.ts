@@ -359,6 +359,10 @@ export class PaperService {
     return this.prisma.userQuestion.findMany({
       where: {
         userId: userTokenPayload.id,
+        isCorrect: false,
+        answer: {
+          not: "",
+        },
       },
       orderBy: {
         lastAnswerAt: "desc",
