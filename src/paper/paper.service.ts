@@ -356,7 +356,7 @@ export class PaperService {
   }
 
   async getQuestionsMine(userTokenPayload: UserTokenPayload) {
-    return this.prisma.userQuestion.findMany({
+    const userQuestions = await this.prisma.userQuestion.findMany({
       where: {
         userId: userTokenPayload.id,
         isCorrect: false,
@@ -370,6 +370,15 @@ export class PaperService {
       include: {
         question: {
           include: {
+            paper: {
+              select: {
+                id: true,
+                level: true,
+                year: true,
+                month: true,
+                title: true,
+              },
+            },
             choices: {
               orderBy: {
                 order: "asc",
@@ -378,6 +387,13 @@ export class PaperService {
           },
         },
       },
+    });
+
+    return userQuestions.map((userQuestion) => {
+      return Object.assign(userQuestion.question, {
+        userAnswer: userQuestion.answer,
+        isCorrect: userQuestion.isCorrect,
+      });
     });
   }
 }
