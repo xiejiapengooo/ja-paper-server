@@ -1,4 +1,4 @@
-import { IsArray, IsEnum, IsNotEmpty, IsString, ValidateNested } from "class-validator";
+import { IsArray, IsEnum, IsNotEmpty, IsOptional, IsString, ValidateNested } from "class-validator";
 import { Type } from "class-transformer";
 import { PaperLevel } from "@prisma/client";
 
@@ -24,4 +24,10 @@ export class PostPaperDto {
   @ValidateNested({ each: true })
   @Type(() => QuestionAnswerListItem)
   questionAnswerList: QuestionAnswerListItem[];
+}
+
+export class GetQuestionsMineDto {
+  @IsOptional()
+  @IsString()
+  cursor?: string;
 }

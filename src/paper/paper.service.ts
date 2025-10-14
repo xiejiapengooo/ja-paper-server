@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { PrismaService } from "../prisma/prisma.service";
-import { GetPaperDto, PostPaperDto } from "./paper.dto";
+import { GetPaperDto, GetQuestionsMineDto, PostPaperDto } from "./paper.dto";
 import { BusinessException } from "../exception";
 import { PAPER_QUESTION_TYPE_WEIGHT, PAPER_SECTION_SCORE, SECTION_TYPE_LABEL } from "../constant";
 import { UserTokenPayload } from "../types";
@@ -355,8 +355,12 @@ export class PaperService {
     return this.prisma.$transaction(upserts);
   }
 
-  async getQuestionsMine(userTokenPayload: UserTokenPayload) {
+  async getQuestionsMine(dto: GetQuestionsMineDto, userTokenPayload: UserTokenPayload) {
+    const limit = 30;
     const userQuestions = await this.prisma.userQuestion.findMany({
+      cursor: dto.cursor ? { id: dto.cursor } : void 0,
+      skip: dto.cursor ? 1 : 0,
+      take: limit,
       where: {
         userId: userTokenPayload.id,
         isCorrect: false,
@@ -389,11 +393,18 @@ export class PaperService {
       },
     });
 
-    return userQuestions.map((userQuestion) => {
+    const list = userQuestions.map((userQuestion) => {
       return Object.assign(userQuestion.question, {
+        userQuestionId: userQuestion.id,
         userAnswer: userQuestion.answer,
         isCorrect: userQuestion.isCorrect,
       });
     });
+
+    return {
+      more: list.length === limit,
+      cursor: list.length ? list[list.length - 1].userQuestionId : "",
+      list,
+    };
   }
 }
