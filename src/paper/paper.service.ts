@@ -383,6 +383,7 @@ export class PaperService {
                 title: true,
               },
             },
+            section: true,
             choices: {
               orderBy: {
                 order: "asc",
@@ -395,6 +396,19 @@ export class PaperService {
 
     const list = userQuestions.map((userQuestion) => {
       return Object.assign(userQuestion.question, {
+        section: Object.assign(userQuestion.question.section, {
+          imageContent: userQuestion.question.section.imageContent
+            ? CosUtils.getUrl([
+                `${getPaperCosPath(userQuestion.question.paper.level, userQuestion.question.paper.year + userQuestion.question.paper.month)}/${userQuestion.question.section.imageContent}`,
+              ])[0]
+            : "",
+          typeLabel: SECTION_TYPE_LABEL[userQuestion.question.section.type],
+        }),
+        listeningAudio: userQuestion.question.listeningAudio
+          ? CosUtils.getUrl([
+              `${getPaperCosPath(userQuestion.question.paper.level, userQuestion.question.paper.year + userQuestion.question.paper.month)}/${userQuestion.question.listeningAudio}`,
+            ])[0]
+          : "",
         userQuestionId: userQuestion.id,
         userAnswer: userQuestion.answer,
         isCorrect: userQuestion.isCorrect,
